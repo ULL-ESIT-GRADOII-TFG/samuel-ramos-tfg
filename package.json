@@ -1,0 +1,19 @@
+{
+  "name": "samuel-ramos-tfg",
+  "version": "1.0.0",
+  "description": "TFG: CodeLab",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg.git"
+  },
+  "author": "Samuel Ramos Barroso",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/issues"
+  },
+  "homepage": "https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg#readme"
+}
