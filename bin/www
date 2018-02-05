@@ -1,0 +1,10 @@
+#! /usr/bin/env node
+
+'use strict'
+
+const config = require('../config/configServer.js')
+const app = require('../app')
+
+app.listen(config.port, () => {
+  console.log(`Servidor corriendo en localhost:${config.port}`)
+})
