@@ -1,8 +1,16 @@
 doctype html
+- var user = usuario
+
 html
   include ../layouts/head.pug
   body
     include ../layouts/nav.pug
-    h1 Sitio de ejemplo
-    p Bienvenido al ejemplo
+    
+    if user
+      p Hola user.username Consulta tu perfil  
+        a(href='/profile') Perfil
+    else
+      a(href='/login') Log in
+    
     include ../layouts/footer.pug
+    

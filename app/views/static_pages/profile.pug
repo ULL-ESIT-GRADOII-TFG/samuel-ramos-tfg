@@ -1,8 +1,14 @@
 doctype html
+- var user = { id: usuario.id, username: usuario.username, displayName: usuario.displayName, email: usuario.emails[0].value }
 html
   include ../layouts/head.pug
   body
     include ../layouts/nav.pug
-    h1 Sitio de ejemplo
-    p Bienvenido al ejemplo
+    h1 Perfil
+    
+    p id: #{user.id}
+    p Username: #{user.username}
+    p Name: #{user.displayName}
+    p Email: #{user.email}
+
     include ../layouts/footer.pug

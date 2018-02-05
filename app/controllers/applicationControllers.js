@@ -1,6 +1,7 @@
 
 function home (req, res) {
-  res.render('static_pages/home', { titulo: 'Home' })
+  console.log(req.user);
+  res.render('static_pages/home', { titulo: 'Home', usuario: req.user  })
 }
 
 function login (req, res) {
