@@ -5,7 +5,7 @@ const loggedIn = require('connect-ensure-login')
 const express = require('express')
 const api = express.Router()
 
-const appControllers = require('../app/controllers/appicationControllers.js')
+const appControllers = require('../app/controllers/applicationControllers.js')
 
 api.get('/', appControllers.home)
 

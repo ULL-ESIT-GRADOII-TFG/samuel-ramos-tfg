@@ -14,8 +14,8 @@ require('./config/configPassport')(passport, strategy)
 
 const api = require('./config/routes')
 
-app.set('views', path.join(__dirname, '/views'))
-app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '/app/views/'))
+app.set('view engine', 'pug')
 
 app.use(morgan('combined'))
 app.use(cookie())

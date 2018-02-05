@@ -1,10 +1,10 @@
 
 function home (req, res) {
-  res.render('home', { user: req.user })
+  res.render('static_pages/home', { titulo: 'Home' })
 }
 
 function login (req, res) {
-  res.render('login')
+  res.render('static_pages/login', { titulo: 'Log in' })
 }
 
 function redirectHome (req, res) {
@@ -12,7 +12,7 @@ function redirectHome (req, res) {
 }
 
 function profiles (req, res) {
-  res.render('profile', { user: req.user })
+  res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user })
 }
 
 module.exports = {
