@@ -1,5 +1,4 @@
 module.exports = (passport, Strategy) => {
-
   require('dotenv').config()
 
   passport.use(new Strategy({
