@@ -10,7 +10,8 @@ const body = require('body-parser')
 const session = require('express-session')
 const path = require('path')
 
-const github = require('./config/configPassport')
+require('./config/configPassport')(passport, strategy)
+
 const api = require('./config/routes')
 
 app.set('views', path.join(__dirname, '/views'))
