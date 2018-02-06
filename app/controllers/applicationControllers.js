@@ -1,6 +1,5 @@
 
 function home (req, res) {
-  console.log(req.user)
   res.render('static_pages/home', { titulo: 'Home', usuario: req.user })
 }
 
