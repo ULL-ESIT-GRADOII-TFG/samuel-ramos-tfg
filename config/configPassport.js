@@ -5,7 +5,7 @@ module.exports = (passport, Strategy) => {
     clientID: process.env.CLIENTID,
     clientSecret: process.env.CLIENTSECRET,
     callbackURL: process.env.CALLBACKURL,
-    scope: ['user', 'repo', 'admin:org', 'admin:public_key', 'admin:repo_hook', 'admin:org_hook', 'gist', 'notifications', 'delete_repo', 'admin:gpg_key']
+    scope: ['read:user', 'repo', 'admin:org', 'admin:org_hook', 'delete_repo']
   },
   function (accessToken, refreshToken, profile, cb) {
     return cb(null, profile)
