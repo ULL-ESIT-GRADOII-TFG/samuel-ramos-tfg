@@ -1,0 +1,23 @@
+{
+  "name": "samuel-ramos-tfg",
+  "description": "TFG: CodeLab",
+  "main": "./bin/www",
+  "authors": [
+    "Samuel Ramos Barroso"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "tfg"
+  ],
+  "homepage": "https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.100.2"
+  }
+}
