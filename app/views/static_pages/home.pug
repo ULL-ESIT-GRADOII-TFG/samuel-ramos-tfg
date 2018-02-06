@@ -7,10 +7,8 @@ html
     include ../layouts/nav.pug
     
     if user
-      p Hola user.username Consulta tu perfil  
+      p Hola #{user.username} Consulta tu perfil  
         a(href='/profile') Perfil
-    else
-      a(href='/login') Log in
     
     include ../layouts/footer.pug
     

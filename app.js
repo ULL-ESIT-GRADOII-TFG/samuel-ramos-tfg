@@ -17,6 +17,9 @@ const api = require('./config/routes')
 app.set('views', path.join(__dirname, '/app/views/'))
 app.set('view engine', 'pug')
 
+app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/bower_components')));
+
 app.use(morgan('combined'))
 app.use(cookie())
 app.use(session({ secret: 'tfg1718', resave: true, saveUninitialized: true }))
