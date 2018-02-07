@@ -7,12 +7,46 @@ html
     include ../layouts/nav.pug
     div(class="container")
       div(class="row")
+        
+        div(class="s12", id="space")
+        
+        div(class="col s1")
+        div(class="col s10")
+          div(class="col s12")
+            h3(align="center") Gestiona las tareas de código de los alumnos de forma cómoda y ágil.
+          div(class="col s12")
+            p(align="center")
+              i(class="octicon octicon-mortar-board licons")
+              i(class="octicon octicon-organization licons")
+              i(class="octicon octicon-file-code licons")
+              i(class="octicon octicon-book licons")
+              i(class="octicon octicon-repo licons")
+          p(align="center") Powered by 
+            a(href="https://github.com/"): i(class="octicon octicon-logo-github lcolor")
+        div(class="col s1")
+          
+        div(class="col s12" id="lspace")
+        
         div(class="col s4")
-          p(align="center") hola
+          div(class="col s12")
+            p(class="lttext") Tareas
+              i(class="octicon octicon-file-code ficons")    
+          div(class="col s12 ltext")
+            p Asigna tareas a tus alumnos de forma automatizada, de forma que cada alumno o grupo de alumnos tiene su repositorio propio.
+            
         div(class="col s4")
-          p(align="center") hola
+          div(class="col s12")
+            p(class="lttext") Corrección
+              i(class="octicon octicon-pencil ficons")    
+          div(class="col s12 ltext")
+            p Facilita la corrección de todas las tareas debido a que se puede obtener un repositorio de corrección.
+            
         div(class="col s4")
-          p(align="center") hola
-    
+          div(class="col s12")
+            p(class="lttext") Alumnos
+              i(class="octicon octicon-mortar-board ficons")
+          div(class="col s12 ltext")
+            p Los alumnos podrán ver a que organizaciones pertenecen y todas sus asignaciones en la misma.
+            
     include ../layouts/footer.pug
     

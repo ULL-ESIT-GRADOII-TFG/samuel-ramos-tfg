@@ -6,7 +6,11 @@ nav
     ul(id="nav-mobile" class="right hide-on-med-and-down m5pc")
       if user
         li: a(href='/profile') Perfil
+          i(class="octicon octicon-person micons")
         li: a(href="#") Aulas 
-        li: a(href='/logout') Sign out
+          i(class="octicon octicon-mortar-board micons")
+        li: a(href='/logout') Sign out 
+          i(class="octicon octicon-sign-out micons")
       else
         li: a(href="/login/github") Sign in
+          i(class="octicon octicon-sign-in micons")
