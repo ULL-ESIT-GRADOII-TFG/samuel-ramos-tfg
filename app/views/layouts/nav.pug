@@ -1,8 +1,9 @@
 - var user = usuario
 nav
-  div(class="nav-wrapper")
-    a(href='/' class="brand-logo ") Logo
-    ul(id="nav-mobile" class="right hide-on-med-and-down")
+  div(class="nav-wrapper light-blue darken-4")
+    a(href='/' class="brand-logo" id='logo') CodeLab 
+      i(class="fas fa-flask")
+    ul(id="nav-mobile" class="right hide-on-med-and-down m5pc")
       if user
         li: a(href='/profile') Perfil
         li: a(href="#") Aulas 
