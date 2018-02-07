@@ -1,7 +1,5 @@
 
-
 function home (req, res) {
-
   res.render('static_pages/home', { titulo: 'Home', usuario: req.user })
 }
 
@@ -15,8 +13,7 @@ function redirectHome (req, res) {
 }
 
 function profiles (req, res) {
-  res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, foto:req.user.photos[0].value, perfilUrl: req.user.profileUrl, mail: req.user.emails[0].value })
-  console.log(req.user.photos[0].value);
+  res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, foto: req.user.photos[0].value, perfilUrl: req.user.profileUrl, mail: req.user.emails[0].value })
 }
 
 module.exports = {

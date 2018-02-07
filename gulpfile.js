@@ -1,6 +1,6 @@
 const gulp = require('gulp')
 const fs = require('fs')
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')
 
 const dotenv = 'CLIENTID=' + '\nCLIENTSECRET=' + '\nCALLBACKURL='
 
