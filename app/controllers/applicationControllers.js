@@ -3,8 +3,9 @@ function home (req, res) {
   res.render('static_pages/home', { titulo: 'Home', usuario: req.user })
 }
 
-function login (req, res) {
-  res.render('static_pages/login', { titulo: 'Log in' })
+function logout (req, res) {
+  req.logout()
+  res.redirect('/')
 }
 
 function redirectHome (req, res) {
@@ -17,7 +18,7 @@ function profiles (req, res) {
 
 module.exports = {
   home,
-  login,
+  logout,
   redirectHome,
   profiles
 }

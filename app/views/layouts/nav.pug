@@ -1,10 +1,11 @@
 - var user = usuario
 nav
   div(class="nav-wrapper")
-    a(href="#" class="brand-logo ") Logo
+    a(href='/' class="brand-logo ") Logo
     ul(id="nav-mobile" class="right hide-on-med-and-down")
       if user
         li: a(href='/profile') Perfil
         li: a(href="#") Aulas 
+        li: a(href='/logout') Sign out
       else
-        li: a(href="/login/github") Log in
+        li: a(href="/login/github") Sign in

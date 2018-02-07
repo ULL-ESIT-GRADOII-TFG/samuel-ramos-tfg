@@ -2,13 +2,13 @@
   "name": "samuel-ramos-tfg",
   "version": "1.0.0",
   "description": "TFG: CodeLab",
-  "main": "index.js",
+  "main": "bin/www",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bin/www",
     "lint": "standard",
     "fix": "standard --fix",
-    "setup": " npm install && ./node_modules/gulp/bin/gulp.js default-env"
+    "setup": " npm install && ./node_modules/bower/bin/bower install && ./node_modules/gulp/bin/gulp.js default-env"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@octokit/rest": "^14.0.8",
     "body-parser": "^1.18.2",
+    "bower": "^1.8.2",
     "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.0",
@@ -33,5 +34,8 @@
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
     "pug": "^2.0.0-rc.4"
+  },
+  "devDependencies": {
+    "gulp-sass": "^3.1.0"
   }
 }

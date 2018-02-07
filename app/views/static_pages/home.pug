@@ -5,20 +5,14 @@ html
   include ../layouts/head.pug
   body
     include ../layouts/nav.pug
-    
-    if user
-      div(class="container")
-        div(class="row")
-          div(class="col s4")
-            hola
-          div(class="col s4")
-            hola
-          div(class="col s4")
-            hola
-
-
-      p Hola #{user.username} Consulta tu perfil  
-        a(href='/profile') Perfil
+    div(class="container")
+      div(class="row")
+        div(class="col s4")
+          p(align="center") hola
+        div(class="col s4")
+          p(align="center") hola
+        div(class="col s4")
+          p(align="center") hola
     
     include ../layouts/footer.pug
     
