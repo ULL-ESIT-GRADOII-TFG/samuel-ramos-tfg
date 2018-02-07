@@ -20,6 +20,11 @@
   padding-top: 5%;
 }
 
+#pspace {
+  padding-top: 25%;
+
+}
+
 a:link {
   text-decoration: none;
 }
@@ -38,7 +43,6 @@ a:link {
   font-family: 'Dosis', sans-serif;
 }
 
-
 .micons{
   font-size: 15px;
   margin-left: 3px;
@@ -47,4 +51,8 @@ a:link {
 .ficons {
   font-size: 30px;
   margin-left: 5%;
+}
+
+div a{
+  color: red;
 }
