@@ -13,6 +13,7 @@ function redirectHome (req, res) {
 }
 
 function profiles (req, res) {
+  console.log(req)
   res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, foto: req.user.photos[0].value, perfilUrl: req.user.profileUrl, mail: req.user.emails[0].value })
 }
 
