@@ -9,9 +9,12 @@ class Gh {
   }
 
   userOrgs () {
-    octokit.users.getOrgs({}, (error, result) => {
-      if (error) console.log(error)
-      else console.log(result)
+    return new Promise((resolve, reject) => {
+      octokit.users.getOrgs({}, (error, result) => {
+        if (error) console.log(error)
+
+        resolve(result)
+      })
     })
   }
 }
