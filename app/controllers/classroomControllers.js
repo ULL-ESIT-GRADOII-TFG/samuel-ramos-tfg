@@ -18,7 +18,12 @@ function orgs (req, res) {
   })
 }
 
+function orgsP (req, res) {
+  console.log(req.body)
+}
+
 module.exports = {
   classrooms,
-  orgs
+  orgs,
+  orgsP
 }

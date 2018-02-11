@@ -3,7 +3,19 @@ nav
   div(class="nav-wrapper light-blue darken-4")
     a(href='/' class="brand-logo" id='logo') CodeLab 
       i(class="fas fa-flask")
+    a(href="#" data-activates="mobile-demo" class="button-collapse"): i(class="material-icons") menu
     ul(id="nav-mobile" class="right hide-on-med-and-down m5pc")
+      if user
+        li: a(href='/profile') Perfil
+          i(class="octicon octicon-person micons")
+        li: a(href="/classrooms") Aulas 
+          i(class="octicon octicon-mortar-board micons")
+        li: a(href='/logout') Sign out 
+          i(class="octicon octicon-sign-out micons")
+      else
+        li: a(href="/login/github") Sign in
+          i(class="octicon octicon-sign-in micons")
+    ul(class="side-nav" id="mobile-demo")
       if user
         li: a(href='/profile') Perfil
           i(class="octicon octicon-person micons")

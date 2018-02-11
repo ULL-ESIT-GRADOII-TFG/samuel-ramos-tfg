@@ -16,5 +16,6 @@ api.get('/profile', loggedIn.ensureLoggedIn(), appControllers.profiles)
 api.get('/logout', loggedIn.ensureLoggedIn(), appControllers.logout)
 api.get('/classrooms', loggedIn.ensureLoggedIn(), classControllers.classrooms)
 api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
+api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 
 module.exports = api

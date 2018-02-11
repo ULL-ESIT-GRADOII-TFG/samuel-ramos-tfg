@@ -25,6 +25,10 @@
 
 }
 
+a:link {
+  text-decoration: none;
+}
+
 .lcolor {
   color: black;
 }
