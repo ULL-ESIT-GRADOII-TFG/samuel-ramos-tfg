@@ -15,5 +15,6 @@ api.get('/login/github/return', passport.authenticate('github', { failureRedirec
 api.get('/profile', loggedIn.ensureLoggedIn(), appControllers.profiles)
 api.get('/logout', loggedIn.ensureLoggedIn(), appControllers.logout)
 api.get('/classrooms', loggedIn.ensureLoggedIn(), classControllers.classrooms)
+api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 
 module.exports = api
