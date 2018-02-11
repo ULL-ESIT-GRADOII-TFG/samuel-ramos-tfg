@@ -1,8 +1,32 @@
+- var classrooms = aulas
 doctype html
 
 html
   include ../layouts/head.pug
   body
     include ../layouts/nav.pug
-          
+    div(class="container")
+      div(class="row")
+        div(class="col s12", id="space")
+          div(class="col s12")
+            h1(align="center" id="titclass") Aulas 
+              a(href="#" id="test" class="btn-floating btn-large waves-effect waves-light light-blue darken-4"): i(class="material-icons") add
+          if classrooms
+            each i in classrooms
+              div(class="col s6 offset-s3")
+                div(class="card horizontal")
+                  div(class="card-image")
+                    img(class="responsive-img", src="")
+                  div(class="card-stacked")
+                    div(class="card-content")
+                      p I am a very simple card. I am good at containing small bits of information.
+                    div(class="card-action")
+                      a(href="#") This is a link
+            else
+              div(align="center" class="col s12")
+                p(class="noclass") No tiene aulas activas.      
+          else   
+            div(align="center" class="col s12")
+              p(class="noclass") No tiene aulas activas.  
+                  
     include ../layouts/footer.pug
