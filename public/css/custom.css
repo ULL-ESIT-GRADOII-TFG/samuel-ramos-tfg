@@ -52,3 +52,11 @@ a:link {
   font-size: 30px;
   margin-left: 5%;
 }
+
+.seleccion {
+  font-size: 10px;
+}
+
+#tclass{
+  font-family: 'Dosis', sans-serif;
+}
