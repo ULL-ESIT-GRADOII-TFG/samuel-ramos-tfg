@@ -6,7 +6,7 @@ function classrooms (req, res) {
   Org.find({ 'ownerLogin': req.user.username }, (err, org) => {
     if (err) console.log(err)
 
-    res.render('classroom/classrooms', { titulo: 'Organizaciones', usuario: req.user, aulas: org })
+    res.render('classroom/classrooms', { titulo: 'Aulas', usuario: req.user, aulas: org })
   })
 }
 
@@ -30,7 +30,6 @@ function orgsP (req, res, next) {
   let idOrg = data[0]
   let loginOrg = data[1]
   let avatarUrl = data[2]
-  let url = data[3]
 
   let newOrg = new Org({
     login: loginOrg,
@@ -48,8 +47,16 @@ function orgsP (req, res, next) {
   })
 }
 
+function invi (req, res) {
+  let idOrg = req.param.idclass
+  console.log(idOrg)
+
+  res.render('classroom/invitation', { titulo: 'Organizaciones', usuario: req.user })
+}
+
 module.exports = {
   classrooms,
   orgs,
-  orgsP
+  orgsP,
+  invi
 }
