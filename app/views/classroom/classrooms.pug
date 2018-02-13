@@ -9,19 +9,24 @@ html
       div(class="row")
         div(class="col s12", id="space")
           div(class="col s12")
-            h1(align="center" id="tclass") Aulas 
+            h1(align="center" class="fclass") Aulas 
               a(href="/orgs" id="test" class="btn-floating btn-large waves-effect waves-light light-blue darken-4"): i(class="material-icons") add
           if classrooms
             each i in classrooms
               div(class="col s6 offset-s3")
                 div(class="card horizontal")
                   div(class="card-image")
-                    img(class="responsive-img", src="")
+                    img(class="responsive-img", src="" + i.avatarUrl)
                   div(class="card-stacked")
-                    div(class="card-content")
-                      p I am a very simple card. I am good at containing small bits of information.
+                    div(class="card-content ftxt")
+                      p #{i.login}
+                      p 0
+                        i(class="octicon octicon-person aicons")
+                      p(id="aspace")
+                      p 0
+                        i(class="octicon octicon-repo aicons")
                     div(class="card-action")
-                      a(href="#") This is a link
+                      a(href="#" class="blue-text text-darken-4") Asginaciones
             else
               div(align="center" class="col s12")
                 p(class="noclass") No tiene aulas activas.      

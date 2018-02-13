@@ -25,6 +25,10 @@
 
 }
 
+#aspace {
+  padding-top: 5%;
+}
+
 a:link {
   text-decoration: none;
 }
@@ -57,6 +61,15 @@ a:link {
   font-size: 10px;
 }
 
-#tclass{
+.fclass{
   font-family: 'Dosis', sans-serif;
+}
+
+.ftxt{
+  font-size: 15px;
+  font-family: 'Dosis', sans-serif;
+}
+.aicons {
+  font-size: 18px;
+  margin-left: 5%;
 }
