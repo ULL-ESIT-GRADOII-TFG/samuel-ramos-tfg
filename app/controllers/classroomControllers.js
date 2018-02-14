@@ -10,7 +10,6 @@ function classrooms (req, res) {
   })
 }
 
-// Controlador para mostras las organizaciones a las que pertenece el usuario.
 function orgs (req, res) {
   User.findOne({ 'login': req.user.username }, (err, user) => {
     if (err) console.log(err)
@@ -24,7 +23,6 @@ function orgs (req, res) {
   })
 }
 
-// Controlador para añadir las organizaciones como aulas.
 function orgsP (req, res, next) {
   let data = req.body.data.split('@')
   let idOrg = data[0]
@@ -47,16 +45,26 @@ function orgsP (req, res, next) {
   })
 }
 
-function invi (req, res) {
-  let idOrg = req.param.idclass
+function classroom (req, res) {
+  let titulo = 'Aula'
+  let idOrg = req.params.idclass
   console.log(idOrg)
 
-  res.render('classroom/invitation', { titulo: 'Organizaciones', usuario: req.user })
+  res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
+}
+
+function invi (req, res) {
+  let titulo = 'Invitacion para '
+  let idOrg = req.params.idClass
+  console.log(idOrg)
+
+  res.render('classroom/invitation', { titulo: titulo, usuario: req.user })
 }
 
 module.exports = {
   classrooms,
   orgs,
   orgsP,
-  invi
+  invi,
+  classroom
 }

@@ -17,6 +17,7 @@ api.get('/logout', loggedIn.ensureLoggedIn(), appControllers.logout)
 api.get('/classrooms', loggedIn.ensureLoggedIn(), classControllers.classrooms)
 api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi)
+api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
 
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 
