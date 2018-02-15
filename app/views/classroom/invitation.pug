@@ -10,8 +10,10 @@ html
         div(class="col s12", id="space")  
         div(align="center" class="col s12")  
           p(class="ftxt") Haga click en el siguiente botón para unirse a la organización 
+            span(id="aula") #{aula}
         div(class="col s12", id="ispace")  
         div(align="center" class="col s12")  
-          a(class="waves-effect waves-light btn-large light-blue darken-4") Aceptar invitación
+          a(id="click" class="waves-effect waves-light btn-large light-blue darken-4") Aceptar invitación
                    
     include ../layouts/footerParams.pug
+    script(type="text/javascript", src="../js/getOrg.js")

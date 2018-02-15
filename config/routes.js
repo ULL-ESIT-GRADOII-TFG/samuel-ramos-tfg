@@ -19,6 +19,7 @@ api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi)
 api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
 
+api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 
 module.exports = api

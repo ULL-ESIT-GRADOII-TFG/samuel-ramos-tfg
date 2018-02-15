@@ -54,11 +54,31 @@ function classroom (req, res) {
 }
 
 function invi (req, res) {
-  let titulo = 'Invitacion para '
-  let idOrg = req.params.idClass
+  let titulo = 'Invitacion para ' + req.params.idclass
+  let idOrg = req.params.idclass
   console.log(idOrg)
 
-  res.render('classroom/invitation', { titulo: titulo, usuario: req.user })
+  res.render('classroom/invitation', { titulo: titulo, usuario: req.user, classroom: idOrg })
+}
+
+function inviP (req, res) {
+  let org = req.params.idclass
+  let titulo = 'Aula'
+
+  Org.findOne({ 'login': org }, (err, org) => {
+    if (err) console.log(err)
+
+    User.findOne({ 'login': org.ownerLogin }, (err, user) => {
+      if (err) console.log(err)
+
+      const ghUser = new Github(user.token)
+
+      ghUser.addUserOrg(org.login, req.user.username)
+    .then(result => {
+      res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
+    })
+    })
+  })
 }
 
 module.exports = {
@@ -66,5 +86,6 @@ module.exports = {
   orgs,
   orgsP,
   invi,
-  classroom
+  classroom,
+  inviP
 }
