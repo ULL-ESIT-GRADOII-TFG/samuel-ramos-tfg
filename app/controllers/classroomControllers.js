@@ -46,24 +46,22 @@ function orgsP (req, res, next) {
 }
 
 function classroom (req, res) {
-  let titulo = 'Aula'
   let idOrg = req.params.idclass
-  console.log(idOrg)
+  let titulo = 'Aula: ' + idOrg
 
-  res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
+  res.render('classroom/classroom', { titulo: titulo, usuario: req.user, classroom: idOrg })
 }
 
 function invi (req, res) {
-  let titulo = 'Invitacion para ' + req.params.idclass
   let idOrg = req.params.idclass
-  console.log(idOrg)
+  let titulo = 'Invitacion para ' + idOrg
 
   res.render('classroom/invitation', { titulo: titulo, usuario: req.user, classroom: idOrg })
 }
 
 function inviP (req, res) {
   let org = req.params.idclass
-  let titulo = 'Aula'
+  let titulo = 'Aula: ' + org
 
   Org.findOne({ 'login': org }, (err, org) => {
     if (err) console.log(err)

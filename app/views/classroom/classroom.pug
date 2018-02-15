@@ -8,10 +8,11 @@ html
     div(class="container")
       div(class="row")
         div(class="col s12", id="space") 
-          p(align="center" class="ftxt") Haga click en el siguiente botón para copiar el enlace de invitación
+          p(align="center" class="ftxt") Haga click en el siguiente botón para copiar el enlace de invitación a #{aula}
         div(class="col s12", id="ispace")         
           p(align="center" class="ftxt") 
-            span(id="copy" class="iispace") http://localhost:8081/invitation/19349908 
-            button(class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/invitation/19349908"): i(class="octicon octicon-clippy iicons")
+            span(class="iispace") http://localhost:8081/invitation/#{aula}
+            button(id="btn" class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/invitation/" + aula): i(class="octicon octicon-clippy iicons")
 
     include ../layouts/footerParams.pug
+    script(type="text/javascript", src="../js/copy.js")
