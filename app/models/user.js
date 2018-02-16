@@ -7,7 +7,6 @@ const UserSchema = new Schema({
   token: String,
   signupDate: { type: Date, default: Date.now() },
   lastLogin: Date
-
 })
 
 module.exports = mongoose.model('User', UserSchema)
