@@ -23,7 +23,15 @@ function newAssignP (req, res) {
   })
 }
 
+function assign (req, res) {
+  let tarea = req.params.idassign
+  let titulo = 'Tarea ' + req.params.idassign
+
+  res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea })
+}
+
 module.exports = {
   newAssign,
-  newAssignP
+  newAssignP,
+  assign
 }

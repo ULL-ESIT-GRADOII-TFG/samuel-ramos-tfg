@@ -20,6 +20,7 @@ api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi)
 api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
 api.get('/new/:idclass', loggedIn.ensureLoggedIn(), assingControllers.newAssign)
+api.get('/assign/:idassign', loggedIn.ensureLoggedIn(), assingControllers.assign)
 
 api.post('/new/:idclass', loggedIn.ensureLoggedIn(), assingControllers.newAssignP)
 api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
