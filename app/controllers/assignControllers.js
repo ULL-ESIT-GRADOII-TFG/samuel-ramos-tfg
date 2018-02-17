@@ -1,7 +1,4 @@
-/* const Github = require('../helpers/githubHelper').Gh
-const User = require('../models/user')
-const Org = require('../models/org')
-*/
+const Assign = require('../models/assign')
 
 function newAssign (req, res) {
   let orgLogin = req.params.idclass
@@ -11,7 +8,19 @@ function newAssign (req, res) {
 function newAssignP (req, res) {
   let orgLogin = req.params.idclass
   console.log(req.body)
-  res.redirect('/classroom/' + orgLogin)
+  let newAssign = new Assign({
+    titulo: req.body.titulo,
+    ownerLogin: req.user.username,
+    repoType: req.body.repo,
+    userAdmin: req.body.admin,
+    orgLogin: orgLogin
+  })
+
+  newAssign.save((err) => {
+    if (err) console.log(err)
+
+    res.redirect('/classroom/' + orgLogin)
+  })
 }
 
 module.exports = {
