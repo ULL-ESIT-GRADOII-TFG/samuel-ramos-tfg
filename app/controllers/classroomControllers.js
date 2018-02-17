@@ -1,6 +1,7 @@
 const Github = require('../helpers/githubHelper').Gh
 const User = require('../models/user')
 const Org = require('../models/org')
+const Assign = require('../models/assign')
 
 function classrooms (req, res) {
   Org.find({ 'ownerLogin': req.user.username }, (err, org) => {
@@ -49,7 +50,11 @@ function classroom (req, res) {
   let idOrg = req.params.idclass
   let titulo = 'Aula: ' + idOrg
 
-  res.render('classroom/classroom', { titulo: titulo, usuario: req.user, classroom: idOrg })
+  Assign.find({ 'orgLogin': idOrg }, (err, assigns) => {
+    if (err) console.log(err)
+
+    res.render('classroom/classroom', { titulo: titulo, usuario: req.user, classroom: idOrg, assign: assigns })
+  })
 }
 
 function invi (req, res) {

@@ -7,10 +7,10 @@ function newAssign (req, res) {
 
 function newAssignP (req, res) {
   let orgLogin = req.params.idclass
-  console.log(req.body)
   let newAssign = new Assign({
     titulo: req.body.titulo,
     ownerLogin: req.user.username,
+    assignType: 'person',
     repoType: req.body.repo,
     userAdmin: req.body.admin,
     orgLogin: orgLogin

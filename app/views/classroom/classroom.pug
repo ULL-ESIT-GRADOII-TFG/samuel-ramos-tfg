@@ -1,4 +1,5 @@
 - var aula = classroom
+- var tarea = assign
 doctype html
 
 html
@@ -29,6 +30,31 @@ html
             a(class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
               i(class="octicon octicon-organization")
           div(class="col s3")
+          div(class="col s12", id="ispace")   
+            h4(align="center" class="fclass") Tareas 
+          div(class="col s12", id="ispace") 
+          div(class="col s6")
+            p(align="center" class="ftxt")  Tarea
+          div(class="col s6")
+            p(align="center" class="ftxt")  Enlace de invitación
+          div(class="col s12")
+            if tarea
+              each i in tarea
+                div(class="col s6")
+                  p(align="center" class="ftxt")  
+                    a(href="/assign/" + i.titulo) 
+                      i(class="octicon octicon-" + i.assignType)
+                      span  #{i.titulo} 
+                div(class="col s6")
+                  p(align="center" class="ftxt") 
+                    span(class="iispace") http://localhost:8081/assigninvi/#{i.titulo}
+                
+              else
+                div(align="center" class="col s12")
+                  p(class="noclass") No tiene tareas activas.      
+            else   
+              div(align="center" class="col s12")
+                p(class="noclass") No tiene tareas activas.  
 
     include ../layouts/footerParams.pug
     script(type="text/javascript", src="../js/copy.js")
