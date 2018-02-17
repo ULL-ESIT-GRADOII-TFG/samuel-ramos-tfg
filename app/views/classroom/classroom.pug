@@ -13,6 +13,22 @@ html
           p(align="center" class="ftxt") 
             span(class="iispace") http://localhost:8081/invitation/#{aula}
             button(id="btn" class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/invitation/" + aula): i(class="octicon octicon-clippy iicons")
+        div(align="center" class="col s12", id="ispace") 
+          div(class="col s3")
+          div(class="col s3")
+            p(align="center" class="ftxt") Haga click para crear una asignacion individual
+          div(class="col s3")
+            p(align="center" class="ftxt") Haga click para crear una asignacion grupal
+          div(class="col s3")
+        div(align="center" class="col s12", id="ispace") 
+          div(class="col s3")
+          div(class="col s3")
+            a(href="/new/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
+              i(class="octicon octicon-person")
+          div(class="col s3")
+            a(class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
+              i(class="octicon octicon-organization")
+          div(class="col s3")
 
     include ../layouts/footerParams.pug
     script(type="text/javascript", src="../js/copy.js")

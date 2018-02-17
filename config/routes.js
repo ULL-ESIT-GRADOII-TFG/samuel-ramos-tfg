@@ -7,6 +7,7 @@ const api = express.Router()
 
 const appControllers = require('../app/controllers/applicationControllers.js')
 const classControllers = require('../app/controllers/classroomControllers.js')
+const assingControllers = require('../app/controllers/assignControllers.js')
 
 api.get('/', appControllers.home)
 api.get('/login', appControllers.redirectHome)
@@ -18,7 +19,9 @@ api.get('/classrooms', loggedIn.ensureLoggedIn(), classControllers.classrooms)
 api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi)
 api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
+api.get('/new/:idclass', loggedIn.ensureLoggedIn(), assingControllers.newAssign)
 
+api.post('/new/:idclass', loggedIn.ensureLoggedIn(), assingControllers.newAssignP)
 api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 

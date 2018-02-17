@@ -7,7 +7,7 @@
   margin-right: 5%;
 }
 
-.licons{
+.licons {
   font-size: 60px;
   margin-right: 3%;
 }
@@ -33,6 +33,10 @@
   padding-top: 2%;
 }
 
+#fspace {
+  padding-top: 5%;
+}
+
 a:link {
   text-decoration: none;
 }
@@ -51,7 +55,7 @@ a:link {
   font-family: 'Dosis', sans-serif;
 }
 
-.micons{
+.micons {
   font-size: 15px;
   margin-left: 3px;
 }
@@ -65,11 +69,11 @@ a:link {
   font-size: 10px;
 }
 
-.fclass{
+.fclass {
   font-family: 'Dosis', sans-serif;
 }
 
-.ftxt{
+.ftxt {
   font-size: 15px;
   font-family: 'Dosis', sans-serif;
 }
@@ -78,10 +82,14 @@ a:link {
   margin-left: 5%;
 }
 
-.iicons{
+.iicons {
   font-size: 15px;
 }
 
-.iispace{
+.iispace {
   margin-right: 2%;
+}
+
+.iconsclass {
+  margin-left: 1%;
 }
