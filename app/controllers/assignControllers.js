@@ -25,13 +25,33 @@ function newAssignP (req, res) {
 
 function assign (req, res) {
   let tarea = req.params.idassign
+  let aula = req.params.idclass
   let titulo = 'Tarea ' + req.params.idassign
 
-  res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea })
+  res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
+}
+
+function assignInvi (req, res) {
+  let tarea = req.params.idassign
+  let aula = req.params.idclass
+  console.log(tarea)
+  let titulo = 'Tarea ' + req.params.idassign
+
+  res.render('assignments/invitation', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
+}
+
+function assignInviP (req, res) {
+  let tarea = req.params.idassign
+  let aula = req.params.idclass
+
+  console.log(tarea + '-' + req.user.username)
+  console.log(aula)
 }
 
 module.exports = {
   newAssign,
   newAssignP,
-  assign
+  assign,
+  assignInvi,
+  assignInviP
 }

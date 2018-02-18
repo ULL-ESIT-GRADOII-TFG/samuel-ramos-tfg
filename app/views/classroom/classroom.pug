@@ -42,12 +42,12 @@ html
               each i in tarea
                 div(class="col s6")
                   p(align="center" class="ftxt")  
-                    a(href="/assign/" + i.titulo) 
+                    a(href="/assign/"+ aula + "/" + i.titulo) 
                       i(class="octicon octicon-" + i.assignType)
                       span  #{i.titulo} 
                 div(class="col s6")
                   p(align="center" class="ftxt") 
-                    span(class="iispace") http://localhost:8081/assigninvi/#{i.titulo}
+                    span(class="iispace") http://localhost:8081/assigninvitation/#{aula}#{i.titulo}
                 
               else
                 div(align="center" class="col s12")
