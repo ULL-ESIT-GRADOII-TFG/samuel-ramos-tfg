@@ -50,10 +50,18 @@ function classroom (req, res) {
   let idOrg = req.params.idclass
   let titulo = 'Aula: ' + idOrg
 
-  Assign.find({ 'orgLogin': idOrg }, (err, assigns) => {
+  Org.findOne({ 'login': idOrg }, (err, org) => {
     if (err) console.log(err)
 
-    res.render('classroom/classroom', { titulo: titulo, usuario: req.user, classroom: idOrg, assign: assigns })
+    if (org.ownerLogin === req.user.username) {
+      Assign.find({ 'orgLogin': idOrg }, (err, assigns) => {
+        if (err) console.log(err)
+
+        res.render('classroom/classroom', { titulo: titulo, usuario: req.user, classroom: idOrg, assign: assigns })
+      })
+    } else {
+      res.redirect('/classrooms')
+    }
   })
 }
 

@@ -1,10 +1,10 @@
 const octokit = require('@octokit/rest')()
 
 class Gh {
-  constructor (Token) {
+  constructor (token) {
     octokit.authenticate({
       type: 'oauth',
-      token: Token
+      token: token
     })
   }
 
@@ -21,6 +21,16 @@ class Gh {
   addUserOrg (org, user) {
     return new Promise((resolve, reject) => {
       octokit.orgs.addOrgMembership({org: org, username: user, role: 'admin'}, (error, result) => {
+        if (error) console.log(error)
+
+        resolve(result)
+      })
+    })
+  }
+
+  createRepo (org, name, desc, repoType, idUser) {
+    return new Promise((resolve, reject) => {
+      octokit.repos.createForOrg({ org: org, name: name, description: desc, private: false, has_issues: true, has_projects: true }, (error, result) => {
         if (error) console.log(error)
 
         resolve(result)
