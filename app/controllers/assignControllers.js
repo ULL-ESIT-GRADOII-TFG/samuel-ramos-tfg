@@ -24,7 +24,6 @@ function newAssignP (req, res) {
     if (err) console.log(err)
 
     if (org.ownerLogin === req.user.username) {
-
       let newAssign = new Assign({
         titulo: req.body.titulo,
         ownerLogin: req.user.username,
@@ -39,7 +38,6 @@ function newAssignP (req, res) {
 
         res.redirect('/classroom/' + orgLogin)
       })
-
     } else {
       res.redirect('/classrooms')
     }
@@ -60,7 +58,6 @@ function assign (req, res) {
       res.redirect('/classrooms')
     }
   })
-
 }
 
 function assignInvi (req, res) {
@@ -101,6 +98,11 @@ function assignInviP (req, res) {
       ghUser.createRepo(aula, repo, 'Repo created by CodeLab', false, req.user.id)
       .then(result => {
         console.log(result)
+
+        ghUser.addCollaborator(aula, repo, estudiante)
+        .then(result => {
+          console.log(result)
+        })
       })
     })
   })
