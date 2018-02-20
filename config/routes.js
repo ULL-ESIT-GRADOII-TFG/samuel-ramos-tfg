@@ -21,11 +21,13 @@ api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi)
 api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
 api.get('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssign)
+api.get('/newgroup/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newGroup)
 api.get('/assign/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assign)
 api.get('/assigninvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assignInvi)
 
 api.post('/assigninvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assignInviP)
 api.post('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssignP)
+api.post('/newgroup/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newGroupP)
 api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 

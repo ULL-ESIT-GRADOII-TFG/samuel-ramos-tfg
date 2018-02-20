@@ -85,9 +85,9 @@ function inviP (req, res) {
       const ghUser = new Github(user.token)
 
       ghUser.addUserOrg(org.login, req.user.username)
-    .then(result => {
-      res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
-    })
+      .then(result => {
+        res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
+      })
     })
   })
 }

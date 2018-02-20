@@ -3,6 +3,7 @@ const User = require('../models/user')
 const Org = require('../models/org')
 const Assign = require('../models/assign')
 const Repo = require('../models/repo')
+const Group = require('../models/group')
 
 function newAssign (req, res) {
   let orgLogin = req.params.idclass
@@ -52,14 +53,18 @@ function assign (req, res) {
   Org.findOne({ 'login': aula }, (err, org) => {
     if (err) console.log(err)
 
-    if (org.ownerLogin === req.user.username) {
-      Repo.find({ 'orgLogin': aula }, (err, repos) => {
-        if (err) console.log(err)
+    if (org) {
+      if (org.ownerLogin === req.user.username) {
+        Repo.find({ 'orgLogin': aula, assignName: tarea }, (err, repos) => {
+          if (err) console.log(err)
 
-        res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
-      })
+          res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
+        })
+      } else {
+        res.redirect('/classrooms')
+      }
     } else {
-      res.redirect('/classrooms')
+      res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
     }
   })
 }
@@ -112,10 +117,92 @@ function assignInviP (req, res) {
   })
 }
 
+function newGroup (req, res) {
+  let orgLogin = req.params.idclass
+
+  Org.findOne({ 'login': orgLogin }, (err, org) => {
+    if (err) console.log(err)
+
+    if (org.ownerLogin === req.user.username) {
+      res.render('assignments/newGroup', { titulo: 'Nueva tarea', usuario: req.user, classroom: orgLogin })
+    } else {
+      res.redirect('/classrooms')
+    }
+  })
+}
+
+function newGroupP (req, res) {
+  let orgLogin = req.params.idclass
+  Org.findOne({ 'login': orgLogin }, (err, org) => {
+    if (err) console.log(err)
+
+    if (org.ownerLogin === req.user.username) {
+      let newAssign = new Assign({
+        titulo: req.body.titulo,
+        ownerLogin: req.user.username,
+        assignType: 'organization',
+        repoType: req.body.repo,
+        userAdmin: req.body.admin,
+        orgLogin: orgLogin
+      })
+
+      newAssign.save((err) => {
+        if (err) console.log(err)
+
+        res.redirect('/classroom/' + orgLogin)
+      })
+    } else {
+      res.redirect('/classrooms')
+    }
+  })
+}
+
+function groupInviP (req, res) {
+  let tarea = req.params.idassign
+  let aula = req.params.idclass
+  let repo = tarea + '-' + req.user.username
+  let estudiante = req.user.username
+
+  Org.findOne({ 'login': aula }, (err, org) => {
+    if (err) console.log(err)
+
+    User.findOne({ 'login': org.ownerLogin }, (err, user) => {
+      if (err) console.log(err)
+
+      let newGroup = new Group({
+        name: repo,
+        assignName: tarea,
+        StudentLogin: estudiante,
+        ownerLogin: user.login,
+        orgLogin: aula
+      })
+
+      newGroup.save((err) => {
+        if (err) console.log(err)
+      })
+
+      const ghUser = new Github(user.token)
+
+      ghUser.createRepo(aula, repo, 'Repo created by CodeLab', false, req.user.id)
+      .then(result => {
+        console.log(result)
+
+        ghUser.addCollaborator(aula, repo, estudiante)
+        .then(result => {
+          console.log(result)
+        })
+      })
+    })
+  })
+}
+
 module.exports = {
   newAssign,
   newAssignP,
   assign,
   assignInvi,
-  assignInviP
+  assignInviP,
+  newGroup,
+  newGroupP,
+  groupInviP
 }

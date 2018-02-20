@@ -27,7 +27,7 @@ html
             a(href="/new/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
               i(class="octicon octicon-person")
           div(class="col s3")
-            a(class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
+            a(href="/newgroup/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
               i(class="octicon octicon-organization")
           div(class="col s3")
           div(class="col s12", id="ispace")   
@@ -47,8 +47,10 @@ html
                       span  #{i.titulo} 
                 div(class="col s6")
                   p(align="center" class="ftxt") 
-                    span(class="iispace") http://localhost:8081/assigninvitation/#{aula}#{i.titulo}
-                
+                    if i.assignType == 'person'
+                      span(class="iispace") http://localhost:8081/assigninvitation/#{aula}#{i.titulo}
+                    else 
+                      span(class="iispace") http://localhost:8081/groupinvitation/#{aula}#{i.titulo}
               else
                 div(align="center" class="col s12")
                   p(class="noclass") No tiene tareas activas.      
