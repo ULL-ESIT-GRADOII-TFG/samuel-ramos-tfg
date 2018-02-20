@@ -53,7 +53,11 @@ function assign (req, res) {
     if (err) console.log(err)
 
     if (org.ownerLogin === req.user.username) {
-      res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
+      Repo.find({ 'orgLogin': aula }, (err, repos) => {
+        if (err) console.log(err)
+
+        res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
+      })
     } else {
       res.redirect('/classrooms')
     }
