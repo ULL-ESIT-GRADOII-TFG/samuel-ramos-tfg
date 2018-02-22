@@ -9,18 +9,17 @@ html
     div(class="container")
       div(class="row")
         div(class="col s12", id="space")
-          p(class="ftext") Añada los username de github, los grupos se crearán con el formato: user1-user2-user3
           form(class="col s12" method="post" action="/team/" + aula + "/" + tarea)
-              div(class="input-field col s12")
-                textarea(id="alumnos" class="materialize-textarea" name="alumnos" required)
-                label(for="alumnos") Usuarios de github
-              div(class="col s12" id="fspace")
-                div(align="center" class="col s4")
-                  button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
-                    i(class="material-icons right") send
-                div(align="center" class="col s4")
-                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text red") Cancelar
-                    i(class="material-icons right") cancel
-                div(align="center" class="col s4")
+            div(class="input-field col s12" )
+              input(id="team" type="text" class="validate" name="team" required)
+              label(for="team") Equipo 
+            div(class="col s12" id="fspace")
+              div(align="center" class="col s3")
+                button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
+                  i(class="material-icons right") send
+              div(align="center" class="col s3")
+                a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text red") Cancelar
+                  i(class="material-icons right") cancel
+              div(align="center" class="col s6")
 
     include ../layouts/footerParams2.pug

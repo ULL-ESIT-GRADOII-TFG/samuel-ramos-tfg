@@ -91,6 +91,7 @@ function assignInviP (req, res) {
     User.findOne({ 'login': org.ownerLogin }, (err, user) => {
       if (err) console.log(err)
 
+      console.log("hola")
       let newRepo = new Repo({
         name: repo,
         assignName: tarea,
@@ -186,7 +187,7 @@ function groupAssign (req, res) {
 
     if (org) {
       if (org.ownerLogin === req.user.username) {
-        Group.find({ 'orgLogin': aula, assignName: tarea }, (err, repos) => {
+        Teams.find({ 'org': aula }, (err, repos) => {
           if (err) console.log(err)
 
           res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
@@ -206,16 +207,38 @@ function team (req, res) {
   let titulo = 'Nuevo equipo'
 
   res.render('assignments/newTeam', { titulo: titulo, usuario: req.user, classroom: aula, assign: tarea })
-
 }
 
 function teamP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
+  let team = req.body.team
 
-  console.log(aula)
-  console.log(req.body)
-  res.redirect('/groupinvitation/' + aula + '/' + tarea)
+  Org.findOne({ 'login': aula }, (err, org) => {
+    if (err) console.log(err)
+
+    User.findOne({ 'login': org.ownerLogin }, (err, user) => {
+      if (err) console.log(err)
+
+      const ghUser = new Github(user.token)
+      ghUser.createTeam(aula, team)
+      .then(result => {
+        console.log(result)
+
+        let newTeam = new Team({
+          name: team,
+          id: result.data.id,
+          org: aula
+        })
+
+        newTeam.save((err) => {
+          if (err) console.log(err)
+
+          res.redirect('/groupinvitation/' + aula + '/' + tarea)
+        })
+      })
+    })
+  })
 }
 
 module.exports = {

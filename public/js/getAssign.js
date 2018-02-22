@@ -1,5 +1,5 @@
 $(document).ready(() => {
   $("#click").click(function() {
-    $.post('/groupInvitation/'+ $('#aula').text() + "/" + $('#tarea').text(), { data: $('#tarea').text() }, (data, status) => {})
+    $.post('/assigninvitation/'+ $('#aula').text() + "/" + $('#tarea').text(), { data: $('#tarea').text() }, (data, status) => {})
   })
 })

@@ -44,6 +44,16 @@ class Gh {
       })
     })
   }
+
+  createTeam (orgLogin, nameTeam) {
+    return new Promise((resolve, reject) => {
+      octokit.orgs.createTeam({ org: orgLogin, name: nameTeam }, (error, result) => {
+        if (error) console.log(error)
+
+        resolve(result)
+      })
+    })
+  }
 }
 
 module.exports = {

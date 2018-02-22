@@ -12,6 +12,9 @@ html
         div(class="col s12", id="space")  
         div(align="center" class="col s12")  
           if teams 
+            p(class="ftxt") Haga click 
+              a(href="/newteam/"+ aula + "/" + tarea) aqui 
+              span para crear un equipo nuevo  
             form(class="col s12" method="post" action="/new/" + aula)
               div(class="input-field col s12")
                 select(name="repo")                  
