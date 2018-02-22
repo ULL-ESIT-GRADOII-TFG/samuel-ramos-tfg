@@ -200,8 +200,22 @@ function groupAssign (req, res) {
   })
 }
 
-function teams (req, res) {
+function team (req, res) {
+  let aula = req.params.idclass
+  let tarea = req.params.idassign
+  let titulo = 'Nuevo equipo'
 
+  res.render('assignments/newTeam', { titulo: titulo, usuario: req.user, classroom: aula, assign: tarea })
+
+}
+
+function teamP (req, res) {
+  let aula = req.params.idclass
+  let tarea = req.params.idassign
+
+  console.log(aula)
+  console.log(req.body)
+  res.redirect('/groupinvitation/' + aula + '/' + tarea)
 }
 
 module.exports = {
@@ -213,5 +227,6 @@ module.exports = {
   groupInvi,
   groupAssign,
   groupInviP,
-  teams
+  team,
+  teamP
 }

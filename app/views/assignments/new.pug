@@ -11,7 +11,7 @@ html
           form(class="col s12" method="post" action="/new/" + aula)
             div(class="col s12" )
               div(class="input-field col s12" )
-                input(id="titulo" type="text" class="validate" name="titulo")
+                input(id="titulo" type="text" class="validate" name="titulo" required)
                 label(for="titulo") Titulo 
               div(class="input-field col s12")
                 input(id="code" type="text" class="validate" name="code")
@@ -34,7 +34,7 @@ html
                   button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
                     i(class="material-icons right") send
                 div(align="center" class="col s4")
-                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text light-blue darken-4") Cancelar
+                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text red") Cancelar
                     i(class="material-icons right") cancel
                 div(align="center" class="col s4")
 

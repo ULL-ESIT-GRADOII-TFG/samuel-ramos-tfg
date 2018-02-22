@@ -1,41 +1,26 @@
 - var aula = classroom
+- var tarea = assign
 doctype html
 
 html
-  include ../layouts/headParams.pug
+  include ../layouts/headParams2.pug
   body
     include ../layouts/nav.pug
     div(class="container")
       div(class="row")
         div(class="col s12", id="space")
-          form(class="col s12" method="post" action="/new/" + aula)
-            div(class="col s12" )
-              div(class="input-field col s12" )
-                input(id="titulo" type="text" class="validate" name="titulo")
-                label(for="titulo") Titulo 
+          p(class="ftext") Añada los username de github, los grupos se crearán con el formato: user1-user2-user3
+          form(class="col s12" method="post" action="/team/" + aula + "/" + tarea)
               div(class="input-field col s12")
-                input(id="code" type="text" class="validate" name="code")
-                label(for="code") Añadir starter code (Opcional) 
-              div(class="input-field col s12")
-                select(name="repo")
-                  option(value="false") Publico
-                  option(value="true") Privado
-                label Repositorio
-              div(class="input-field col s12")
-                select(name="type")
-                  option(value="individual") Individual
-                  option(value="grupal") Grupal
-                label Tipo de asignación
-              div(class="col s12")
-                input(type="checkbox" id="admin" name="admin")
-                label(for="admin") Permisos de administrador en el repo para los alumnos.
+                textarea(id="alumnos" class="materialize-textarea" name="alumnos" required)
+                label(for="alumnos") Usuarios de github
               div(class="col s12" id="fspace")
                 div(align="center" class="col s4")
                   button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
                     i(class="material-icons right") send
                 div(align="center" class="col s4")
-                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text light-blue darken-4") Cancelar
+                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text red") Cancelar
                     i(class="material-icons right") cancel
                 div(align="center" class="col s4")
 
-    include ../layouts/footerParams.pug
+    include ../layouts/footerParams2.pug
