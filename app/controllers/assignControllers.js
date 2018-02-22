@@ -4,6 +4,7 @@ const Org = require('../models/org')
 const Assign = require('../models/assign')
 const Repo = require('../models/repo')
 const Group = require('../models/group')
+const Team = require('../models/team')
 
 function newAssign (req, res) {
   let orgLogin = req.params.idclass
@@ -28,7 +29,7 @@ function newAssignP (req, res) {
       let newAssign = new Assign({
         titulo: req.body.titulo,
         ownerLogin: req.user.username,
-        assignType: 'person',
+        assignType: req.body.type,
         repoType: req.body.repo,
         userAdmin: req.body.admin,
         orgLogin: orgLogin
@@ -117,43 +118,22 @@ function assignInviP (req, res) {
   })
 }
 
-function newGroup (req, res) {
-  let orgLogin = req.params.idclass
-
-  Org.findOne({ 'login': orgLogin }, (err, org) => {
+function groupInvi (req, res) {
+  let tarea = req.params.idassign
+  let aula = req.params.idclass
+  let titulo = 'Tarea ' + req.params.idassign
+  Team.find({ org: aula }, (err, teams) => {
     if (err) console.log(err)
 
-    if (org.ownerLogin === req.user.username) {
-      res.render('assignments/newGroup', { titulo: 'Nueva tarea', usuario: req.user, classroom: orgLogin })
-    } else {
-      res.redirect('/classrooms')
+    let exp = new RegExp('' + req.user.username)
+    let hallado = []
+    for (let i = 0; i < teams.length; i++) {
+      if (teams[i].name.match(exp)) {
+        hallado.push(teams[i].name)
+      }
     }
-  })
-}
 
-function newGroupP (req, res) {
-  let orgLogin = req.params.idclass
-  Org.findOne({ 'login': orgLogin }, (err, org) => {
-    if (err) console.log(err)
-
-    if (org.ownerLogin === req.user.username) {
-      let newAssign = new Assign({
-        titulo: req.body.titulo,
-        ownerLogin: req.user.username,
-        assignType: 'organization',
-        repoType: req.body.repo,
-        userAdmin: req.body.admin,
-        orgLogin: orgLogin
-      })
-
-      newAssign.save((err) => {
-        if (err) console.log(err)
-
-        res.redirect('/classroom/' + orgLogin)
-      })
-    } else {
-      res.redirect('/classrooms')
-    }
+    res.render('assignments/groupInvi', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, equipos: hallado })
   })
 }
 
@@ -196,13 +176,42 @@ function groupInviP (req, res) {
   })
 }
 
+function groupAssign (req, res) {
+  let tarea = req.params.idassign
+  let aula = req.params.idclass
+  let titulo = 'Tarea ' + req.params.idassign
+
+  Org.findOne({ 'login': aula }, (err, org) => {
+    if (err) console.log(err)
+
+    if (org) {
+      if (org.ownerLogin === req.user.username) {
+        Group.find({ 'orgLogin': aula, assignName: tarea }, (err, repos) => {
+          if (err) console.log(err)
+
+          res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
+        })
+      } else {
+        res.redirect('/classrooms')
+      }
+    } else {
+      res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
+    }
+  })
+}
+
+function teams (req, res) {
+
+}
+
 module.exports = {
   newAssign,
   newAssignP,
   assign,
   assignInvi,
   assignInviP,
-  newGroup,
-  newGroupP,
-  groupInviP
+  groupInvi,
+  groupAssign,
+  groupInviP,
+  teams
 }

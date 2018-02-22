@@ -1,0 +1,43 @@
+- var tarea = assign
+- var aula = classroom
+- var repos = assigns
+doctype html
+
+html
+  include ../layouts/headParams2.pug
+  body
+    include ../layouts/nav.pug
+    div(class="container")
+      div(class="row")
+        div(class="col s12", id="space") 
+          p(align="center" class="ftxt") Haga click en el siguiente botón para copiar el enlace de invitación a #{tarea}
+        div(class="col s12", id="ispace")         
+          p(align="center" class="ftxt") 
+            span(class="iispace") http://localhost:8081/groupinvitation/#{aula}/#{tarea}
+            button(id="btn" class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/groupinvitation/" + aula + "/" + tarea): i(class="octicon octicon-clippy iicons")
+        div(class="col s12", id="ispace")   
+          h4(align="center" class="fclass") Repositorios
+        div(class="col s12", id="ispace") 
+        div(class="col s6")
+          p(align="center" class="ftxt")  Repo
+        div(class="col s6")
+          p(align="center" class="ftxt")  Autor
+        div(class="col s12")
+          if repos
+            each i in repos
+              div(class="col s6")
+                p(align="center" class="ftxt")  
+                  a(href="https://github.com/" + i.orgLogin + "/" + i.name) #{i.name} 
+              div(class="col s6")
+                p(align="center" class="ftxt") 
+                  span(class="iispace") #{i.team}
+              
+            else
+              div(align="center" class="col s12")
+                p(class="noclass") No tiene repositorios activos.      
+          else   
+            div(align="center" class="col s12")
+              p(class="noclass") No tiene repositorios activos.      
+              
+    include ../layouts/footerParams2.pug
+    script(type="text/javascript", src="../../js/copy.js")

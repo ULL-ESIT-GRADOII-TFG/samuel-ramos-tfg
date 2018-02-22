@@ -14,40 +14,48 @@ html
           p(align="center" class="ftxt") 
             span(class="iispace") http://localhost:8081/invitation/#{aula}
             button(id="btn" class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/invitation/" + aula): i(class="octicon octicon-clippy iicons")
+        div(align="center" class="divider col s12") 
         div(align="center" class="col s12", id="ispace") 
           div(class="col s3")
-          div(class="col s3")
-            p(align="center" class="ftxt") Haga click para crear una asignacion individual
-          div(class="col s3")
-            p(align="center" class="ftxt") Haga click para crear una asignacion grupal
+          div(class="col s6")
+            p(align="center" class="ftxt") Haga click para crear una asignacion individual o grupal
           div(class="col s3")
         div(align="center" class="col s12", id="ispace") 
           div(class="col s3")
-          div(class="col s3")
-            a(href="/new/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
-              i(class="octicon octicon-person")
-          div(class="col s3")
-            a(href="/newgroup/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Asignacion 
-              i(class="octicon octicon-organization")
+          div(class="col s6")
+            a(href="/new/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Nueva Asignacion 
           div(class="col s3")
           div(class="col s12", id="ispace")   
+          div(align="center" class="divider col s12") 
+          div(align="center" class="col s12") 
             h4(align="center" class="fclass") Tareas 
           div(class="col s12", id="ispace") 
-          div(class="col s6")
-            p(align="center" class="ftxt")  Tarea
-          div(class="col s6")
-            p(align="center" class="ftxt")  Enlace de invitación
+            div(class="col s3")
+              p(align="center" class="ftxt")  Tarea
+            div(class="col s3")
+              p(align="center" class="ftxt")  Tipo de asignación
+            div(class="col s6")
+              p(align="center" class="ftxt")  Enlace de invitación
           div(class="col s12")
             if tarea
               each i in tarea
-                div(class="col s6")
+                div(class="col s3")
                   p(align="center" class="ftxt")  
-                    a(href="/assign/"+ aula + "/" + i.titulo) 
-                      i(class="octicon octicon-" + i.assignType)
-                      span  #{i.titulo} 
+                      if i.assignType == 'individual'
+                        a(href="/assign/"+ aula + "/" + i.titulo) 
+                          i(class="octicon octicon-person")
+                          span  #{i.titulo} 
+
+                      else 
+                        a(href="/groupassign/"+ aula + "/" + i.titulo) 
+                          i(class="octicon octicon-organization")
+                          span  #{i.titulo} 
+
+                div(class="col s3")
+                  p(align="center" class="ftxt") #{i.assignType}
                 div(class="col s6")
                   p(align="center" class="ftxt") 
-                    if i.assignType == 'person'
+                    if i.assignType == 'individual'
                       span(class="iispace") http://localhost:8081/assigninvitation/#{aula}#{i.titulo}
                     else 
                       span(class="iispace") http://localhost:8081/groupinvitation/#{aula}#{i.titulo}

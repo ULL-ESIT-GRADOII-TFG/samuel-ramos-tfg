@@ -1,5 +1,6 @@
 - var tarea = assign
 - var aula = classroom
+- var teams = assigns
 doctype html
 
 html
@@ -10,13 +11,26 @@ html
       div(class="row")
         div(class="col s12", id="space")  
         div(align="center" class="col s12")  
-          p(class="ftxt") Haga click en el siguiente botón para aceptar la tarea 
-            span(id="tarea") #{tarea}
-            span  del aula 
-            span(id="aula") #{aula}
-        div(class="col s12", id="ispace")  
-        div(align="center" class="col s12")  
-          a(id="click" class="waves-effect waves-light btn-large light-blue darken-4") Aceptar invitación
+          if teams 
+            form(class="col s12" method="post" action="/new/" + aula)
+              div(class="input-field col s12")
+                select(name="repo")                  
+                  each i in teams
+                    option(value="" + i.name) #{i.name}
+                label Equipos
+              div(class="col s12" id="fspace")
+                div(align="center" class="col s4")
+                  button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
+                    i(class="material-icons right") send
+                div(align="center" class="col s4")
+                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text light-blue darken-4") Cancelar
+                    i(class="material-icons right") cancel
+                div(align="center" class="col s4")
+          else 
+            p(class="ftxt") No tienes equipos creados, haga click en el siguiente botón para crear un equipo nuevo  
+            div(align="center" class="col s12")  
+              a(href="/team" class="waves-effect waves-light btn-large light-blue darken-4") Nuevo equipo
+              
                    
     include ../layouts/footerParams2.pug
     script(type="text/javascript", src="../../js/getAssign.js")
