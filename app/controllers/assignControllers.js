@@ -158,8 +158,23 @@ function groupAssign (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
   let titulo = 'Tarea ' + req.params.idassign
+  Org.findOne({ 'login': aula }, (err, org) => {
+    if (err) console.log(err)
 
-  res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
+    if (org) {
+      if (org.ownerLogin === req.user.username) {
+        Group.find({ 'orgLogin': aula, assignName: tarea }, (err, repos) => {
+          if (err) console.log(err)
+
+          res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
+        })
+      } else {
+        res.redirect('/classrooms')
+      }
+    } else {
+      res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
+    }
+  })
 }
 
 function team (req, res) {
