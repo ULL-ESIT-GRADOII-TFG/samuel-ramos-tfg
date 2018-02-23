@@ -1,6 +1,6 @@
 - var tarea = assign
 - var aula = classroom
-- var teams = assigns
+- var teams = equipos
 doctype html
 
 html
@@ -15,20 +15,21 @@ html
             p(class="ftxt") Haga click 
               a(href="/newteam/"+ aula + "/" + tarea) aqui 
               span para crear un equipo nuevo  
-            form(class="col s12" method="post" action="/new/" + aula)
-              div(class="input-field col s12")
-                select(name="repo")                  
+            form(class="col s12" method="post" action=)
+              div(class="input-field col s7")
+                select(name="team")                  
                   each i in teams
                     option(value="" + i.name) #{i.name}
                 label Equipos
               div(class="col s12" id="fspace")
-                div(align="center" class="col s4")
+                div(align="center" class="col s3")
                   button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
                     i(class="material-icons right") send
                 div(align="center" class="col s4")
-                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text light-blue darken-4") Cancelar
+                  a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text red") Cancel
                     i(class="material-icons right") cancel
-                div(align="center" class="col s4")
+                div(align="center" class="col s5")
+
           else 
             p(class="ftxt") No tienes equipos creados, haga click en el siguiente botón para crear un equipo nuevo  
             div(align="center" class="col s12")  
@@ -36,4 +37,3 @@ html
               
                    
     include ../layouts/footerParams2.pug
-    script(type="text/javascript", src="../../js/getAssign.js")

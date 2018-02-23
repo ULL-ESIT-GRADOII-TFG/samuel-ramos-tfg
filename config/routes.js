@@ -29,6 +29,7 @@ api.get('/newteam/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControll
 
 api.post('/team/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.teamP)
 api.post('/assigninvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assignInviP)
+api.post('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.groupInviP)
 api.post('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssignP)
 api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
