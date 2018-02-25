@@ -28,16 +28,16 @@ class Gh {
   createRepo (org, name, desc, repoType) {
     return new Promise((resolve, reject) => {
       octokit.repos.createForOrg({ org: org, name: name, description: desc, private: false, has_issues: true, has_projects: true }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })
     })
   }
 
-  addCollaborator (ownerLogin, nameRepo, user) {
+  addCollaborator (ownerLogin, nameRepo, user, permisos) {
     return new Promise((resolve, reject) => {
-      octokit.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: 'admin' }, (error, result) => {
+      octokit.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: permisos }, (error, result) => {
         if (error) console.log(error)
 
         resolve(result)
@@ -48,7 +48,7 @@ class Gh {
   createTeam (orgLogin, nameTeam, members) {
     return new Promise((resolve, reject) => {
       octokit.orgs.createTeam({ org: orgLogin, name: nameTeam, maintainers: members }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })

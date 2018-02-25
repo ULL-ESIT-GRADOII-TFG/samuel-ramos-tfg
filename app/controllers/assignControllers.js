@@ -84,14 +84,16 @@ function assignInviP (req, res) {
   let aula = req.params.idclass
   let repo = tarea + '-' + req.user.username
   let estudiante = req.user.username
+  let permisos
 
-  Org.findOne({ 'login': aula }, (err, org) => {
+  Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
     if (err) console.log(err)
 
-    User.findOne({ 'login': org.ownerLogin }, (err, user) => {
+    if (assign.userAdmin) { permisos = 'admin' } else { permisos = 'push' }
+
+    User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
       if (err) console.log(err)
 
-      console.log('hola')
       let newRepo = new Repo({
         name: repo,
         assignName: tarea,
@@ -106,11 +108,11 @@ function assignInviP (req, res) {
 
       const ghUser = new Github(user.token)
 
-      ghUser.createRepo(aula, repo, 'Repo created by CodeLab', false, req.user.id)
+      ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
       .then(result => {
         console.log(result)
 
-        ghUser.addCollaborator(aula, repo, estudiante)
+        ghUser.addCollaborator(aula, repo, estudiante, permisos)
         .then(result => {
           console.log(result)
         })
@@ -123,6 +125,7 @@ function groupInvi (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
   let titulo = 'Tarea ' + req.params.idassign
+
   Team.find({ org: aula }, (err, teams) => {
     if (err) console.log(err)
 
@@ -192,10 +195,10 @@ function teamP (req, res) {
   let repo = tarea + '-' + team
   let idTeam
 
-  Org.findOne({ 'login': aula }, (err, org) => {
+  Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
     if (err) console.log(err)
 
-    User.findOne({ 'login': org.ownerLogin }, (err, user) => {
+    User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
       if (err) console.log(err)
 
       const ghUser = new Github(user.token)
@@ -211,9 +214,9 @@ function teamP (req, res) {
         })
 
         newTeam.save((err) => {
-          if (err) console.log(err)
-
-          res.redirect('/groupinvitation/' + aula + '/' + tarea)
+          if (err) {
+            console.log(err)
+          }
         })
 
         idTeam = result.data.id
@@ -230,15 +233,20 @@ function teamP (req, res) {
           if (err) console.log(err)
         })
 
-        ghUser.createRepo(aula, repo, 'Repo created by CodeLab', false)
-      .then(result => {
-        console.log(result)
-
-        ghUser.addTeam(idTeam, aula, repo)
+        ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.assignType)
         .then(result => {
           console.log(result)
+
+          ghUser.addTeam(idTeam, aula, repo)
+          .then(result => {
+            console.log(result)
+            res.redirect('https://github.com/' + aula + '/' + repo)
+          })
         })
       })
+      .catch(error => {
+        console.log(error)
+        res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El equipo ya existe' })
       })
     })
   })
