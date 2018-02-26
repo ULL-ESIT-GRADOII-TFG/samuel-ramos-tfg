@@ -93,3 +93,13 @@ a:link {
 .iconsclass {
   margin-left: 1%;
 }
+
+.erroricons {
+  color: red;
+  font-size: 50px;
+}
+
+.errortxt {
+  font-size: 50px;
+  font-family: 'Dosis', sans-serif;
+}

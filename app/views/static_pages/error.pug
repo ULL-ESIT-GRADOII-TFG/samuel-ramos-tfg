@@ -9,6 +9,9 @@ html
     div(class="container")
       div(class="row")
         div(class="s12", id="space")
-          p(align="center", class="ftxt") Error: #{mensaje}
+          p(align="center")
+            i(class="fas fa-exclamation-triangle erroricons")
+          p(align="center", class="errortxt") Error: #{mensaje}
+
     include ../layouts/footerParams2.pug
     

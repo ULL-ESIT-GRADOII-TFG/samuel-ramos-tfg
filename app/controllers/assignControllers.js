@@ -36,9 +36,11 @@ function newAssignP (req, res) {
       })
 
       newAssign.save((err) => {
-        if (err) console.log(err)
-
-        res.redirect('/classroom/' + orgLogin)
+        if (err) {
+          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya existe' })
+        } else {
+          res.redirect('/classroom/' + orgLogin)
+        }
       })
     } else {
       res.redirect('/classrooms')
@@ -103,7 +105,7 @@ function assignInviP (req, res) {
       })
 
       newRepo.save((err) => {
-        if (err) console.log(err)
+        if (err) res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
       })
 
       const ghUser = new Github(user.token)
@@ -116,6 +118,11 @@ function assignInviP (req, res) {
         .then(result => {
           console.log(result)
         })
+        res.redirect('https://github.com/' + aula + '/' + repo)
+      })
+      .catch(error => {
+        console.log(error)
+        res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
       })
     })
   })
@@ -135,7 +142,9 @@ function groupInvi (req, res) {
 
 function groupInviP (req, res) {
   let aula = req.params.idclass
+  let tarea = req.params.idassign
   let teamName = req.body.team
+  let repo = tarea + '-' + teamName
 
   Org.findOne({ 'login': aula }, (err, org) => {
     if (err) console.log(err)
@@ -151,6 +160,11 @@ function groupInviP (req, res) {
         ghUser.addMember(team.id, req.user.username)
         .then(result => {
           console.log(result)
+          res.redirect('https://github.com/' + aula + '/' + repo)
+        })
+        .catch(error => {
+          console.log(error)
+          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El miembro ya forma parte del equipo' })
         })
       })
     })

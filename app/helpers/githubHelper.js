@@ -8,7 +8,7 @@ class Gh {
   userOrgs () {
     return new Promise((resolve, reject) => {
       octokit.users.getOrgs({ }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })
@@ -18,7 +18,7 @@ class Gh {
   addUserOrg (org, user) {
     return new Promise((resolve, reject) => {
       octokit.orgs.addOrgMembership({ org: org, username: user }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })
@@ -38,7 +38,7 @@ class Gh {
   addCollaborator (ownerLogin, nameRepo, user, permisos) {
     return new Promise((resolve, reject) => {
       octokit.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: permisos }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })
@@ -58,7 +58,7 @@ class Gh {
   addTeam (idTeam, orgLogin, nameRepo) {
     return new Promise((resolve, reject) => {
       octokit.orgs.addTeamRepo({ id: idTeam, org: orgLogin, repo: nameRepo }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })
@@ -68,7 +68,7 @@ class Gh {
   checkMember (idTeam, user) {
     return new Promise((resolve, reject) => {
       octokit.orgs.getTeamMembership({ id: idTeam, username: user }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })
@@ -78,7 +78,7 @@ class Gh {
   addMember (idTeam, user) {
     return new Promise((resolve, reject) => {
       octokit.orgs.addTeamMembership({ id: idTeam, username: user }, (error, result) => {
-        if (error) console.log(error)
+        if (error) reject(error)
 
         resolve(result)
       })
