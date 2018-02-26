@@ -8,6 +8,7 @@ const assignSchema = new Schema({
   repoType: String,
   userAdmin: String,
   orgLogin: String,
+  isActive: Boolean,
   createDate: { type: Date, default: Date.now() }
 })
 

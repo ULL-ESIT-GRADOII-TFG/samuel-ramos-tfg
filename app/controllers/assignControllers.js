@@ -32,7 +32,8 @@ function newAssignP (req, res) {
         assignType: req.body.type,
         repoType: req.body.repo,
         userAdmin: req.body.admin,
-        orgLogin: orgLogin
+        orgLogin: orgLogin,
+        isActive: true
       })
 
       newAssign.save((err) => {
@@ -93,6 +94,10 @@ function assignInviP (req, res) {
 
     if (assign.userAdmin) { permisos = 'admin' } else { permisos = 'push' }
 
+    if (!assign.isActive) {
+      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+    }
+
     User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
       if (err) console.log(err)
 
@@ -146,10 +151,14 @@ function groupInviP (req, res) {
   let teamName = req.body.team
   let repo = tarea + '-' + teamName
 
-  Org.findOne({ 'login': aula }, (err, org) => {
+  Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
     if (err) console.log(err)
 
-    User.findOne({ 'login': org.ownerLogin }, (err, user) => {
+    if (!assign.isActive) {
+      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+    }
+
+    User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
       if (err) console.log(err)
 
       Team.findOne({ 'name': teamName }, (err, team) => {
@@ -212,6 +221,10 @@ function teamP (req, res) {
   Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
     if (err) console.log(err)
 
+    if (!assign.isActive) {
+      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+    }
+
     User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
       if (err) console.log(err)
 
@@ -266,6 +279,32 @@ function teamP (req, res) {
   })
 }
 
+function optionsG (req, res) {
+  let aula = req.params.idclass
+  let tarea = req.params.idassign
+
+  Org.findOne({ 'login': aula }, (err, org) => {
+    if (err) console.log(err)
+
+    if (org.ownerLogin === req.user.username) {
+      res.render('assignments/options', { titulo: 'Nueva tarea', usuario: req.user, classroom: aula, assign: tarea })
+    } else {
+      res.redirect('/classrooms')
+    }
+  })
+}
+
+function optionsP (req, res) {
+  let aula = req.params.idclass
+  let tarea = req.params.idassign
+/*
+  Assgin.findOneAndUpdate({ login: profile.username }, { token: accessToken, lastLogin: Date.now() }, (err) => {
+    if (err) console.log(err)
+  }) */
+  console.log(aula)
+  console.log(tarea)
+}
+
 module.exports = {
   newAssign,
   newAssignP,
@@ -276,5 +315,7 @@ module.exports = {
   groupAssign,
   groupInviP,
   team,
-  teamP
+  teamP,
+  optionsG,
+  optionsP
 }
