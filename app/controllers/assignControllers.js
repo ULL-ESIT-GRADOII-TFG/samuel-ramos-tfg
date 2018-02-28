@@ -95,41 +95,46 @@ function assignInviP (req, res) {
     if (assign.userAdmin) { permisos = 'admin' } else { permisos = 'push' }
 
     if (!assign.isActive) {
-      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
-    }
+      return res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+    } else {
+      User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
+        if (err) console.log(err)
 
-    User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
-      if (err) console.log(err)
+        let newRepo = new Repo({
+          name: repo,
+          assignName: tarea,
+          StudentLogin: estudiante,
+          ownerLogin: user.login,
+          orgLogin: aula
+        })
 
-      let newRepo = new Repo({
-        name: repo,
-        assignName: tarea,
-        StudentLogin: estudiante,
-        ownerLogin: user.login,
-        orgLogin: aula
-      })
+        newRepo.save((err) => {
+          if (err) res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
+        })
 
-      newRepo.save((err) => {
-        if (err) res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
-      })
+        const ghUser = new Github(user.token)
 
-      const ghUser = new Github(user.token)
-
-      ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
-      .then(result => {
-        console.log(result)
-
-        ghUser.addCollaborator(aula, repo, estudiante, permisos)
+        ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
         .then(result => {
           console.log(result)
+
+          ghUser.addCollaborator(aula, repo, estudiante, permisos)
+          .then(result => {
+            console.log(result)
+            res.redirect('https://github.com/' + aula + '/' + repo)
+          })
+          .catch(error => {
+            console.log(error)
+
+            res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El colaborador ya forma parte del repositorio' })
+          })
         })
-        res.redirect('https://github.com/' + aula + '/' + repo)
+        .catch(error => {
+          console.log(error)
+          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
+        })
       })
-      .catch(error => {
-        console.log(error)
-        res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
-      })
-    })
+    }
   })
 }
 
@@ -155,28 +160,28 @@ function groupInviP (req, res) {
     if (err) console.log(err)
 
     if (!assign.isActive) {
-      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
-    }
-
-    User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
-      if (err) console.log(err)
-
-      Team.findOne({ 'name': teamName }, (err, team) => {
+      return res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+    } else {
+      User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
         if (err) console.log(err)
 
-        const ghUser = new Github(user.token)
+        Team.findOne({ 'name': teamName }, (err, team) => {
+          if (err) console.log(err)
 
-        ghUser.addMember(team.id, req.user.username)
-        .then(result => {
-          console.log(result)
-          res.redirect('https://github.com/' + aula + '/' + repo)
-        })
-        .catch(error => {
-          console.log(error)
-          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El miembro ya forma parte del equipo' })
+          const ghUser = new Github(user.token)
+
+          ghUser.addMember(team.id, req.user.username)
+          .then(result => {
+            console.log(result)
+            res.redirect('https://github.com/' + aula + '/' + repo)
+          })
+          .catch(error => {
+            console.log(error)
+            res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El miembro ya forma parte del equipo' })
+          })
         })
       })
-    })
+    }
   })
 }
 
@@ -222,60 +227,60 @@ function teamP (req, res) {
     if (err) console.log(err)
 
     if (!assign.isActive) {
-      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
-    }
+      return res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+    } else {
+      User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
+        if (err) console.log(err)
 
-    User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
-      if (err) console.log(err)
-
-      const ghUser = new Github(user.token)
-      ghUser.createTeam(aula, team, [req.user.username])
-      .then(result => {
-        console.log(result)
-
-        let newTeam = new Team({
-          name: team,
-          id: result.data.id,
-          members: [req.user.username],
-          org: aula
-        })
-
-        newTeam.save((err) => {
-          if (err) {
-            console.log(err)
-          }
-        })
-
-        idTeam = result.data.id
-        let newGroup = new Group({
-          name: repo,
-          assignName: tarea,
-          team: team,
-          idTeam: idTeam,
-          ownerLogin: user.login,
-          orgLogin: aula
-        })
-
-        newGroup.save((err) => {
-          if (err) console.log(err)
-        })
-
-        ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.assignType)
+        const ghUser = new Github(user.token)
+        ghUser.createTeam(aula, team, [req.user.username])
         .then(result => {
           console.log(result)
 
-          ghUser.addTeam(idTeam, aula, repo)
+          let newTeam = new Team({
+            name: team,
+            id: result.data.id,
+            members: [req.user.username],
+            org: aula
+          })
+
+          newTeam.save((err) => {
+            if (err) {
+              console.log(err)
+            }
+          })
+
+          idTeam = result.data.id
+          let newGroup = new Group({
+            name: repo,
+            assignName: tarea,
+            team: team,
+            idTeam: idTeam,
+            ownerLogin: user.login,
+            orgLogin: aula
+          })
+
+          newGroup.save((err) => {
+            if (err) console.log(err)
+          })
+
+          ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.assignType)
           .then(result => {
             console.log(result)
-            res.redirect('https://github.com/' + aula + '/' + repo)
+
+            ghUser.addTeam(idTeam, aula, repo)
+            .then(result => {
+              console.log(result)
+              res.redirect('https://github.com/' + aula + '/' + repo)
+            })
           })
         })
+        .catch(error => {
+          console.log(error)
+          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El equipo ya existe' })
+        })
       })
-      .catch(error => {
-        console.log(error)
-        res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El equipo ya existe' })
-      })
-    })
+    }
   })
 }
 
@@ -287,7 +292,11 @@ function optionsG (req, res) {
     if (err) console.log(err)
 
     if (org.ownerLogin === req.user.username) {
-      res.render('assignments/options', { titulo: 'Nueva tarea', usuario: req.user, classroom: aula, assign: tarea })
+      Assign.findOne({ 'orgLogin': aula, titulo: tarea }, (err, assign) => {
+        if (err) console.log(err)
+
+        res.render('assignments/options', { titulo: 'Nueva tarea', usuario: req.user, classroom: aula, assign: tarea, activado: assign.isActive })
+      })
     } else {
       res.redirect('/classrooms')
     }
@@ -297,12 +306,17 @@ function optionsG (req, res) {
 function optionsP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
-/*
-  Assgin.findOneAndUpdate({ login: profile.username }, { token: accessToken, lastLogin: Date.now() }, (err) => {
-    if (err) console.log(err)
-  }) */
-  console.log(aula)
-  console.log(tarea)
+
+  if (req.body.activador) {
+    Assign.findOneAndUpdate({ titulo: tarea }, { isActive: true }, (err) => {
+      if (err) console.log(err)
+    })
+  } else {
+    Assign.findOneAndUpdate({ titulo: tarea }, { isActive: false }, (err) => {
+      if (err) console.log(err)
+    })
+  }
+  res.redirect('/assign/' + aula + '/' + tarea)
 }
 
 module.exports = {

@@ -88,6 +88,9 @@ function inviP (req, res) {
       .then(result => {
         res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
       })
+      .catch(error => {
+        console.log(error)
+      })
     })
   })
 }

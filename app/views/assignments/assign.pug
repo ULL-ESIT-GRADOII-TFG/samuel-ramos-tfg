@@ -15,6 +15,8 @@ html
           p(align="center" class="ftxt") 
             span(class="iispace") http://localhost:8081/assigninvitation/#{aula}/#{tarea}
             button(id="btn" class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/assigninvitation/" + aula + "/" + tarea): i(class="octicon octicon-clippy iicons")        
+        div(align="center" class="col s12", id="ispace") 
+          a(href="/options/" + aula + "/" + tarea class="waves-effect waves-light btn-large light-blue darken-4") Opciones
         div(class="col s12", id="ispace")   
           h4(align="center" class="fclass") Repositorios
         div(class="col s12", id="ispace") 

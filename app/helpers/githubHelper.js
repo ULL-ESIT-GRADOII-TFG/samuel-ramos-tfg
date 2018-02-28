@@ -17,7 +17,7 @@ class Gh {
 
   addUserOrg (org, user) {
     return new Promise((resolve, reject) => {
-      octokit.orgs.addOrgMembership({ org: org, username: user }, (error, result) => {
+      octokit.orgs.addOrgMembership({ org: org, username: user, role: 'member' }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -37,7 +37,7 @@ class Gh {
 
   addCollaborator (ownerLogin, nameRepo, user, permisos) {
     return new Promise((resolve, reject) => {
-      octokit.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: 'admin'}, (error, result) => {
+      octokit.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: 'admin' }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
