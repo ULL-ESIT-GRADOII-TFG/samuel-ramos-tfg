@@ -1,3 +1,6 @@
+const Repo = require('../models/repo')
+const Group = require('../models/group')
+const teamHelper = require('../helpers/teamHelper')
 
 function home (req, res) {
   res.render('static_pages/home', { titulo: 'Home', usuario: req.user })
@@ -13,7 +16,16 @@ function redirectHome (req, res) {
 }
 
 function profiles (req, res) {
-  res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, foto: req.user.photos[0].value, perfilUrl: req.user.profileUrl, mail: req.user.emails[0].value })
+  Repo.find({ 'StudentLogin': req.user }, (err, repos) => {
+    if (err) console.log(err)
+
+    Group.find({ }, (err, groups) => {
+      if (err) console.log(err)
+
+      teamHelper(groups, req.user.username)
+      res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user })
+    })
+  })
 }
 
 function err (req, res) {

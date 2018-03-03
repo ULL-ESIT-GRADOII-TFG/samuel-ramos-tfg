@@ -116,8 +116,6 @@ function assignInviP (req, res) {
 
         ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
         .then(result => {
-          console.log(result)
-
           ghUser.addCollaborator(aula, repo, estudiante, permisos)
           .then(result => {
             console.log(result)
@@ -168,11 +166,14 @@ function groupInviP (req, res) {
         Team.findOne({ 'name': teamName }, (err, team) => {
           if (err) console.log(err)
 
+          Team.update({ name: team.name }, { $push: {members: req.user.username} }, (err) => {
+            if (err) console.log(err)
+          })
+
           const ghUser = new Github(user.token)
 
           ghUser.addMember(team.id, req.user.username)
           .then(result => {
-            console.log(result)
             res.redirect('https://github.com/' + aula + '/' + repo)
           })
           .catch(error => {
@@ -235,8 +236,6 @@ function teamP (req, res) {
         const ghUser = new Github(user.token)
         ghUser.createTeam(aula, team, [req.user.username])
         .then(result => {
-          console.log(result)
-
           let newTeam = new Team({
             name: team,
             id: result.data.id,
@@ -266,11 +265,8 @@ function teamP (req, res) {
 
           ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.assignType)
           .then(result => {
-            console.log(result)
-
             ghUser.addTeam(idTeam, aula, repo)
             .then(result => {
-              console.log(result)
               res.redirect('https://github.com/' + aula + '/' + repo)
             })
           })

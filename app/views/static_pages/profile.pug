@@ -1,8 +1,5 @@
 doctype html
-- var user = { id: usuario.id, username: usuario.username, displayName: usuario.displayName }
-- var url = foto
-- var perfil = perfilUrl
-- var email= mail
+- var user = usuario
 
 html
   include ../layouts/head.pug
@@ -11,24 +8,39 @@ html
     
     div(class="container")
       div(class="row")
-        
         div(class="s12", id="space")
-          
-        div(class="col s2")          
+        div(class="col s2")
         div(class="col s8" id="profile")
           div(class="col s12")
             div(class="card horizontal")
               div(class="card-image")
-                img(class="responsive-img" src='' + foto)
+                img(class="responsive-img" src='' + user.photos[0].value)
               div(class="card-stacked")
                 div(class="card-content" id="pspace")
                   p Usuario: #{user.username}
                   p Nombre: #{user.displayName}
-                  p Email: #{email}                
                 div(class="card-action")
-                  a(class="cenlace" href='' + perfil) Perfil de github
-        div(class="col s2") 
-          
-  
-
+                  a(class="cenlace" href="https://github.com/" + user.username) Perfil de github
+        div(class="col s2")
+        div(class="col s12" id="ispace") 
+          div(class="col s6")
+            h3(align="center") Tareas individuales
+            div(class="col s6")
+              p(align="center" class="lttext") Aula      
+            div(class="col s6") 
+              p(align="center" class="lttext") Tarea
+            div(class="col s6")
+              p(align="center" class="ltext") Aula      
+            div(class="col s6") 
+              p(align="center" class="ltext") Tarea
+          div(class="col s6")
+            h3(align="center") Tareas grupales
+            div(class="col s6")
+              p(align="center" class="lttext") Aula      
+            div(class="col s6") 
+              p(align="center" class="lttext") Tarea
+            div(class="col s6")
+              p(align="center" class="ltext") Aula      
+            div(class="col s6") 
+              p(align="center" class="ltext") Tarea
     include ../layouts/footer.pug

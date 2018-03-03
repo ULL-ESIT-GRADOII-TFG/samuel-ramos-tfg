@@ -21,6 +21,9 @@ function orgs (req, res) {
     .then(result => {
       res.render('classroom/orgs', { titulo: 'Organizaciones', usuario: req.user, orgs: result.data })
     })
+    .catch(error => {
+      console.log(error)
+    })
   })
 }
 

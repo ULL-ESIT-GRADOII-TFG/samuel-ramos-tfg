@@ -17,7 +17,7 @@ $ git clone git@github.com:ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg.git
 
 Se debe crear una [`OAuth app de Github`](https://github.com/settings/applications/new), rellenando con el nombre, dirección de nuestra app y con el callbackURL que será `http://localhost:8081/login/github/return` La `OAuth app de Github` nos dará dos tokens, el `clientID` y el `clientSecret`.
 
-Al ejecutar el siguiente comando, instalará todas las dependencias necesarias y creará un fichero `.env` con que debemos rellenar con el `clientID` `clientSecret` y el `callbackURL` de nuestra  `OAuth app de Github`, que deberá rellenar para poder ejecutar el servidor.
+Al ejecutar el siguiente comando, instalará todas las dependencias necesarias y creará un fichero `.env` con que debemos rellenar con el `clientID` `clientSecret` y el `callbackURL` de nuestra  `OAuth app de Github`.
 
 ```shell
 $ npm run setup
