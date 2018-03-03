@@ -295,7 +295,7 @@ function optionsG (req, res) {
       Assign.findOne({ 'orgLogin': aula, titulo: tarea }, (err, assign) => {
         if (err) console.log(err)
 
-        res.render('assignments/options', { titulo: 'Nueva tarea', usuario: req.user, classroom: aula, assign: tarea, activado: assign.isActive })
+        res.render('assignments/options', { titulo: 'Opciones', usuario: req.user, classroom: aula, assign: tarea, activado: assign.isActive })
       })
     } else {
       res.redirect('/classrooms')

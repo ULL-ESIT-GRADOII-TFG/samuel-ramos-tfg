@@ -7,6 +7,7 @@ const OrgSchema = new Schema({
   avatarUrl: String,
   ownerId: String,
   ownerLogin: String,
+  isActive: Boolean,
   createDate: { type: Date, default: Date.now() }
 })
 

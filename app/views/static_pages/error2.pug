@@ -1,0 +1,17 @@
+doctype html
+- var user = usuario
+- var mensaje = msg
+
+html
+  include ../layouts/headParams.pug
+  body
+    include ../layouts/nav.pug
+    div(class="container")
+      div(class="row")
+        div(class="s12", id="space")
+          p(align="center")
+            i(class="fas fa-exclamation-triangle erroricons")
+          p(align="center", class="errortxt") Error: #{mensaje}
+
+    include ../layouts/footerParams.pug
+    

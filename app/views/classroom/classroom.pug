@@ -16,15 +16,15 @@ html
             button(id="btn" class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/invitation/" + aula): i(class="octicon octicon-clippy iicons")
         div(align="center" class="divider col s12") 
         div(align="center" class="col s12", id="ispace") 
-          div(class="col s3")
+          div(class="col s6")
+            p(align="center" class="ftxt") Haga click para editar las opciones de la organización         
           div(class="col s6")
             p(align="center" class="ftxt") Haga click para crear una asignacion individual o grupal
-          div(class="col s3")
         div(align="center" class="col s12", id="ispace") 
-          div(class="col s3")
+          div(class="col s6")
+            a(href="/options/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Opciones
           div(class="col s6")
             a(href="/new/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Nueva Asignacion 
-          div(class="col s3")
           div(class="col s12", id="ispace")   
           div(align="center" class="divider col s12") 
           div(align="center" class="col s12") 

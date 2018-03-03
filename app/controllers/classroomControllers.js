@@ -35,7 +35,8 @@ function orgsP (req, res, next) {
     id: idOrg,
     avatarUrl: avatarUrl,
     ownerId: req.user.id,
-    ownerLogin: req.user.username
+    ownerLogin: req.user.username,
+    isActive: true
   })
 
   newOrg.save((err) => {
@@ -79,27 +80,64 @@ function inviP (req, res) {
   Org.findOne({ 'login': org }, (err, org) => {
     if (err) console.log(err)
 
-    User.findOne({ 'login': org.ownerLogin }, (err, user) => {
-      if (err) console.log(err)
+    if (!org.isActive) {
+      return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+    } else {
+      User.findOne({ 'login': org.ownerLogin }, (err, user) => {
+        if (err) console.log(err)
 
-      const ghUser = new Github(user.token)
+        const ghUser = new Github(user.token)
 
-      ghUser.addUserOrg(org.login, req.user.username)
-      .then(result => {
-        res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
+        ghUser.addUserOrg(org.login, req.user.username)
+        .then(result => {
+          res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
+        })
+        .catch(error => {
+          console.log(error)
+        })
       })
-      .catch(error => {
-        console.log(error)
-      })
-    })
+    }
   })
+}
+
+function options (req, res) {
+  let aula = req.params.idclass
+
+  Org.findOne({ 'login': aula }, (err, org) => {
+    if (err) console.log(err)
+
+    if (org.ownerLogin === req.user.username) {
+      res.render('classroom/options', { titulo: 'Opciones', usuario: req.user, classroom: aula, activado: org.isActive })
+    } else {
+      res.redirect('/classrooms')
+    }
+  })
+}
+
+function optionsP (req, res) {
+  let aula = req.params.idclass
+
+  console.log(req.body)
+
+  if (req.body.activador) {
+    Org.findOneAndUpdate({ login: aula }, { isActive: true }, (err) => {
+      if (err) console.log(err)
+    })
+  } else {
+    Org.findOneAndUpdate({ login: aula }, { isActive: false }, (err) => {
+      if (err) console.log(err)
+    })
+  }
+  res.redirect('/classroom/' + aula)
 }
 
 module.exports = {
   classrooms,
+  classroom,
   orgs,
   orgsP,
   invi,
-  classroom,
-  inviP
+  inviP,
+  options,
+  optionsP
 }

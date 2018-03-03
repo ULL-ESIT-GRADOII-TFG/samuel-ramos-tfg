@@ -20,6 +20,7 @@ api.get('/classrooms', loggedIn.ensureLoggedIn(), classControllers.classrooms)
 api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi)
 api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
+api.get('/options/:idclass', loggedIn.ensureLoggedIn(), classControllers.options)
 api.get('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssign)
 api.get('/assign/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assign)
 api.get('/groupassign/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.groupAssign)
@@ -28,12 +29,13 @@ api.get('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assign
 api.get('/newteam/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.team)
 api.get('/options/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.optionsG)
 
+api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
+api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
+api.post('/options/:idclass', loggedIn.ensureLoggedIn(), classControllers.optionsP)
 api.post('/options/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.optionsP)
 api.post('/team/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.teamP)
 api.post('/assigninvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assignInviP)
 api.post('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.groupInviP)
 api.post('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssignP)
-api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
-api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 
 module.exports = api
