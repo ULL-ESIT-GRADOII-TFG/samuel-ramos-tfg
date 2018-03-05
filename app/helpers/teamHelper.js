@@ -1,10 +1,10 @@
 const Team = require('../models/team')
 
 function team (userTeams, user) {
-  Team.find({ members: { $in: [user] } }, (err, userTeam) => {
+  Team.find({ members: { $in: [user] } }, (err, teams) => {
     if (err) console.log(err)
 
-    console.log(userTeam)
+    return teams
   })
 }
 
