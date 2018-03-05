@@ -6,6 +6,8 @@ const Repo = require('../models/repo')
 const Group = require('../models/group')
 const Team = require('../models/team')
 
+const nameFormat = new RegExp('[^a-zA-Z0-9_.-]+', 'g')
+
 function newAssign (req, res) {
   let orgLogin = req.params.idclass
 
@@ -22,12 +24,13 @@ function newAssign (req, res) {
 
 function newAssignP (req, res) {
   let orgLogin = req.params.idclass
+  let titleFormated = req.body.titulo.replace(nameFormat, '-')
   Org.findOne({ 'login': orgLogin }, (err, org) => {
     if (err) console.log(err)
 
     if (org.ownerLogin === req.user.username) {
       let newAssign = new Assign({
-        titulo: req.body.titulo,
+        title: titleFormated,
         ownerLogin: req.user.username,
         assignType: req.body.type,
         repoType: req.body.repo,
@@ -76,7 +79,6 @@ function assign (req, res) {
 function assignInvi (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
-  console.log(tarea)
   let titulo = 'Tarea ' + req.params.idassign
 
   res.render('assignments/invitation', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
@@ -220,7 +222,7 @@ function team (req, res) {
 function teamP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
-  let team = req.body.team
+  let teamFormated = req.body.team.replace(nameFormat, '-')
   let repo = tarea + '-' + team
   let idTeam
 
@@ -237,7 +239,7 @@ function teamP (req, res) {
         ghUser.createTeam(aula, team, [req.user.username])
         .then(result => {
           let newTeam = new Team({
-            name: team,
+            name: teamFormated,
             id: result.data.id,
             members: [req.user.username],
             org: aula
