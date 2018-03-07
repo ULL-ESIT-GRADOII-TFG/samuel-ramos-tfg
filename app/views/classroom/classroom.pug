@@ -42,14 +42,14 @@ html
                 div(class="col s3")
                   p(align="center" class="ftxt")  
                       if i.assignType == 'individual'
-                        a(href="/assign/"+ aula + "/" + i.titulo) 
+                        a(href="/assign/"+ aula + "/" + i.title) 
                           i(class="octicon octicon-person")
                           span  #{i.title} 
 
                       else 
-                        a(href="/groupassign/"+ aula + "/" + i.titulo) 
+                        a(href="/groupassign/"+ aula + "/" + i.title) 
                           i(class="octicon octicon-organization")
-                          span  #{i.titulo} 
+                          span  #{i.title} 
 
                 div(class="col s3")
                   p(align="center" class="ftxt") #{i.assignType}

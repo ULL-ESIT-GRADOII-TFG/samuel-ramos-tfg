@@ -223,8 +223,10 @@ function teamP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
   let teamFormated = req.body.team.replace(nameFormat, '-')
-  let repo = tarea + '-' + team
+  let repo = tarea + '-' + teamFormated
   let idTeam
+
+  console.log(teamFormated)
 
   Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
     if (err) console.log(err)
@@ -236,7 +238,7 @@ function teamP (req, res) {
         if (err) console.log(err)
 
         const ghUser = new Github(user.token)
-        ghUser.createTeam(aula, team, [req.user.username])
+        ghUser.createTeam(aula, teamFormated, [req.user.username])
         .then(result => {
           let newTeam = new Team({
             name: teamFormated,
@@ -246,9 +248,7 @@ function teamP (req, res) {
           })
 
           newTeam.save((err) => {
-            if (err) {
-              console.log(err)
-            }
+            if (err) console.log(err)
           })
 
           idTeam = result.data.id

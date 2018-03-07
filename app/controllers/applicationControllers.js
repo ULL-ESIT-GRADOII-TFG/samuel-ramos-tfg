@@ -16,14 +16,16 @@ function redirectHome (req, res) {
 }
 
 function profiles (req, res) {
-  Repo.find({ 'StudentLogin': req.user }, (err, repos) => {
+  Repo.find({ 'StudentLogin': req.user.username }, (err, repos) => {
     if (err) console.log(err)
 
     Group.find({ }, (err, groups) => {
       if (err) console.log(err)
 
-      teamHelper(groups, req.user.username)
-      res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user })
+      let userTeamRepos = teamHelper(groups, req.user.username)
+      console.log(userTeamRepos)
+      console.log(repos)
+      res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, tareas: repos, tareasGrupales: userTeamRepos })
     })
   })
 }

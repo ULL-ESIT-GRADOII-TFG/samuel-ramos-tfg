@@ -1,6 +1,7 @@
 doctype html
 - var user = usuario
-
+- var individual = tareas
+- var grupal = tareasGrupales
 html
   include ../layouts/head.pug
   body
@@ -20,27 +21,36 @@ html
                   p Usuario: #{user.username}
                   p Nombre: #{user.displayName}
                 div(class="card-action")
-                  a(class="cenlace" href="https://github.com/" + user.username) Perfil de github
+                  a(class="cenlace" href="https://github.com/" + user.username class="blue-text text-darken-4") Perfil de github
         div(class="col s2")
-        div(class="col s12" id="ispace") 
-          div(class="col s6")
+        div(align="center" class="col s12" id="ispace") 
+          div(class="col s12")
             h3(align="center") Tareas individuales
             div(class="col s6")
               p(align="center" class="lttext") Aula      
             div(class="col s6") 
               p(align="center" class="lttext") Tarea
-            div(class="col s6")
-              p(align="center" class="ltext") Aula      
-            div(class="col s6") 
-              p(align="center" class="ltext") Tarea
-          div(class="col s6")
+            if individual
+              each i in individual
+                div(class="col s6")
+                  p(align="center" class="ltext") #{i.assignName} 
+                div(class="col s6") 
+                  a(href="https://github.com/" + i.orgLogin + "/" + i.name  align="center" class="ltext") #{i.name} 
+            else 
+              p(class="ltext" align="center") No tiene tareas individuales
+        div(align="center" class="col s12" id="ispace") 
+          div(class="col s12")
             h3(align="center") Tareas grupales
             div(class="col s6")
-              p(align="center" class="lttext") Aula      
+              p(align="center" class="lttext") Tarea      
             div(class="col s6") 
               p(align="center" class="lttext") Tarea
-            div(class="col s6")
-              p(align="center" class="ltext") Aula      
-            div(class="col s6") 
-              p(align="center" class="ltext") Tarea
+            if grupal
+              each i in grupal
+                div(class="col s6")
+                  p(align="center" class="ltext") #{i.assignName}      
+                div(class="col s6") 
+                  a(href="https://github.com/" + i.orgLogin + "/" + i.name align="center" class="ltext") #{i.name}
+            else 
+              p(class="ltext" align="center") No tiene tareas grupales
     include ../layouts/footer.pug

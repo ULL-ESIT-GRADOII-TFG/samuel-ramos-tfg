@@ -5,7 +5,7 @@
   "main": "bin/www",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bin/www",
+    "start": "node bin/www && open http://localhost:8081",
     "lint": "standard",
     "fix": "standard --fix",
     "setup": " npm install && ./node_modules/bower/bin/bower install && ./node_modules/gulp/bin/gulp.js default-env"
