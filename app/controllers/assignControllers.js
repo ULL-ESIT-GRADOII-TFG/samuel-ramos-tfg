@@ -8,6 +8,7 @@ const Team = require('../models/team')
 
 const nameFormat = new RegExp('[^a-zA-Z0-9_.-]+', 'g')
 
+// Controller for get the new assign page.
 function newAssign (req, res) {
   let orgLogin = req.params.idclass
 
@@ -22,6 +23,7 @@ function newAssign (req, res) {
   })
 }
 
+// Controller for create the new assign in the db.
 function newAssignP (req, res) {
   let orgLogin = req.params.idclass
   let titleFormated = req.body.titulo.replace(nameFormat, '-')
@@ -52,6 +54,7 @@ function newAssignP (req, res) {
   })
 }
 
+// Controller for get the assign page.
 function assign (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
@@ -76,6 +79,7 @@ function assign (req, res) {
   })
 }
 
+// Controller for get the assign invitation page.
 function assignInvi (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
@@ -84,6 +88,7 @@ function assignInvi (req, res) {
   res.render('assignments/invitation', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
 }
 
+// Controller for  add a member to the individual assign.
 function assignInviP (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
@@ -138,6 +143,7 @@ function assignInviP (req, res) {
   })
 }
 
+// Controller for get the group invi page.
 function groupInvi (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
@@ -150,6 +156,7 @@ function groupInvi (req, res) {
   })
 }
 
+// Controller for  add a member to the group assign.
 function groupInviP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
@@ -187,7 +194,7 @@ function groupInviP (req, res) {
     }
   })
 }
-
+// Controller for get the group assign page.
 function groupAssign (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
@@ -211,6 +218,7 @@ function groupAssign (req, res) {
   })
 }
 
+// Controller for get the newteams page
 function team (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
@@ -219,14 +227,13 @@ function team (req, res) {
   res.render('assignments/newTeam', { titulo: titulo, usuario: req.user, classroom: aula, assign: tarea })
 }
 
+// Controller for create a new team and an new group assign
 function teamP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
   let teamFormated = req.body.team.replace(nameFormat, '-')
   let repo = tarea + '-' + teamFormated
   let idTeam
-
-  console.log(teamFormated)
 
   Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
     if (err) console.log(err)
@@ -282,6 +289,7 @@ function teamP (req, res) {
   })
 }
 
+// Controller for get the assign options
 function optionsG (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
@@ -301,6 +309,7 @@ function optionsG (req, res) {
   })
 }
 
+// Controller for save the options page
 function optionsP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign

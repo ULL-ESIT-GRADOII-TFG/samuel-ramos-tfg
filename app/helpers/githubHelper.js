@@ -1,5 +1,6 @@
 const octokit = require('@octokit/rest')()
 
+// Class to manage the github API
 class Gh {
   constructor (token) {
     octokit.authenticate({ type: 'oauth', token: token })

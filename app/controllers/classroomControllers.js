@@ -3,6 +3,7 @@ const User = require('../models/user')
 const Org = require('../models/org')
 const Assign = require('../models/assign')
 
+// Controller for get classrom page.
 function classrooms (req, res) {
   Org.find({ 'ownerLogin': req.user.username }, (err, org) => {
     if (err) console.log(err)
@@ -11,6 +12,7 @@ function classrooms (req, res) {
   })
 }
 
+// Controller for get orgs page.
 function orgs (req, res) {
   User.findOne({ 'login': req.user.username }, (err, user) => {
     if (err) console.log(err)
@@ -27,6 +29,7 @@ function orgs (req, res) {
   })
 }
 
+// Controller for create a new classroom.
 function orgsP (req, res, next) {
   let data = req.body.data.split('@')
   let idOrg = data[0]
@@ -50,6 +53,7 @@ function orgsP (req, res, next) {
   })
 }
 
+// Controller for get classrom page.
 function classroom (req, res) {
   let idOrg = req.params.idclass
   let titulo = 'Aula: ' + idOrg
@@ -69,6 +73,7 @@ function classroom (req, res) {
   })
 }
 
+// Controller for get invi page.
 function invi (req, res) {
   let idOrg = req.params.idclass
   let titulo = 'Invitacion para ' + idOrg
@@ -76,6 +81,7 @@ function invi (req, res) {
   res.render('classroom/invitation', { titulo: titulo, usuario: req.user, classroom: idOrg })
 }
 
+// Controller for add a member to the classroom.
 function inviP (req, res) {
   let org = req.params.idclass
   let titulo = 'Aula: ' + org
@@ -103,6 +109,7 @@ function inviP (req, res) {
   })
 }
 
+// Controller for get options page.
 function options (req, res) {
   let aula = req.params.idclass
 
@@ -117,6 +124,7 @@ function options (req, res) {
   })
 }
 
+// Controller for save options.
 function optionsP (req, res) {
   let aula = req.params.idclass
 
