@@ -85,6 +85,16 @@ class Gh {
       })
     })
   }
+
+  getOrgRepos (orgName) {
+    return new Promise((resolve, reject) => {
+      octokit.repos.getForOrg({ org: orgName }, (error, result) => {
+        if (error) reject(error)
+
+        resolve(result)
+      })
+    })
+  }
 }
 
 module.exports = {

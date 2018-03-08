@@ -1,4 +1,6 @@
 const Github = require('../helpers/githubHelper').Gh
+const evaluationRepo = require('../helpers/evaluationHelper')
+
 const User = require('../models/user')
 const Org = require('../models/org')
 const Assign = require('../models/assign')
@@ -326,6 +328,13 @@ function optionsP (req, res) {
   res.redirect('/assign/' + aula + '/' + tarea)
 }
 
+function evalRepo (req, res) {
+  let aula = req.params.idclass
+  let tarea = req.params.idassign
+
+  evaluationRepo(tarea, aula, req.user.username)
+}
+
 module.exports = {
   newAssign,
   newAssignP,
@@ -338,5 +347,6 @@ module.exports = {
   team,
   teamP,
   optionsG,
-  optionsP
+  optionsP,
+  evalRepo
 }

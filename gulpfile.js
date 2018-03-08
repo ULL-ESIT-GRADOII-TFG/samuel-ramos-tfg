@@ -1,6 +1,7 @@
 const gulp = require('gulp')
 const fs = require('fs')
 const sass = require('gulp-sass')
+const open = require('gulp-open')
 
 const dotenv = 'CLIENTID=' + '\nCLIENTSECRET=' + '\nCALLBACKURL='
 
@@ -16,4 +17,9 @@ gulp.task('sass', () => {
 
 gulp.task('sass:watch', () => {
   gulp.watch('./public/custom.scss', ['sass'])
+})
+
+gulp.task('open', () => {
+  gulp.src(__filename)
+  .pipe(open({ uri: 'http://localhost:8081' }))
 })

@@ -5,7 +5,7 @@
   "main": "bin/www",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bin/www && open http://localhost:8081",
+    "start": "node bin/www",
     "lint": "standard",
     "fix": "standard --fix",
     "setup": " npm install && ./node_modules/bower/bin/bower install && ./node_modules/gulp/bin/gulp.js default-env"
@@ -33,11 +33,13 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
-    "pug": "^2.0.0-rc.4"
+    "pug": "^2.0.0-rc.4",
+    "simple-git": "^1.92.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "gulp": "^3.9.1",
+    "gulp-open": "^3.0.0",
     "gulp-sass": "^3.1.0",
     "ip": "^1.1.5",
     "mocha": "^5.0.0",
