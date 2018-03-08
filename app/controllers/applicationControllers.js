@@ -26,10 +26,13 @@ function profiles (req, res) {
     Group.find({ }, (err, groups) => {
       if (err) console.log(err)
 
-      let userTeamRepos = teamHelper(groups, req.user.username)
-      console.log(userTeamRepos)
-      console.log(repos)
-      res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, tareas: repos, tareasGrupales: userTeamRepos })
+      teamHelper(groups, req.user.username)
+      .then(result => {
+        res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, tareas: repos, tareasGrupales: groups })
+      })
+      .catch(error => {
+        console.log(error)
+      })
     })
   })
 }

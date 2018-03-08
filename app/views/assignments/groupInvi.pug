@@ -11,11 +11,12 @@ html
       div(class="row")
         div(class="col s12", id="space")  
         div(align="center" class="col s12")  
-          if teams 
-            p(class="ftxt") Haga click 
+          if teams.length !=0
+            p(class="ltext") Haga click 
               a(href="/newteam/"+ aula + "/" + tarea) aqui 
               span para crear un equipo nuevo  
-            form(class="col s12" method="post" action=)
+            div(class="col s12" id="ispace")
+            form(class="col s10 offset-s3" method="post")
               div(class="input-field col s7")
                 select(name="team")                  
                   each i in teams
@@ -28,11 +29,10 @@ html
                 div(align="center" class="col s4")
                   a(href="/classroom/" + aula class="btn-large waves-effect waves-light white-text red") Cancel
                     i(class="material-icons right") cancel
-                div(align="center" class="col s5")
-
+                div(align="center" class="col s5") 
           else 
             p(class="ftxt") No tienes equipos creados, haga click en el siguiente botón para crear un equipo nuevo  
-            div(align="center" class="col s12")  
+            div(align="center" class="col s12" id="ispace")  
               a(href="/newteam/"+ aula + "/" + tarea class="waves-effect waves-light btn-large light-blue darken-4") Nuevo equipo
               
                    

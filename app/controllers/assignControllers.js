@@ -262,7 +262,7 @@ function teamP (req, res) {
           let newGroup = new Group({
             name: repo,
             assignName: tarea,
-            team: team,
+            team: teamFormated,
             idTeam: idTeam,
             ownerLogin: user.login,
             orgLogin: aula
