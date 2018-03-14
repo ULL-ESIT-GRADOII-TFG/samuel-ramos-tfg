@@ -95,6 +95,15 @@ class Gh {
       })
     })
   }
+  createFile (org, evalRepo, file, text, encoded) {
+    return new Promise((resolve, reject) => {
+      octokit.repos.createFile({ owner: org, repo: evalRepo, path: file, message: text, content: encoded }, (error, result) => {
+        if (error) reject(error)
+
+        resolve(result)
+      })
+    })
+  }
 }
 
 module.exports = {

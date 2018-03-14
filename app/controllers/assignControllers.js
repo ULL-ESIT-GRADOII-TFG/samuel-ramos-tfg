@@ -1,3 +1,6 @@
+const base64 = require('base-64')
+const utf8 = require('utf8')
+
 const Github = require('../helpers/githubHelper').Gh
 const evaluationRepo = require('../helpers/evaluationHelper')
 
@@ -331,7 +334,42 @@ function optionsP (req, res) {
 function evalRepo (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
+  let evalRepo = 'eval-' + tarea
+  let readme = '# Eval repo\n' + 'Clone and exec ```./eval.sh``` for get all the students repos'
+
   evaluationRepo(aula, tarea, req.user.username)
+  .then(result => {
+    User.findOne({ 'login': req.user.username }, (err, usr) => {
+      if (err) console.log(err)
+
+      const ghUser = new Github(usr.token)
+      ghUser.createRepo(aula, evalRepo, 'Repo created by CodeLab', 1)
+      .then(res => {
+        ghUser.createFile(aula, evalRepo, 'eval.sh', 'adding eval.sh :bookmark:', result)
+        .then(res => {
+          console.log(res.meta.status)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        ghUser.createFile(aula, evalRepo, 'README.md', 'adding README :information_source:', base64.encode(utf8.encode(readme)))
+        .then(res => {
+          console.log(res.meta.status)
+          res.redirect('https://github.com/' + aula + '/' + evalRepo)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+      .catch(err => {
+        res.redirect('https://github.com/' + aula + '/' + evalRepo)
+        console.log(err)
+      })
+    })
+  })
+  .catch(error => {
+    console.log(error)
+  })
 }
 
 module.exports = {

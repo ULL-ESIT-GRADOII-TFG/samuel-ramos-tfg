@@ -22,6 +22,7 @@
   "homepage": "https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg#readme",
   "dependencies": {
     "@octokit/rest": "^14.0.8",
+    "base-64": "^0.1.0",
     "body-parser": "^1.18.2",
     "bower": "^1.8.2",
     "connect-ensure-login": "^0.1.1",
@@ -31,11 +32,10 @@
     "express-session": "^1.15.6",
     "mongoose": "^5.0.4",
     "morgan": "^1.9.0",
-    "nodegit": "^0.21.1",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
     "pug": "^2.0.0-rc.4",
-    "simple-git": "^1.92.0"
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
