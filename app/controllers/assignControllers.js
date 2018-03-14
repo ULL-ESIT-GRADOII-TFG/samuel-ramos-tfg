@@ -331,8 +331,7 @@ function optionsP (req, res) {
 function evalRepo (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
-
-  evaluationRepo(tarea, aula, req.user.username)
+  evaluationRepo(aula, tarea, req.user.username)
 }
 
 module.exports = {
