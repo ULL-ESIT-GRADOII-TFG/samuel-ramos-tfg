@@ -15,7 +15,7 @@ function createSubmodule (org, assign, user) {
       const ghUser = new Github(usr.token)
       ghUser.getOrgRepos(org)
       .then(result => {
-        for (let i = 0; i < result.data.length - 1; i++) {
+        for (let i = 0; i < result.data.length; i++) {
           if (result.data[i].name.match(nameFormat)) {
             submodule = submodule + '\ngit submodule add https://github.com/' + result.data[i].full_name
           }
@@ -29,4 +29,36 @@ function createSubmodule (org, assign, user) {
   })
 }
 
-module.exports = createSubmodule
+function createEvalRepo (aula, evalRepo, usr, result, readme, res) {
+  const ghUser = new Github(usr.token)
+  ghUser.createRepo(aula, evalRepo, 'Repo created by CodeLab', 1)
+  .then(response => {
+    createEvalFile(aula, evalRepo, result, readme, ghUser)
+  }).catch(err => {
+    res.redirect('https://github.com/' + aula + '/' + evalRepo)
+    console.log(err)
+  })
+}
+
+function createEvalFile (aula, evalRepo, result, readme, ghUser) {
+  ghUser.createFile(aula, evalRepo, 'eval.sh', 'adding eval.sh :bookmark:', result)
+  .then(resp => {
+    createReadmeFile(aula, evalRepo, readme, ghUser)
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
+function createReadmeFile (aula, evalRepo, readme, ghUser) {
+  ghUser.createFile(aula, evalRepo, 'README.md', 'adding README :information_source:', base64.encode(utf8.encode(readme)))
+  .then(resp => {
+    console.log(resp.meta.status)
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
+module.exports = {
+  createSubmodule,
+  createEvalRepo
+}
