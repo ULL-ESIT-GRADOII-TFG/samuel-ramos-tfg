@@ -29,6 +29,8 @@ function newAssign (req, res) {
 function newAssignP (req, res) {
   let orgLogin = req.params.idclass
   let titleFormated = req.body.titulo.replace(nameFormat, '-')
+  console.log(req.body)
+
   Org.findOne({ 'login': orgLogin }, (err, org) => {
     if (err) console.log(err)
 
@@ -38,9 +40,9 @@ function newAssignP (req, res) {
         ownerLogin: req.user.username,
         assignType: req.body.type,
         repoType: req.body.repo,
-        userAdmin: req.body.admin,
         orgLogin: orgLogin,
-        isActive: true
+        isActive: true,
+        travis: req.body.travis
       })
 
       newAssign.save((err) => {
@@ -339,6 +341,7 @@ function evalRepo (req, res) {
     User.findOne({ 'login': req.user.username }, (err, usr) => {
       if (err) console.log(err)
       Eval.createEvalRepo(aula, evalRepo, usr, result, readme, res)
+      res.redirect('/assign/' + tarea + '/' + tarea)
     })
   }).catch(error => {
     console.log(error)

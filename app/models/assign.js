@@ -6,9 +6,9 @@ const assignSchema = new Schema({
   ownerLogin: String,
   assignType: String,
   repoType: String,
-  userAdmin: String,
   orgLogin: String,
   isActive: Boolean,
+  travis: String,
   createDate: { type: Date, default: Date.now() }
 })
 

@@ -14,9 +14,6 @@ html
                 input(id="titulo" type="text" class="validate" name="titulo" required)
                 label(for="titulo") Titulo 
               div(class="input-field col s12")
-                input(id="code" type="text" class="validate" name="code")
-                label(for="code") Añadir starter code (Opcional) 
-              div(class="input-field col s12")
                 select(name="repo")
                   option(value="false") Publico
                   option(value="true") Privado
@@ -27,8 +24,8 @@ html
                   option(value="grupal") Grupal
                 label Tipo de asignación
               div(class="col s12")
-                input(type="checkbox" id="admin" name="admin")
-                label(for="admin") Permisos de administrador en el repo para los alumnos.
+                input(type="checkbox" id="travis" name="travis")
+                label(for="travis") La tarea incluirá Travis.
               div(class="col s12" id="fspace")
                 div(align="center" class="col s3")
                   button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
