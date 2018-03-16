@@ -103,3 +103,19 @@ a:link {
   font-size: 50px;
   font-family: 'Dosis', sans-serif;
 }
+
+#pindiv {
+  padding-top: 2%;
+}
+
+#pgroup {
+  padding-top: 2%;
+}
+
+.esconder {
+  display: none;
+}
+
+#profile {
+  padding-top: 5%;
+}

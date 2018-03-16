@@ -10,6 +10,11 @@ html
     div(class="container")
       div(class="row")
         div(class="s12", id="space")
+          div(class="tabs is-centered")
+            ul
+              li(class="is-active" id="butprofile"): a( href="#") Información
+              li(id="butpgroup" class=""): a(href="#") Tareas Individuales
+              li(id="butpindiv" class=""): a(href="#") Tareas Grupales
         div(class="col s2")
         div(class="col s8" id="profile")
           div(class="col s12")
@@ -23,7 +28,7 @@ html
                 div(class="card-action")
                   a(class="cenlace" href="https://github.com/" + user.username class="blue-text text-darken-4") Perfil de github
         div(class="col s2")
-        div(align="center" class="col s12" id="ispace") 
+        div(align="center" class="col s12 esconder" id="pindiv") 
           div(class="col s12")
             h3(align="center") Tareas individuales
             div(class="col s6")
@@ -38,7 +43,7 @@ html
                   a(href="https://github.com/" + i.orgLogin + "/" + i.name  align="center" class="ltext") #{i.name} 
               else 
                 p(class="ltext" align="center") No tiene tareas individuales
-        div(align="center" class="col s12" id="ispace") 
+        div(align="center" class="col s12 esconder" id="pgroup") 
           div(class="col s12")
             h3(align="center") Tareas grupales
             div(class="col s6")
@@ -54,3 +59,4 @@ html
             else 
               p(class="ltext" align="center") No tiene tareas grupales
     include ../layouts/footer.pug
+    script(type="text/javascript", src="../../js/profile.js")
