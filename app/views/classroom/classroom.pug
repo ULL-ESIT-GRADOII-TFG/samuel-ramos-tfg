@@ -9,26 +9,21 @@ html
     div(class="container")
       div(class="row")
         div(class="col s12", id="space") 
-          p(align="center" class="ftxt") Haga click en el siguiente botón para copiar el enlace de invitación a #{aula}
-        div(class="col s12", id="ispace")         
+          div(class="tabs is-centered")
+            ul
+              li(class="is-active" id="buttarea"): a(href="#") Tareas
+              li(id="butinvi" class=""): a(href="#") Enlace de invitación
+              li(id="butpindiv" class=""): a(href="/new/"+ aula) Nueva Asignación
+              li(id="butoptions" class=""): a(href="/options/"+ aula) Opciones
+        div(class="col s12 esconder", id="iinvi")      
+          p(align="center" class="ftxt") Haga click en el siguiente botón para copiar el enlace de invitación a #{aula}   
+          div(id="ispace")
           p(align="center" class="ftxt") 
             span(class="iispace") http://localhost:8081/invitation/#{aula}
             button(id="btn" class="button button-circle white-text light-blue darken-4", data-clipboard-text="http://localhost:8081/invitation/" + aula): i(class="octicon octicon-clippy iicons")
-        div(align="center" class="divider col s12") 
-        div(align="center" class="col s12", id="ispace") 
-          div(class="col s6")
-            p(align="center" class="ftxt") Haga click para editar las opciones de la organización         
-          div(class="col s6")
-            p(align="center" class="ftxt") Haga click para crear una asignacion individual o grupal
-        div(align="center" class="col s12", id="ispace") 
-          div(class="col s6")
-            a(href="/options/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Opciones
-          div(class="col s6")
-            a(href="/new/"+ aula class="waves-effect waves-light btn-large white-text light-blue darken-4") Nueva Asignacion 
-          div(class="col s12", id="ispace")   
-          div(align="center" class="divider col s12") 
-          div(align="center" class="col s12") 
-            h4(align="center" class="fclass") Tareas 
+        
+        div(align="center" class="col s12" id="tareas") 
+          h4(align="center" class="fclass") Tareas 
           div(class="col s12", id="ispace") 
             div(class="col s3")
               p(align="center" class="ftxt")  Tarea
@@ -45,12 +40,10 @@ html
                         a(href="/assign/"+ aula + "/" + i.title) 
                           i(class="octicon octicon-person")
                           span  #{i.title} 
-
                       else 
                         a(href="/groupassign/"+ aula + "/" + i.title) 
                           i(class="octicon octicon-organization")
                           span  #{i.title} 
-
                 div(class="col s3")
                   p(align="center" class="ftxt") #{i.assignType}
                 div(class="col s6")
@@ -68,3 +61,4 @@ html
 
     include ../layouts/footerParams.pug
     script(type="text/javascript", src="../js/copy.js")
+    script(type="text/javascript", src="../js/classroom.js")

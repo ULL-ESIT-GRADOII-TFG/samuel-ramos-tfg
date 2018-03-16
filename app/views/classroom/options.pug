@@ -9,6 +9,11 @@ html
     div(class="container")
       div(class="row")
       div(class="col s12", id="ispace")
+        div(class="tabs is-centered")
+          ul
+            li(id="buttarea"): a(href="/classroom/" + aula) Tareas
+            li(id="butpindiv" class=""): a(href="/new/"+ aula) Nueva Asignación
+            li(class="is-active" id="butoptions" class=""): a(href="/options/"+ aula) Opciones
         p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
           form(class="col s12" method="post" action="/options/" + aula)
             div(align="center" class="col s12 switch")
