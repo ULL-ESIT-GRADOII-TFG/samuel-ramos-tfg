@@ -10,6 +10,10 @@ html
     div(class="container")
       div(class="row")
       div(class="col s12", id="ispace")
+        div(class="tabs is-centered")
+            ul
+              li(id="butrepos"): a(href="/assign/" + aula + "/" + tarea) Repos
+              li(class="is-active" id="butoptions" class=""): a(href="/options/" + aula + "/" + tarea) Opciones 
         p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
           form(class="col s12" method="post" action="/options/" + aula + "/" + tarea)
             div(align="center" class="col s12 switch")

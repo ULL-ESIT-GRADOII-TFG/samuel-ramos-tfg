@@ -301,8 +301,9 @@ function optionsG (req, res) {
   Org.findOne({ 'login': aula }, (err, org) => {
     if (err) console.log(err)
 
+    console.log(org)
     if (org.ownerLogin === req.user.username) {
-      Assign.findOne({ 'orgLogin': aula, titulo: tarea }, (err, assign) => {
+      Assign.findOne({ 'orgLogin': aula, 'title': tarea }, (err, assign) => {
         if (err) console.log(err)
 
         res.render('assignments/options', { titulo: 'Opciones', usuario: req.user, classroom: aula, assign: tarea, activado: assign.isActive })
