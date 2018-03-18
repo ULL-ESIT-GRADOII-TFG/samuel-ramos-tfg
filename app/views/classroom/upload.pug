@@ -1,5 +1,4 @@
 - var aula = classroom
-- var active = activado
 doctype html
 
 html
@@ -13,17 +12,17 @@ html
           ul
             li(id="buttarea"): a(href="/classroom/" + aula) Tareas
             li(id="butpindiv" class=""): a(href="/new/"+ aula) Nueva Asignación
-            li(class="is-active" id="butoptions" class=""): a(href="/options/"+ aula) Opciones
+            li(id="butoptions" class=""): a(href="/options/"+ aula) Opciones
             li(id="butalum" class=""): a(href="/alumnos/"+ aula) Alumnos
-            li(id="butfile" class=""): a(href="/upload/"+ aula) Subir fichero de alumnos
+            li(class="is-active" id="butfile" class=""): a(href="/upload/"+ aula) Subir fichero de alumnos
         p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
-          form(class="col s12" method="post" action="/options/" + aula)
-            div(align="center" class="col s12 switch")
-              label
-                span Desactivadas
-                input(type="checkbox" name="activador" checked)
-                span(class="lever")
-                span Activadas
+          form(class="col s6" method="post" action="/file" enctype="multipart/form-data")
+            div(class="col s6 file-field input-field")
+                div(class="btn-large waves-effect waves-light white-text light-blue darken-4")
+                    span File
+                    input(type="file" name='csv' id="csv")
+                div(class="file-path-wrapper")
+                    input(class="file-path validate" type="text" placeholder="Suba el fichero .csv")
             div(align="center" class="col s12", id="ispace")
               button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
                 i(class="material-icons right") send

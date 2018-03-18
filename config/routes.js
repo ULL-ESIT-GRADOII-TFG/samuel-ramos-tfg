@@ -3,6 +3,7 @@
 const passport = require('passport')
 const loggedIn = require('connect-ensure-login')
 const express = require('express')
+
 const api = express.Router()
 
 const appControllers = require('../app/controllers/applicationControllers.js')
@@ -21,6 +22,7 @@ api.get('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgs)
 api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi)
 api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
 api.get('/options/:idclass', loggedIn.ensureLoggedIn(), classControllers.options)
+api.get('/upload/:idclass', loggedIn.ensureLoggedIn(), classControllers.load)
 api.get('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssign)
 api.get('/assign/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assign)
 api.get('/groupassign/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.groupAssign)
@@ -29,6 +31,7 @@ api.get('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assign
 api.get('/newteam/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.team)
 api.get('/options/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.optionsG)
 
+api.post('/file', loggedIn.ensureLoggedIn(), classControllers.file)
 api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 api.post('/options/:idclass', loggedIn.ensureLoggedIn(), classControllers.optionsP)

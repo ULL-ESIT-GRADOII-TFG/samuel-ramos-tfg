@@ -1,7 +1,20 @@
+const multer = require('multer')
+const path = require('path')
+
 const Github = require('../helpers/githubHelper').Gh
 const User = require('../models/user')
 const Org = require('../models/org')
 const Assign = require('../models/assign')
+
+// Multer config
+const storage = multer.diskStorage({
+  destination: './public/files/',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+})
+
+const upload = multer({ storage: storage }).single('csv')
 
 // Controller for get classrom page.
 function classrooms (req, res) {
@@ -142,6 +155,20 @@ function optionsP (req, res) {
   res.redirect('/classroom/' + aula)
 }
 
+function file (req, res) {
+  upload(req, res, err => {
+    if (err) console.log(err)
+
+    console.log(req.file)
+    console.log('test')
+  })
+}
+
+function load (req, res) {
+  let aula = req.params.idclass
+  res.render('classroom/upload', { titulo: 'Suba el fichero', usuario: req.user, classroom: aula })
+}
+
 module.exports = {
   classrooms,
   classroom,
@@ -150,5 +177,7 @@ module.exports = {
   invi,
   inviP,
   options,
-  optionsP
+  optionsP,
+  file,
+  load
 }

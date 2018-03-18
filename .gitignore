@@ -62,3 +62,6 @@ package-lock.json
 
 # MacOS files
 .DS_Store
+
+# CSV files
+.csv
