@@ -7,6 +7,7 @@ const Assign = require('../models/assign')
 const Repo = require('../models/repo')
 const Group = require('../models/group')
 const Team = require('../models/team')
+const Student = require('../models/student')
 
 const nameFormat = new RegExp('[^a-zA-Z0-9_.-]+', 'g')
 
@@ -41,8 +42,7 @@ function newAssignP (req, res) {
         assignType: req.body.type,
         repoType: req.body.repo,
         orgLogin: orgLogin,
-        isActive: true,
-        travis: req.body.travis
+        isActive: true
       })
 
       newAssign.save((err) => {
@@ -72,7 +72,11 @@ function assign (req, res) {
         Repo.find({ 'orgLogin': aula, assignName: tarea }, (err, repos) => {
           if (err) console.log(err)
 
-          res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
+          Student.find({ 'orgName': aula }, (err, alumnos) => {
+            if (err) console.log(err)
+
+            res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos, students: alumnos })
+          })
         })
       } else {
         res.redirect('/classrooms')

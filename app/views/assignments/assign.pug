@@ -1,6 +1,7 @@
 - var tarea = assign
 - var aula = classroom
 - var repos = assigns
+- var alumnos = students
 doctype html
 
 html
@@ -27,20 +28,29 @@ html
         div(class="col s12", id="repos")   
           h4(align="center" class="fclass") Repositorios
           div(class="col s12", id="ispace") 
-          div(class="col s6")
+          div(class="col s3")
             p(align="center" class="ftxt")  Repo
-          div(class="col s6")
-            p(align="center" class="ftxt")  Autor
+          div(class="col s9")
+            div(class="col s3 ftxt" align="center") Github ID
+            div(class="col s3 ftxt" align="center") Nombre
+            div(class="col s3 ftxt" align="center") Travis
+            div(class="col s3 ftxt" align="center") Email
           div(class="col s12")
             if repos
               each i in repos
-                div(class="col s6")
+                div(class="col s3")
                   p(align="center" class="ftxt")  
                     a(href="https://github.com/" + i.orgLogin + "/" + i.name) #{i.name} 
-                div(class="col s6")
+                div(class="col s9")
                   p(align="center" class="ftxt") 
-                    span(class="iispace") #{i.StudentLogin}
-                
+                    each j in alumnos
+                      if j.idGithub == i.StudentLogin
+                        div(class="col s3" align="center") #{i.StudentLogin}
+                        div(class="col s3" align="center") #{j.name} #{j.surname}
+                        div(class="col s3" align="center") 
+                          a(href="https://github.com/" + i.orgLogin + "/" + i.name) Travis CI
+                        div(class="col s3" align="center") #{j.email}
+
               else
                 div(align="center" class="col s12")
                   p(class="noclass") No tiene repositorios activos.      
