@@ -23,6 +23,7 @@ api.get('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.invi
 api.get('/classroom/:idclass', loggedIn.ensureLoggedIn(), classControllers.classroom)
 api.get('/options/:idclass', loggedIn.ensureLoggedIn(), classControllers.options)
 api.get('/upload/:idclass', loggedIn.ensureLoggedIn(), classControllers.load)
+api.get('/alumnos/:idclass', loggedIn.ensureLoggedIn(), classControllers.students)
 api.get('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssign)
 api.get('/assign/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.assign)
 api.get('/groupassign/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.groupAssign)

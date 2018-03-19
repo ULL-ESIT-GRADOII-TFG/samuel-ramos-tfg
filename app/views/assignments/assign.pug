@@ -29,12 +29,17 @@ html
           h4(align="center" class="fclass") Repositorios
           div(class="col s12", id="ispace") 
           div(class="col s3")
-            p(align="center" class="ftxt")  Repo
+            p(align="center" class="ftxt")  
+              b Repo
           div(class="col s9")
-            div(class="col s3 ftxt" align="center") Github ID
-            div(class="col s3 ftxt" align="center") Nombre
-            div(class="col s3 ftxt" align="center") Travis
-            div(class="col s3 ftxt" align="center") Email
+            div(class="col s3 ftxt" align="center") 
+              b Github ID
+            div(class="col s3 ftxt" align="center") 
+              b Nombre
+            div(class="col s3 ftxt" align="center") 
+              b Travis
+            div(class="col s3 ftxt" align="center") 
+              b Email
           div(class="col s12")
             if repos
               each i in repos
@@ -48,7 +53,7 @@ html
                         div(class="col s3" align="center") #{i.StudentLogin}
                         div(class="col s3" align="center") #{j.name} #{j.surname}
                         div(class="col s3" align="center") 
-                          a(href="https://github.com/" + i.orgLogin + "/" + i.name) Travis CI
+                          a(href="https://travis-ci.org/"+ i.orgLogin + "/" + i.name) Travis CI
                         div(class="col s3" align="center") #{j.email}
 
               else

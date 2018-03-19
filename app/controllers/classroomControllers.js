@@ -206,6 +206,16 @@ function load (req, res) {
   res.render('classroom/upload', { titulo: 'Suba el fichero', usuario: req.user, classroom: aula })
 }
 
+function students (req, res) {
+  let aula = req.params.idclass
+
+  Student.find({ 'orgName': aula }, (err, alumnos) => {
+    if (err) console.log(err)
+
+    res.render('classroom/students', { titulo: 'Alumnos', usuario: req.user, classroom: aula, students: alumnos })
+  })
+}
+
 module.exports = {
   classrooms,
   classroom,
@@ -216,5 +226,6 @@ module.exports = {
   options,
   optionsP,
   file,
-  load
+  load,
+  students
 }
