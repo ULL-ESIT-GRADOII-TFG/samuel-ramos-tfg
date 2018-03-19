@@ -7,6 +7,7 @@ const Github = require('../helpers/githubHelper').Gh
 const User = require('../models/user')
 const Org = require('../models/org')
 const Assign = require('../models/assign')
+const Student = require('../models/student')
 
 // Multer config
 const storage = multer.diskStorage({
@@ -16,7 +17,26 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage: storage }).single('csv')
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb)
+  }
+}).single('csv')
+
+function checkFileType (file, cb) {
+  const fileTypes = /csv/
+
+  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase())
+  const mimetype = fileTypes.test(file.mimetype)
+
+  if (mimetype && extname) {
+    return cb(null, true)
+  } else {
+    return cb(new Error('Solo imagenes'))
+  }
+}
 
 // Controller for get classrom page.
 function classrooms (req, res) {
@@ -161,9 +181,7 @@ function file (req, res) {
   let aula = req.params.idclass
 
   upload(req, res, err => {
-    if (err) console.log(err)
-
-    console.log(req.file)
+    if (err) return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sólo se pueden ficheros con formato csv' })
 
     const options = {
       headers: 'name,surname,email,idGithub,orgName'
@@ -173,7 +191,13 @@ function file (req, res) {
     let file = csvjson.toObject(data, options)
 
     file.shift()
-    res.redirect('/classroom/' + aula)
+
+    Student.collection.insertMany(file, (err, result) => {
+      if (err) console.log(err)
+
+      console.log(result)
+      res.redirect('/classroom/' + aula)
+    })
   })
 }
 
