@@ -31,7 +31,7 @@ api.get('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assign
 api.get('/newteam/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.team)
 api.get('/options/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.optionsG)
 
-api.post('/file', loggedIn.ensureLoggedIn(), classControllers.file)
+api.post('/file/:idclass', loggedIn.ensureLoggedIn(), classControllers.file)
 api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
 api.post('/options/:idclass', loggedIn.ensureLoggedIn(), classControllers.optionsP)

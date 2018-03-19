@@ -16,7 +16,7 @@ html
             li(id="butalum" class=""): a(href="/alumnos/"+ aula) Alumnos
             li(class="is-active" id="butfile" class=""): a(href="/upload/"+ aula) Subir fichero de alumnos
         p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
-          form(class="col s6" method="post" action="/file" enctype="multipart/form-data")
+          form(class="col s6" method="post" action="/file/" + aula enctype="multipart/form-data")
             div(class="col s6 file-field input-field")
                 div(class="btn-large waves-effect waves-light white-text light-blue darken-4")
                     span File

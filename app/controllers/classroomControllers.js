@@ -1,5 +1,7 @@
 const multer = require('multer')
+const csvjson = require('csvjson')
 const path = require('path')
+const fs = require('fs')
 
 const Github = require('../helpers/githubHelper').Gh
 const User = require('../models/user')
@@ -156,11 +158,22 @@ function optionsP (req, res) {
 }
 
 function file (req, res) {
+  let aula = req.params.idclass
+
   upload(req, res, err => {
     if (err) console.log(err)
 
     console.log(req.file)
-    console.log('test')
+
+    const options = {
+      headers: 'name,surname,email,idGithub,orgName'
+    }
+
+    let data = fs.readFileSync(path.join(__dirname, '../../public/files/' + req.file.filename), { encoding: 'utf8' })
+    let file = csvjson.toObject(data, options)
+
+    file.shift()
+    res.redirect('/classroom/' + aula)
   })
 }
 
