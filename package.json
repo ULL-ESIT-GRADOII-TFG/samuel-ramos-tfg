@@ -8,7 +8,8 @@
     "start": "node bin/www",
     "lint": "standard",
     "fix": "standard --fix",
-    "setup": " npm install && ./node_modules/bower/bin/bower install && ./node_modules/gulp/bin/gulp.js default-env"
+    "setup": " npm install && ./node_modules/bower/bin/bower install && ./node_modules/gulp/bin/gulp.js default-env",
+    "postinstall": "./node_modules/bower/bin/bower install" 
   },
   "repository": {
     "type": "git",
