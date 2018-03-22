@@ -1,8 +1,6 @@
 # TFG 17-18: CodeLab
 
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard) [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
 > Autor: Samuel Ramos Barroso (alu01008165146@ull.edu.es)
@@ -38,3 +36,4 @@ $ npm start
 ```
 
 Accede la app desde este [enlace](http://localhost:8081/)
+Accede la app en Heroku desde este [enlace](https://codelab-tfg1718.herokuapp.com/)
