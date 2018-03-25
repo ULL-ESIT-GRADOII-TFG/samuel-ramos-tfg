@@ -42,10 +42,15 @@ function err (req, res) {
   res.render('static_pages/error', { titulo: 'Error: Página no encontrada', usuario: req.user })
 }
 
+function help (req, res) {
+  res.render('static_pages/error', { titulo: 'Ayuda', usuario: req.user })
+}
+
 module.exports = {
   home,
   logout,
   redirectHome,
   profiles,
-  err
+  err,
+  help
 }

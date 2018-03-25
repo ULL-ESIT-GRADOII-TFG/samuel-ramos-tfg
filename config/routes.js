@@ -12,6 +12,7 @@ const assignControllers = require('../app/controllers/assignControllers.js')
 
 api.get('/', appControllers.home)
 api.get('/login', appControllers.redirectHome)
+api.get('/help', appControllers.help)
 api.get('/login/github', passport.authenticate('github'))
 api.get('/login/github/return', passport.authenticate('github', { failureRedirect: '/login' }), appControllers.redirectHome)
 api.get('/profile', loggedIn.ensureLoggedIn(), appControllers.profiles)
