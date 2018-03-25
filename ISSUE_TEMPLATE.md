@@ -16,7 +16,7 @@
 
 ### Versions
 
-You can get this information from copy and pasting the output of `atom --version` and `apm --version` from the command line. Also, please include the OS and what version of the OS you're running.
+versions of the used packages. Please include the OS and what version of the OS you're running.
 
 ### Additional Information
 
