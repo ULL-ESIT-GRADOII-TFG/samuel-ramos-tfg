@@ -2,6 +2,8 @@
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
+[![Build Status](https://travis-ci.org/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg.svg?branch=master)](https://travis-ci.org/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg)
+
 > Autor: Samuel Ramos Barroso (alu01008165146@ull.edu.es)
 
 > Tutor: Casiano Rodríguez León (crguezl@ull.edu.es)
