@@ -1,0 +1,27 @@
+{
+  "name": "CodeLab",
+  "description": "A Eeucation tool for teachers.",
+  "repository": "https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg",
+  "keywords": ["node", "express", "Github", "Git", "Education", "Mongo"],
+  "env": {
+    "CALLBACKURL": {
+      "description": "GITHUB CALLBACK."
+    },
+    "CLIENTID": {
+      "description": "THE GITHUB CLIENT ID"
+    },
+    "CLIENTSECRET": {
+      "description": "THE GITHUB CLIENT SECRET"
+    },
+    "MONGODB": {
+      "description": "HEROKU MONGODB URI"
+    }
+  },
+  "addons": [
+    "mongolab",
+    {
+      "plan": "sandbox",
+      "as": "MONGODB"
+    }
+  ]
+}
