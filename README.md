@@ -38,7 +38,6 @@ $ npm start
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-
 ## Enlaces
 
 Accede la app desde este [enlace](http://localhost:8081/)
