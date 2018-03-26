@@ -17,5 +17,15 @@ html
               a(href="https://www.google.es/intl/es/sheets/about/") Hojas de cáculo de Google
               span Debido al tipo de fichero CSV que generan. 
             li(class="lisep") Finalmente, subimos el fichero .csv y nos dirigimos a la vista de alumnos, en ella nos se nos mostrará en detalle los datos de los alumnos, en la vista de cada tarea obtendremos más detalles por cada alumno y repositorio.
+    div(class="col s12")
+          h3(class="helph2") Crear un repositorio de evaluación
+        div(class="col s12 ltext")
+          ol
+            li(class="lisep") En primer lugar, en la vista de una asignación nos vamos a la sección de Evaluación y hacemos click en el botón "Crear repositorio de evaluación".
+            li(class="lisep") Se creará un repositorio en la organización con el nombre 'eval-nombre-tarea' 
+            li(class="lisep") El profesor deberá clonar el repositorio y ejecutar el script 'eval.sh' que viene incluido en el repositorio.
+            li(class="lisep") Después de ejecutar el script el profesor dispondrá de todos los repositorios con las tareas de sus correspondientes alumnos como submódulos de ese repositorio
+            li(class="lisep") Puede consultar las ventajas del comando git submodule en este 
+              a(href="https://git-scm.com/docs/git-submodule") enlace
     include ../layouts/footer.pug
     

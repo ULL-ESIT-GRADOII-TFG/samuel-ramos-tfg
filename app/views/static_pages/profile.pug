@@ -56,6 +56,8 @@ html
                   p(align="center" class="ltext") #{i.orgLogin}      
                 div(class="col s6") 
                   a(href="https://github.com/" + i.orgLogin + "/" + i.name align="center" class="ltext") #{i.name}
+              else 
+                p(class="ltext" align="center") No tiene tareas individuales
             else 
               p(class="ltext" align="center") No tiene tareas grupales
     include ../layouts/footer.pug
