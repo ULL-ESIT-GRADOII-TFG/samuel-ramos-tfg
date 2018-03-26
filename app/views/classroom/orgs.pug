@@ -13,6 +13,7 @@ html
               li(id="butpindiv" class=""): a(href="/classrooms") Aula
               li(class="is-active" id="butoptions" class=""): a(href="/orgs") Nueva aula
           div(class="col s12")
+
           if org
             each i in org
               div(class="col s6 offset-s3")
@@ -33,6 +34,10 @@ html
           else   
             div(align="center" class="col s12")
               p(class="noclass") No tiene aulas activas.  
-                  
+          
+          div(align="center" class="col s12", id="ispace") Si no encuentra la organización que busca, pruebe a activar el acceso de 
+              a(href="https://help.github.com/articles/approving-oauth-apps-for-your-organization/") Third-party access
+              span  en Github.
+          div(class="col s12" id="ispace")
     include ../layouts/footer.pug
     script(type="text/javascript", src="./js/getId.js")
