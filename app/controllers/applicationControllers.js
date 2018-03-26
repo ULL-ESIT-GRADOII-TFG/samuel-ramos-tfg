@@ -43,7 +43,7 @@ function err (req, res) {
 }
 
 function help (req, res) {
-  res.render('static_pages/error', { titulo: 'Ayuda', usuario: req.user })
+  res.render('static_pages/help', { titulo: 'Ayuda', usuario: req.user })
 }
 
 module.exports = {

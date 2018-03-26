@@ -7,7 +7,15 @@ html
     include ../layouts/nav.pug
     div(class="container")
       div(class="row")
-        div(class="s12", id="space")
-
+        div(class="col s12", id="space")
+        div(class="col s12")
+          h3(class="helph2") Añadir un fichero .csv con datos de alumnos
+        div(class="col s12 ltext")
+          ol
+            li(class="lisep") Será necesario obtener un fichero .CSV que contenga los siguientes campos sobre los alumnos: nombre, apellido, dirección de correo, ID de Github, organización de Github que será usada como aula.
+            li(class="lisep") Se aconseja el uso de 
+              a(href="https://www.google.es/intl/es/sheets/about/") Hojas de cáculo de Google
+              span Debido al tipo de fichero CSV que generan. 
+            li(class="lisep") Finalmente, subimos el fichero .csv y nos dirigimos a la vista de alumnos, en ella nos se nos mostrará en detalle los datos de los alumnos, en la vista de cada tarea obtendremos más detalles por cada alumno y repositorio.
     include ../layouts/footer.pug
     

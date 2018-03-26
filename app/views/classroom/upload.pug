@@ -15,7 +15,8 @@ html
             li(id="butoptions" class=""): a(href="/options/"+ aula) Opciones
             li(id="butalum" class=""): a(href="/alumnos/"+ aula) Alumnos
             li(class="is-active" id="butfile" class=""): a(href="/upload/"+ aula) Subir fichero de alumnos
-        p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
+        p(align="center" class="ftxt") Suba un fichero .CSV con los datos de los alumnos. Para saber que datos son necesarios, haga click 
+          a(href="/help") aquí
           form(class="col s6" method="post" action="/file/" + aula enctype="multipart/form-data")
             div(class="col s6 file-field input-field")
                 div(class="btn-large waves-effect waves-light white-text light-blue darken-4")

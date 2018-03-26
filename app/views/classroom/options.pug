@@ -21,7 +21,10 @@ html
             div(align="center" class="col s12 switch")
               label
                 span Desactivadas
-                input(type="checkbox" name="activador" checked)
+                if active
+                  input(type="checkbox" name="activador" checked)
+                else
+                  input(type="checkbox" name="activador")
                 span(class="lever")
                 span Activadas
             div(align="center" class="col s12", id="ispace")
