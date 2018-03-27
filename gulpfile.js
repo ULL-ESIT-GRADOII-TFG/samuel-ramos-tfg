@@ -2,8 +2,10 @@ const gulp = require('gulp')
 const fs = require('fs')
 const sass = require('gulp-sass')
 const open = require('gulp-open')
+const browserSync = require('browser-sync').create()
+const nodemon = require('gulp-nodemon')
 
-const dotenv = 'CLIENTID=' + '\nCLIENTSECRET=' + '\nCALLBACKURL='
+const dotenv = 'CLIENTID=' + '\nCLIENTSECRET=' + '\nCALLBACKURL=' + '\n\nTOKENFORTEST='
 
 gulp.task('default-env', () => {
   fs.writeFileSync('.env', dotenv)
@@ -22,4 +24,25 @@ gulp.task('sass:watch', () => {
 gulp.task('open', () => {
   gulp.src(__filename)
   .pipe(open({ uri: 'http://localhost:8081' }))
+})
+
+gulp.task('browser-sync', ['nodemon'], () => {
+  browserSync.init(null, {
+    proxy: 'http://localhost:3000',
+    files: ['views/*.ejs', 'public/js/*.js', 'public/css/*.css'],
+    port: 2121
+  })
+})
+
+// Tarea nodemon
+gulp.task('nodemon', (cb) => {
+  var started = false
+  return nodemon({
+    script: 'npm start'
+  }).on('start', () => {
+    if (!started) {
+      cb()
+      started = true
+    }
+  })
 })
