@@ -216,6 +216,16 @@ function students (req, res) {
   })
 }
 
+function ghedsh (req, res) {
+  let aula = req.params.idclass
+
+  Student.find({ 'orgName': aula }, (err, alumnos) => {
+    if (err) console.log(err)
+
+    res.json(alumnos)
+  })
+}
+
 module.exports = {
   classrooms,
   classroom,
@@ -227,5 +237,6 @@ module.exports = {
   optionsP,
   file,
   load,
-  students
+  students,
+  ghedsh
 }
