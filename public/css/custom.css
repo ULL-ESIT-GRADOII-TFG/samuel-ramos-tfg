@@ -178,3 +178,10 @@ a:link {
 .dropdown-content li > a, .dropdown-content li > span {
   color: #01579b !important;
 }
+
+.titulo-aula-tarea{
+  text-align: center;
+  font-family: 'Dosis', sans-serif;
+  padding: 2%;
+  margin-bottom: -8%;
+}

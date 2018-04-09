@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const StudentSchema = new Schema({
-  name: String,
+  name: { type: String, unique: true },
   surname: String,
   email: String,
   idGithub: String,
-  orgName: String,
+  orgName: { type: String, unique: true },
   signupDate: { type: Date, default: Date.now() }
 })
 
