@@ -184,11 +184,18 @@ function file (req, res) {
     if (err) return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sólo se pueden ficheros con formato csv' })
 
     const options = {
+      delimiter: /[,|;]+/,
       headers: 'name,surname,email,idGithub,orgName'
     }
+    let file
+    let data
 
-    let data = fs.readFileSync(path.join(__dirname, '../../public/files/' + req.file.filename), { encoding: 'utf8' })
-    let file = csvjson.toObject(data, options)
+    try {
+      data = fs.readFileSync(path.join(__dirname, '../../public/files/' + req.file.filename), { encoding: 'utf8' })
+      file = csvjson.toObject(data, options)
+    } catch (error) {
+      return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sube un fichero válido' })
+    }
 
     file.shift()
 
