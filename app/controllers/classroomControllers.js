@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs')
 
 const Github = require('../helpers/githubHelper').Gh
+const xlsx = require('../helpers/xlsxConvert')
 const User = require('../models/user')
 const Org = require('../models/org')
 const Assign = require('../models/assign')
@@ -26,15 +27,16 @@ const upload = multer({
 }).single('csv')
 
 function checkFileType (file, cb) {
-  const fileTypes = /csv/
+  const fileTypes = /csv|xlsx/
+  const mimeTypes = /csv|spreadsheetml/
 
   const extname = fileTypes.test(path.extname(file.originalname).toLowerCase())
-  const mimetype = fileTypes.test(file.mimetype)
+  const mimetype = mimeTypes.test(file.mimetype)
 
   if (mimetype && extname) {
     return cb(null, true)
   } else {
-    return cb(new Error('Solo imagenes'))
+    return cb(new Error('Solo CSV'))
   }
 }
 
@@ -183,28 +185,43 @@ function file (req, res) {
   upload(req, res, err => {
     if (err) return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sólo se pueden ficheros con formato csv' })
 
-    const options = {
-      delimiter: /[,|;]+/,
-      headers: 'name,surname,email,idGithub,orgName'
+    console.log(path.extname(req.file.filename))
+    if (path.extname(req.file.filename) === '.csv') {
+      const options = {
+        delimiter: /[,|;]+/,
+        headers: 'name,surname,email,idGithub,orgName'
+      }
+      let file
+      try {
+        let data = fs.readFileSync(path.join(__dirname, '../../public/files/' + req.file.filename), { encoding: 'utf8' })
+        file = csvjson.toObject(data, options)
+      } catch (error) {
+        return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sube un fichero válido' })
+      }
+
+      file.shift()
+      Student.collection.insertMany(file, (err, result) => {
+        if (err) console.log(err)
+
+        console.log(result)
+        res.redirect('/classroom/' + aula)
+      })
+    } else {
+      const options = {
+        delimiter: /[,|;]+/,
+        headers: 'name,surname,email,idGithub,orgName'
+      }
+      let csv = xlsx('../../public/files/' + req.file.filename)
+      let file = csvjson.toObject(csv, options)
+
+      file.shift()
+      Student.collection.insertMany(file, (err, result) => {
+        if (err) console.log(err)
+
+        console.log(result)
+        res.redirect('/classroom/' + aula)
+      })
     }
-    let file
-    let data
-
-    try {
-      data = fs.readFileSync(path.join(__dirname, '../../public/files/' + req.file.filename), { encoding: 'utf8' })
-      file = csvjson.toObject(data, options)
-    } catch (error) {
-      return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sube un fichero válido' })
-    }
-
-    file.shift()
-
-    Student.collection.insertMany(file, (err, result) => {
-      if (err) console.log(err)
-
-      console.log(result)
-      res.redirect('/classroom/' + aula)
-    })
   })
 }
 
