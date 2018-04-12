@@ -59,7 +59,7 @@ Para contribuir lee el fichero [CONTRIBUTING.md](https://gist.github.com/PurpleB
 * **Samuel Ramos Barroso** - *Alumno* - [Losnen](https://github.com/Losnen)
 * **Casiano Rodríguez León** - *Tutor* - [Crguezl](https://github.com/crguezl)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+Mira la lista de [contributors](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/graphs/contributors) de este proyecto.
 
 ## License
 
