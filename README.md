@@ -44,15 +44,19 @@ $ npm start
 
 ## Despliegue
 
+Desde el siguiente botón se puede desplegar la aplicación en heroku.
+
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ## Dependecias
 
-Mira la sección de dependencias en el [package.json](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/blob/master/package.json) Para más información
+Mira la sección de dependencias en el [package.json](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/blob/master/package.json) para más información
 
 ## Contributing
 
-Para contribuir lee el fichero [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) Para más detalles consulta el [CODE_OF_CONDUCT.md](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/blob/master/CODE_OF_CONDUCT.md)
+Para contribuir lee el fichero [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) 
+
+Para más detalles consulta el [CODE_OF_CONDUCT.md](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/blob/master/CODE_OF_CONDUCT.md)
 
 ## Contributors
 
