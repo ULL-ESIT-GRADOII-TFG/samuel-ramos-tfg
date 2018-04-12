@@ -203,7 +203,6 @@ function file (req, res) {
       Student.collection.insertMany(file, (err, result) => {
         if (err) console.log(err)
 
-        console.log(result)
         res.redirect('/classroom/' + aula)
       })
     } else {
@@ -218,7 +217,6 @@ function file (req, res) {
       Student.collection.insertMany(file, (err, result) => {
         if (err) console.log(err)
 
-        console.log(result)
         res.redirect('/classroom/' + aula)
       })
     }
