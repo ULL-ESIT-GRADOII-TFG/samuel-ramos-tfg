@@ -2,11 +2,17 @@
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-[![Build Status](https://travis-ci.org/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg.svg?branch=master)](https://travis-ci.org/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg)
+Codelab es una plataforma escrita usando Node.js, Express, MongoDB y la Github API para la gestión de tareas de código de forma cómoda y sencilla
 
-> Autor: Samuel Ramos Barroso (alu01008165146@ull.edu.es)
+![landing](./public/images/captura.png)
 
-> Tutor: Casiano Rodríguez León (crguezl@ull.edu.es)
+
+## Prerequisitos
+
+* Tener instalado Node.JS
+* Tener instaladoMongoDB
+* Tener una cuenta de Github
+* Crear una OAuth app de github
 
 ## Instalación
 
@@ -36,13 +42,31 @@ Con el siguiente comando se pone en marcha el servidor.
 $ npm start
 ```
 
-## Despliegue en Heroku
+## Despliegue
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
+## Dependecias
+
+Mira la sección de dependencias en el [package.json](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/blob/master/package.json) Para más información
+
+## Contributing
+
+Para contribuir lee el fichero [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) Para más detalles consulta el [CODE_OF_CONDUCT.md](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/blob/master/CODE_OF_CONDUCT.md)
+
+## Contributors
+
+* **Samuel Ramos Barroso** - *Alumno* - [Losnen](https://github.com/Losnen)
+* **Casiano Rodríguez León** - *Tutor* - [Crguezl](https://github.com/crguezl)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+Este proyecto está bajo licencia GPL-3.0 - Consulta [LICENSE.md](https://github.com/ULL-ESIT-GRADOII-TFG/samuel-ramos-tfg/blob/master/LICENSE) para más detalles
 
 ## Enlaces
 
 * Accede la app en local desde este [enlace](http://localhost:8081/)
 * Accede la app en Heroku desde este [enlace](https://codelab-tfg1718.herokuapp.com/)
- 
- 
+* Repositorio de la [memoria](https://github.com/Losnen/memoria-tfg)
