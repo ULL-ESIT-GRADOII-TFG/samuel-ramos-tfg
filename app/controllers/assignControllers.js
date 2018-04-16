@@ -12,28 +12,29 @@ const Student = require('../models/student')
 const nameFormat = new RegExp('[^a-zA-Z0-9_.-]+', 'g')
 
 // Controller for get the new assign page.
-function newAssign (req, res) {
+async function newAssign (req, res) {
   let orgLogin = req.params.idclass
 
-  Org.findOne({ 'login': orgLogin }, (err, org) => {
-    if (err) console.log(err)
+  try {
+    let org = await Org.findOne({ 'login': orgLogin })
 
     if (org.ownerLogin === req.user.username) {
       res.render('assignments/new', { titulo: 'Nueva tarea', usuario: req.user, classroom: orgLogin })
     } else {
       res.redirect('/classrooms')
     }
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for create the new assign in the db.
-function newAssignP (req, res) {
+async function newAssignP (req, res) {
   let orgLogin = req.params.idclass
   let titleFormated = req.body.titulo.replace(nameFormat, '-')
-  console.log(req.body)
 
-  Org.findOne({ 'login': orgLogin }, (err, org) => {
-    if (err) console.log(err)
+  try {
+    let org = await Org.findOne({ 'login': orgLogin })
 
     if (org.ownerLogin === req.user.username) {
       let newAssign = new Assign({
@@ -45,46 +46,40 @@ function newAssignP (req, res) {
         isActive: true
       })
 
-      newAssign.save((err) => {
-        if (err) {
-          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya existe' })
-        } else {
-          res.redirect('/classroom/' + orgLogin)
-        }
-      })
+      await newAssign.save()
+
+      res.redirect('/classroom/' + orgLogin)
     } else {
       res.redirect('/classrooms')
     }
-  })
+  } catch (error) {
+    res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya existe' })
+  }
 }
 
 // Controller for get the assign page.
-function assign (req, res) {
+async function assign (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
   let titulo = 'Tarea ' + req.params.idassign
 
-  Org.findOne({ 'login': aula }, (err, org) => {
-    if (err) console.log(err)
+  try {
+    let org = await Org.findOne({ 'login': aula })
+    let repos = await Repo.find({ 'orgLogin': aula, assignName: tarea })
+    let alumnos = await Student.find({ 'orgName': aula })
 
     if (org) {
       if (org.ownerLogin === req.user.username) {
-        Repo.find({ 'orgLogin': aula, assignName: tarea }, (err, repos) => {
-          if (err) console.log(err)
-
-          Student.find({ 'orgName': aula }, (err, alumnos) => {
-            if (err) console.log(err)
-
-            res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos, students: alumnos })
-          })
-        })
+        res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos, students: alumnos })
       } else {
         res.redirect('/classrooms')
       }
     } else {
       res.render('assignments/assign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
     }
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for get the assign invitation page.
@@ -97,133 +92,104 @@ function assignInvi (req, res) {
 }
 
 // Controller for  add a member to the individual assign.
-function assignInviP (req, res) {
+async function assignInviP (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
   let repo = tarea + '-' + req.user.username
   let estudiante = req.user.username
   let permisos
 
-  Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
-    if (err) console.log(err)
+  try {
+    let assign = await Assign.findOne({ 'orgLogin': aula })
+    let user = await User.findOne({ 'login': assign.ownerLogin })
 
     if (assign.userAdmin) { permisos = 'admin' } else { permisos = 'push' }
 
     if (!assign.isActive) {
-      return res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
     } else {
-      User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
-        if (err) console.log(err)
-
-        let newRepo = new Repo({
-          name: repo,
-          assignName: tarea,
-          StudentLogin: estudiante,
-          ownerLogin: user.login,
-          orgLogin: aula
-        })
-
-        newRepo.save((err) => {
-          if (err) res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
-        })
-
-        const ghUser = new Github(user.token)
-
-        ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
-        .then(result => {
-          ghUser.addCollaborator(aula, repo, estudiante, permisos)
-          .then(result => {
-            console.log(result)
-            res.redirect('https://github.com/' + aula + '/' + repo)
-          })
-          .catch(error => {
-            console.log(error)
-
-            res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El colaborador ya forma parte del repositorio' })
-          })
-        })
-        .catch(error => {
-          console.log(error)
-          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya ha sido aceptada' })
-        })
+      let newRepo = new Repo({
+        name: repo,
+        assignName: tarea,
+        StudentLogin: estudiante,
+        ownerLogin: user.login,
+        orgLogin: aula
       })
+      await newRepo.save()
+
+      const ghUser = new Github(user.token)
+      await ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
+      await ghUser.addCollaborator(aula, repo, estudiante, permisos)
+
+      res.redirect('https://github.com/' + aula + '/' + repo)
     }
-  })
+  } catch (error) {
+    res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Error al aceptar la tarea' })
+  }
 }
 
 // Controller for get the group invi page.
-function groupInvi (req, res) {
+async function groupInvi (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
   let titulo = 'Tarea ' + req.params.idassign
-
-  Team.find({ org: aula }, (err, teams) => {
-    if (err) console.log(err)
-
+  try {
+    let teams = Team.find({ org: aula })
     res.render('assignments/groupInvi', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, equipos: teams })
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for  add a member to the group assign.
-function groupInviP (req, res) {
+async function groupInviP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
   let teamName = req.body.team
   let repo = tarea + '-' + teamName
 
-  Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
-    if (err) console.log(err)
+  try {
+    let assign = await Assign.findOne({ 'orgLogin': aula })
+    let user = await User.findOne({ 'login': assign.ownerLogin })
+    let team = await Team.findOne({ 'name': teamName })
 
     if (!assign.isActive) {
-      return res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
     } else {
-      User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
-        if (err) console.log(err)
+      await Team.update({ name: team.name }, { $push: {members: req.user.username} })
 
-        Team.findOne({ 'name': teamName }, (err, team) => {
-          if (err) console.log(err)
+      const ghUser = new Github(user.token)
+      await ghUser.addMember(team.id, req.user.username)
 
-          Team.update({ name: team.name }, { $push: {members: req.user.username} }, (err) => {
-            if (err) console.log(err)
-          })
-
-          const ghUser = new Github(user.token)
-
-          ghUser.addMember(team.id, req.user.username)
-          .then(result => {
-            res.redirect('https://github.com/' + aula + '/' + repo)
-          })
-          .catch(error => {
-            console.log(error)
-            res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El miembro ya forma parte del equipo' })
-          })
-        })
-      })
+      res.redirect('https://github.com/' + aula + '/' + repo)
     }
-  })
+  } catch (error) {
+    res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El miembro ya forma parte del equipo' })
+  }
 }
+
 // Controller for get the group assign page.
-function groupAssign (req, res) {
+async function groupAssign (req, res) {
   let tarea = req.params.idassign
   let aula = req.params.idclass
   let titulo = 'Tarea ' + req.params.idassign
-  Org.findOne({ 'login': aula }, (err, org) => {
-    if (err) console.log(err)
+
+  try {
+    let org = await Org.findOne({ 'login': aula })
+    let repos = await Group.find({ 'orgLogin': aula, assignName: tarea })
 
     if (org) {
       if (org.ownerLogin === req.user.username) {
-        Group.find({ 'orgLogin': aula, assignName: tarea }, (err, repos) => {
-          if (err) console.log(err)
-
-          res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
-        })
+        res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, assigns: repos })
       } else {
         res.redirect('/classrooms')
       }
     } else {
       res.render('assignments/groupAssign', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula })
     }
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for get the newteams page
@@ -335,22 +301,21 @@ function optionsP (req, res) {
   res.redirect('/assign/' + aula + '/' + tarea)
 }
 
-function evalRepo (req, res) {
+async function evalRepo (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
   let evalRepo = 'eval-' + tarea
   let readme = '# Eval repo\n' + 'Clone and exec ```./eval.sh``` for get all the students repos'
 
-  Eval.createSubmodule(aula, tarea, req.user.username)
-  .then(result => {
-    User.findOne({ 'login': req.user.username }, (err, usr) => {
-      if (err) console.log(err)
-      Eval.createEvalRepo(aula, evalRepo, usr, result, readme, res)
-      res.redirect('/assign/' + tarea + '/' + tarea)
-    })
-  }).catch(error => {
+  try {
+    let result = await Eval.createSubmodule(aula, tarea, req.user.username)
+    let usr = User.findOne({ 'login': req.user.username })
+
+    Eval.createEvalRepo(aula, evalRepo, usr, result, readme, res)
+    res.redirect('/assign/' + tarea + '/' + tarea)
+  } catch (error) {
     console.log(error)
-  })
+  }
 }
 
 module.exports = {
