@@ -1,13 +1,13 @@
+import User from '../models/user'
+import Org from '../models/org'
+import Assign from '../models/assign'
+import Repo from '../models/repo'
+import Group from '../models/group'
+import Team from '../models/team'
+import Student from '../models/student'
+
 const Github = require('../helpers/githubHelper').Gh
 const Eval = require('../helpers/evaluationHelper')
-
-const User = require('../models/user')
-const Org = require('../models/org')
-const Assign = require('../models/assign')
-const Repo = require('../models/repo')
-const Group = require('../models/group')
-const Team = require('../models/team')
-const Student = require('../models/student')
 
 const nameFormat = new RegExp('[^a-zA-Z0-9_.-]+', 'g')
 
@@ -318,7 +318,7 @@ async function evalRepo (req, res) {
   }
 }
 
-module.exports = {
+export default {
   newAssign,
   newAssignP,
   assign,

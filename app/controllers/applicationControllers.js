@@ -1,5 +1,5 @@
-const Repo = require('../models/repo')
-const Group = require('../models/group')
+import Repo from '../models/repo'
+import Group from '../models/group'
 
 // Controller for get home page.
 function home (req, res) {

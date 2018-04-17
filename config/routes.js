@@ -1,14 +1,14 @@
 'use strict'
 
-const passport = require('passport')
-const loggedIn = require('connect-ensure-login')
-const express = require('express')
+import passport from 'passport'
+import loggedIn from 'connect-ensure-login'
+import express from 'express'
+
+import * as appControllers from '../app/controllers/applicationControllers.js'
+import * as classControllers from '../app/controllers/classroomControllers.js'
+import * as assignControllers from '../app/controllers/assignControllers.js'
 
 const api = express.Router()
-
-const appControllers = require('../app/controllers/applicationControllers.js')
-const classControllers = require('../app/controllers/classroomControllers.js')
-const assignControllers = require('../app/controllers/assignControllers.js')
 
 api.get('/', appControllers.home)
 api.get('/login', appControllers.redirectHome)
@@ -44,4 +44,4 @@ api.post('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assig
 api.post('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssignP)
 api.post('/evalrepo/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.evalRepo)
 
-module.exports = api
+export default api

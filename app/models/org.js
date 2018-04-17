@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const OrgSchema = new Schema({
@@ -11,4 +11,6 @@ const OrgSchema = new Schema({
   createDate: { type: Date, default: Date.now() }
 })
 
-module.exports = mongoose.model('Org', OrgSchema)
+let orgModel = mongoose.model('Org', OrgSchema)
+
+export default orgModel

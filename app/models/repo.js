@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const RepoSchema = new Schema({
@@ -10,4 +10,6 @@ const RepoSchema = new Schema({
   createDate: { type: Date, default: Date.now() }
 })
 
-module.exports = mongoose.model('Repo', RepoSchema)
+let repoModel = mongoose.model('Repo', RepoSchema)
+
+export default repoModel

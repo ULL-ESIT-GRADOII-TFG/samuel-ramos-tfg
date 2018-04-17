@@ -1,14 +1,16 @@
-const multer = require('multer')
-const csvjson = require('csvjson')
-const path = require('path')
-const fs = require('fs')
+import User from '../models/user'
+import Org from '../models/org'
+import Assign from '../models/assign'
+import Student from '../models/student'
 
-const Github = require('../helpers/githubHelper').Gh
+import multer from 'multer'
+import csvjson from 'csvjson'
+import path from 'path'
+import fs from 'fs'
+
+import Github from '../helpers/githubHelper'
+
 const xlsx = require('../helpers/xlsxConvert')
-const User = require('../models/user')
-const Org = require('../models/org')
-const Assign = require('../models/assign')
-const Student = require('../models/student')
 
 // Multer config
 const storage = multer.diskStorage({
@@ -205,7 +207,7 @@ async function students (req, res) {
   res.render('classroom/students', { titulo: 'Alumnos', usuario: req.user, classroom: aula, students: alumnos })
 }
 
-module.exports = {
+export default {
   classrooms,
   classroom,
   orgs,

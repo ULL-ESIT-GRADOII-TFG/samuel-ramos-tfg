@@ -1,14 +1,15 @@
-const octokit = require('@octokit/rest')()
+import octokit from '@octokit/rest'
+const rest = octokit()
 
 // Class to manage the github API
-class Gh {
+export default class Github {
   constructor (token) {
-    octokit.authenticate({ type: 'oauth', token: token })
+    rest.authenticate({ type: 'oauth', token: token })
   }
 
   userOrgs () {
     return new Promise((resolve, reject) => {
-      octokit.users.getOrgs({ }, (error, result) => {
+      rest.users.getOrgs({ }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -18,7 +19,7 @@ class Gh {
 
   addUserOrg (org, user) {
     return new Promise((resolve, reject) => {
-      octokit.orgs.addOrgMembership({ org: org, username: user, role: 'member' }, (error, result) => {
+      rest.orgs.addOrgMembership({ org: org, username: user, role: 'member' }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -28,7 +29,7 @@ class Gh {
 
   createRepo (org, name, desc, repoType) {
     return new Promise((resolve, reject) => {
-      octokit.repos.createForOrg({ org: org, name: name, description: desc, private: false, has_issues: true, has_projects: true }, (error, result) => {
+      rest.repos.createForOrg({ org: org, name: name, description: desc, private: false, has_issues: true, has_projects: true }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -38,7 +39,7 @@ class Gh {
 
   addCollaborator (ownerLogin, nameRepo, user, permisos) {
     return new Promise((resolve, reject) => {
-      octokit.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: 'admin' }, (error, result) => {
+      rest.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: 'admin' }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -48,7 +49,7 @@ class Gh {
 
   createTeam (orgLogin, nameTeam, members) {
     return new Promise((resolve, reject) => {
-      octokit.orgs.createTeam({ org: orgLogin, name: nameTeam, maintainers: members }, (error, result) => {
+      rest.orgs.createTeam({ org: orgLogin, name: nameTeam, maintainers: members }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -58,7 +59,7 @@ class Gh {
 
   addTeam (idTeam, orgLogin, nameRepo) {
     return new Promise((resolve, reject) => {
-      octokit.orgs.addTeamRepo({ id: idTeam, org: orgLogin, repo: nameRepo, permission: 'admin' }, (error, result) => {
+      rest.orgs.addTeamRepo({ id: idTeam, org: orgLogin, repo: nameRepo, permission: 'admin' }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -68,7 +69,7 @@ class Gh {
 
   checkMember (idTeam, user) {
     return new Promise((resolve, reject) => {
-      octokit.orgs.getTeamMembership({ id: idTeam, username: user }, (error, result) => {
+      rest.orgs.getTeamMembership({ id: idTeam, username: user }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -78,7 +79,7 @@ class Gh {
 
   addMember (idTeam, user) {
     return new Promise((resolve, reject) => {
-      octokit.orgs.addTeamMembership({ id: idTeam, username: user }, (error, result) => {
+      rest.orgs.addTeamMembership({ id: idTeam, username: user }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -88,7 +89,7 @@ class Gh {
 
   getOrgRepos (orgName) {
     return new Promise((resolve, reject) => {
-      octokit.repos.getForOrg({ org: orgName }, (error, result) => {
+      rest.repos.getForOrg({ org: orgName }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
@@ -97,15 +98,11 @@ class Gh {
   }
   createFile (org, evalRepo, file, text, encoded) {
     return new Promise((resolve, reject) => {
-      octokit.repos.createFile({ owner: org, repo: evalRepo, path: file, message: text, content: encoded }, (error, result) => {
+      rest.repos.createFile({ owner: org, repo: evalRepo, path: file, message: text, content: encoded }, (error, result) => {
         if (error) reject(error)
 
         resolve(result)
       })
     })
   }
-}
-
-module.exports = {
-  Gh
 }

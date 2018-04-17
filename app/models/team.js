@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const TeamSchema = new Schema({
@@ -9,4 +9,6 @@ const TeamSchema = new Schema({
   signupDate: { type: Date, default: Date.now() }
 })
 
-module.exports = mongoose.model('Team', TeamSchema)
+let teamModel = mongoose.model('Team', TeamSchema)
+
+export default teamModel
