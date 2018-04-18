@@ -13,7 +13,6 @@ function convert (file) {
       rows.push(sheet['data'][j])
     }
   }
-
   for (let i = 0; i < rows.length; i++) {
     str += rows[i].join(',') + '\n'
   }
