@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const StudentSchema = new Schema({
@@ -10,4 +10,7 @@ const StudentSchema = new Schema({
   signupDate: { type: Date, default: Date.now() }
 })
 StudentSchema.index({ 'email': 1, 'orgNAme': 1 }, { 'unique': true })
-module.exports = mongoose.model('Student', StudentSchema)
+
+let studentModel = mongoose.model('Student', StudentSchema)
+
+export default studentModel

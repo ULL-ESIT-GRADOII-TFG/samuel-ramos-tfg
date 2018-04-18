@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const assignSchema = new Schema({
@@ -11,4 +11,6 @@ const assignSchema = new Schema({
   createDate: { type: Date, default: Date.now() }
 })
 
-module.exports = mongoose.model('Assign', assignSchema)
+let assignModel = mongoose.model('Assign', assignSchema)
+
+export default assignModel

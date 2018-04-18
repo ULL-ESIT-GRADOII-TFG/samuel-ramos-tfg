@@ -1,6 +1,5 @@
-const Repo = require('../models/repo')
-const Group = require('../models/group')
-const teamHelper = require('../helpers/teamHelper')
+import Repo from '../models/repo'
+import Group from '../models/group'
 
 // Controller for get home page.
 function home (req, res) {
@@ -19,22 +18,14 @@ function redirectHome (req, res) {
 }
 
 // Controller for get profile page.
-function profiles (req, res) {
-  Repo.find({ 'StudentLogin': req.user.username }, (err, repos) => {
-    if (err) console.log(err)
-
-    Group.find({ }, (err, groups) => {
-      if (err) console.log(err)
-
-      teamHelper(groups, req.user.username)
-      .then(result => {
-        res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, tareas: repos, tareasGrupales: groups })
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    })
-  })
+async function profiles (req, res) {
+  try {
+    let repos = await Repo.find({ 'StudentLogin': req.user.username })
+    let groups = await Group.find({ })
+    res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, tareas: repos, tareasGrupales: groups })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for get error page.
@@ -46,7 +37,7 @@ function help (req, res) {
   res.render('static_pages/help', { titulo: 'Ayuda', usuario: req.user })
 }
 
-module.exports = {
+export {
   home,
   logout,
   redirectHome,

@@ -3,62 +3,61 @@ const User = require('../models/user')
 const base64 = require('base-64')
 const utf8 = require('utf8')
 
-function createSubmodule (org, assign, user) {
-  return new Promise((resolve, reject) => {
+async function createSubmodule (org, assign, user) {
+  try {
+    const nameFormat = new RegExp(assign, 'g')
+
     let bashFile = '#!/bin/bash\n'
     let submodule = ''
+    let usr = await User.findOne({ 'login': user })
 
-    const nameFormat = new RegExp(assign, 'g')
-    User.findOne({ 'login': user }, (err, usr) => {
-      if (err) reject(err)
+    const ghUser = new Github(usr.token)
+    let result = await ghUser.getOrgRepos(org)
 
-      const ghUser = new Github(usr.token)
-      ghUser.getOrgRepos(org)
-      .then(result => {
-        for (let i = 0; i < result.data.length; i++) {
-          if (result.data[i].name.match(nameFormat)) {
-            submodule = submodule + '\ngit submodule add https://github.com/' + result.data[i].full_name
-          }
-        }
-        resolve(base64.encode(utf8.encode(bashFile + submodule)))
-      })
-      .catch(err => {
-        reject(err)
-      })
-    })
-  })
+    for (let i = 0; i < result.data.length; i++) {
+      if (result.data[i].name.match(nameFormat)) {
+        submodule = submodule + '\ngit submodule add https://github.com/' + result.data[i].full_name
+      }
+    }
+    let file = await base64.encode(utf8.encode(bashFile + submodule))
+    return file
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-function createEvalRepo (aula, evalRepo, usr, result, readme, res) {
-  const ghUser = new Github(usr.token)
-  ghUser.createRepo(aula, evalRepo, 'Repo created by CodeLab', 1)
-  .then(response => {
-    createEvalFile(aula, evalRepo, result, readme, ghUser)
-  }).catch(err => {
+async function createEvalRepo (aula, evalRepo, usr, result, readme, res) {
+  try {
+    const ghUser = new Github(usr.token)
+
+    await ghUser.createRepo(aula, evalRepo, 'Repo created by CodeLab', 1)
+    await createEvalFile(aula, evalRepo, result, readme, ghUser)
+
     res.redirect('https://github.com/' + aula + '/' + evalRepo)
-    console.log(err)
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-function createEvalFile (aula, evalRepo, result, readme, ghUser) {
-  ghUser.createFile(aula, evalRepo, 'eval.sh', 'adding eval.sh :bookmark:', result)
-  .then(resp => {
-    createReadmeFile(aula, evalRepo, readme, ghUser)
-  }).catch(err => {
-    console.log(err)
-  })
+async function createEvalFile (aula, evalRepo, result, readme, ghUser) {
+  try {
+    await ghUser.createFile(aula, evalRepo, 'eval.sh', 'adding eval.sh :bookmark:', result)
+    await createReadmeFile(aula, evalRepo, readme, ghUser)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-function createReadmeFile (aula, evalRepo, readme, ghUser) {
-  ghUser.createFile(aula, evalRepo, 'README.md', 'adding README :information_source:', base64.encode(utf8.encode(readme)))
-  .then(resp => {
+async function createReadmeFile (aula, evalRepo, readme, ghUser) {
+  try {
+    let resp = await ghUser.createFile(aula, evalRepo, 'README.md', 'adding README :information_source:', base64.encode(utf8.encode(readme)))
     console.log(resp.meta.status)
-  }).catch(err => {
-    console.log(err)
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
-module.exports = {
+export {
   createSubmodule,
   createEvalRepo
 }

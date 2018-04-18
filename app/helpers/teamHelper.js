@@ -1,24 +1,17 @@
-const Team = require('../models/team')
-const Group = require('../models/group')
+import Group from '../models/group'
+import Team from '../models/team'
 
 // Function to get the teams for a user.
-function team (userTeams, user) {
-  return new Promise((resolve, reject) => {
-    let userGroups = []
-    Team.find({ members: { $in: [user] } }, (err, teams) => {
-      if (err) reject(err)
+async function team (userTeams, user) {
+  let userGroups = []
+  let teams = await Team.find({ members: { $in: [user] } })
+  let groups = await Group.find({ team: { $in: userGroups } })
 
-      for (let i = 0; i < teams.length; i++) {
-        userGroups.push(teams[i].name)
-      }
+  for (let i = 0; i < teams.length; i++) {
+    userGroups.push(teams[i].name)
+  }
 
-      Group.find({ team: { $in: userGroups } }, (err, groups) => {
-        if (err) console.log(err)
-
-        resolve(groups)
-      })
-    })
-  })
+  return (groups)
 }
 
-module.exports = team
+export default team

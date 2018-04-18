@@ -9,24 +9,26 @@ html
     include ../layouts/nav.pug
     div(class="container")
       div(class="row")
-      div(class="col s12", id="ispace")
-        div(class="tabs is-centered")
-            ul
-              li(id="butrepos"): a(href="/assign/" + aula + "/" + tarea) Repos
-              li(class="is-active" id="butoptions" class=""): a(href="/options/" + aula + "/" + tarea) Opciones 
-        p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
-          form(class="col s12" method="post" action="/options/" + aula + "/" + tarea)
-            div(align="center" class="col s12 switch")
-              label
-                span Desactivadas
-                if active
-                  input(type="checkbox" name="activador" checked)
-                else
-                  input(type="checkbox" name="activador")
-                span(class="lever")
-                span Activadas
-            div(align="center" class="col s12", id="ispace")
-              button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
-                i(class="material-icons right") send
+        div(class="col s12")
+            h3(class="titulo-aula-tarea2") #{aula}/#{assign}
+        div(class="col s12", id="ispace")
+          div(class="tabs is-centered")
+              ul
+                li(id="butrepos"): a(href="/assign/" + aula + "/" + tarea) Repos
+                li(class="is-active" id="butoptions" class=""): a(href="/options/" + aula + "/" + tarea) Opciones 
+          p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
+            form(class="col s12" method="post" action="/options/" + aula + "/" + tarea)
+              div(align="center" class="col s12 switch")
+                label
+                  span Desactivadas
+                  if active
+                    input(type="checkbox" name="activador" checked)
+                  else
+                    input(type="checkbox" name="activador")
+                  span(class="lever")
+                  span Activadas
+              div(align="center" class="col s12", id="ispace")
+                button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
+                  i(class="material-icons right") send
 
     include ../layouts/footerParams2.pug

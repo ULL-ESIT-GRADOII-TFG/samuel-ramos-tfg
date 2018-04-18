@@ -57,9 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
-# Lock files
-package-lock.json
-
 # MacOS files
 .DS_Store
 

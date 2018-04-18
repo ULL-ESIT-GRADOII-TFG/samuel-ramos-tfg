@@ -8,27 +8,29 @@ html
     include ../layouts/nav.pug
     div(class="container")
       div(class="row")
-      div(class="col s12", id="ispace")
-        div(class="tabs is-centered")
-          ul
-            li(id="buttarea"): a(href="/classroom/" + aula) Tareas
-            li(id="butpindiv" class=""): a(href="/new/"+ aula) Nueva Asignación
-            li(class="is-active" id="butoptions" class=""): a(href="/options/"+ aula) Opciones
-            li(id="butalum" class=""): a(href="/alumnos/"+ aula) Alumnos
-            li(id="butfile" class=""): a(href="/upload/"+ aula) Subir fichero de alumnos
-        p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
-          form(class="col s12" method="post" action="/options/" + aula)
-            div(align="center" class="col s12 switch")
-              label
-                span Desactivadas
-                if active
-                  input(type="checkbox" name="activador" checked)
-                else
-                  input(type="checkbox" name="activador")
-                span(class="lever")
-                span Activadas
-            div(align="center" class="col s12", id="ispace")
-              button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
-                i(class="material-icons right") send
+        div(class="col s12")
+          h3(class="titulo-aula-tarea2") #{aula}
+        div(class="col s12", id="ispace")
+          div(class="tabs is-centered")
+            ul
+              li(id="buttarea"): a(href="/classroom/" + aula) Tareas
+              li(id="butpindiv" class=""): a(href="/new/"+ aula) Nueva Asignación
+              li(class="is-active" id="butoptions" class=""): a(href="/options/"+ aula) Opciones
+              li(id="butalum" class=""): a(href="/alumnos/"+ aula) Alumnos
+              li(id="butfile" class=""): a(href="/upload/"+ aula) Subir fichero de alumnos
+          p(align="center" class="ftxt") Haga click para activar y desactivar las invitaciones
+            form(class="col s12" method="post" action="/options/" + aula)
+              div(align="center" class="col s12 switch")
+                label
+                  span Desactivadas
+                  if active
+                    input(type="checkbox" name="activador" checked)
+                  else
+                    input(type="checkbox" name="activador")
+                  span(class="lever")
+                  span Activadas
+              div(align="center" class="col s12", id="ispace")
+                button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
+                  i(class="material-icons right") send
 
     include ../layouts/footerParams.pug

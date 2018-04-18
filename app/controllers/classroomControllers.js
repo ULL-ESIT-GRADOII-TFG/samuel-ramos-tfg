@@ -1,14 +1,16 @@
-const multer = require('multer')
-const csvjson = require('csvjson')
-const path = require('path')
-const fs = require('fs')
+import User from '../models/user'
+import Org from '../models/org'
+import Assign from '../models/assign'
+import Student from '../models/student'
 
-const Github = require('../helpers/githubHelper').Gh
+import multer from 'multer'
+import csvjson from 'csvjson'
+import path from 'path'
+import fs from 'fs'
+
+import Github from '../helpers/githubHelper'
+
 const xlsx = require('../helpers/xlsxConvert')
-const User = require('../models/user')
-const Org = require('../models/org')
-const Assign = require('../models/assign')
-const Student = require('../models/student')
 
 // Multer config
 const storage = multer.diskStorage({
@@ -41,73 +43,65 @@ function checkFileType (file, cb) {
 }
 
 // Controller for get classrom page.
-function classrooms (req, res) {
-  Org.find({ 'ownerLogin': req.user.username }, (err, org) => {
-    if (err) console.log(err)
-
+async function classrooms (req, res) {
+  try {
+    let org = await Org.find({ 'ownerLogin': req.user.username })
     res.render('classroom/classrooms', { titulo: 'Aulas', usuario: req.user, aulas: org })
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for get orgs page.
-function orgs (req, res) {
-  User.findOne({ 'login': req.user.username }, (err, user) => {
-    if (err) console.log(err)
-
+async function orgs (req, res) {
+  try {
+    let user = await User.findOne({ 'login': req.user.username })
     const ghUser = new Github(user.token)
+    let result = await ghUser.userOrgs()
 
-    ghUser.userOrgs()
-    .then(result => {
-      res.render('classroom/orgs', { titulo: 'Organizaciones', usuario: req.user, orgs: result.data })
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  })
+    res.render('classroom/orgs', { titulo: 'Organizaciones', usuario: req.user, orgs: result.data })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for create a new classroom.
-function orgsP (req, res, next) {
+async function orgsP (req, res, next) {
   let data = req.body.data.split('@')
   let idOrg = data[0]
   let loginOrg = data[1]
   let avatarUrl = data[2]
 
-  let newOrg = new Org({
-    login: loginOrg,
-    id: idOrg,
-    avatarUrl: avatarUrl,
-    ownerId: req.user.id,
-    ownerLogin: req.user.username,
-    isActive: true
-  })
+  try {
+    let newOrg = new Org({
+      login: loginOrg,
+      id: idOrg,
+      avatarUrl: avatarUrl,
+      ownerId: req.user.id,
+      ownerLogin: req.user.username,
+      isActive: true
+    })
 
-  newOrg.save((err) => {
-    if (err) console.log(err)
-
+    await newOrg.save()
     res.redirect('/classrooms')
-    next()
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for get classrom page.
-function classroom (req, res) {
+async function classroom (req, res) {
   let idOrg = req.params.idclass
   let titulo = 'Aula: ' + idOrg
 
-  Org.findOne({ 'login': idOrg }, (err, org) => {
-    if (err) console.log(err)
+  let org = await Org.findOne({ 'login': idOrg })
+  let assigns = await Assign.find({ 'orgLogin': idOrg })
 
-    if (org.ownerLogin === req.user.username) {
-      Assign.find({ 'orgLogin': idOrg }, (err, assigns) => {
-        if (err) console.log(err)
-
-        res.render('classroom/classroom', { titulo: titulo, usuario: req.user, classroom: idOrg, assign: assigns })
-      })
-    } else {
-      res.redirect('/classrooms')
-    }
-  })
+  if (org.ownerLogin === req.user.username) {
+    res.render('classroom/classroom', { titulo: titulo, usuario: req.user, classroom: idOrg, assign: assigns })
+  } else {
+    res.redirect('/classrooms')
+  }
 }
 
 // Controller for get invi page.
@@ -119,62 +113,43 @@ function invi (req, res) {
 }
 
 // Controller for add a member to the classroom.
-function inviP (req, res) {
+async function inviP (req, res) {
   let org = req.params.idclass
   let titulo = 'Aula: ' + org
 
-  Org.findOne({ 'login': org }, (err, org) => {
-    if (err) console.log(err)
+  let orgs = await Org.findOne({ 'login': org })
+  let user = await User.findOne({ 'login': org.ownerLogin })
 
-    if (!org.isActive) {
-      return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
-    } else {
-      User.findOne({ 'login': org.ownerLogin }, (err, user) => {
-        if (err) console.log(err)
+  if (!org.isActive) {
+    return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+  } else {
+    const ghUser = new Github(user.token)
 
-        const ghUser = new Github(user.token)
-
-        ghUser.addUserOrg(org.login, req.user.username)
-        .then(result => {
-          res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
-        })
-        .catch(error => {
-          console.log(error)
-        })
-      })
-    }
-  })
+    await ghUser.addUserOrg(orgs.login, req.user.username)
+    res.render('classroom/classroom', { titulo: titulo, usuario: req.user })
+  }
 }
 
 // Controller for get options page.
-function options (req, res) {
+async function options (req, res) {
   let aula = req.params.idclass
+  let org = await Org.findOne({ 'login': aula })
 
-  Org.findOne({ 'login': aula }, (err, org) => {
-    if (err) console.log(err)
-
-    if (org.ownerLogin === req.user.username) {
-      res.render('classroom/options', { titulo: 'Opciones', usuario: req.user, classroom: aula, activado: org.isActive })
-    } else {
-      res.redirect('/classrooms')
-    }
-  })
+  if (org.ownerLogin === req.user.username) {
+    res.render('classroom/options', { titulo: 'Opciones', usuario: req.user, classroom: aula, activado: org.isActive })
+  } else {
+    res.redirect('/classrooms')
+  }
 }
 
 // Controller for save options.
-function optionsP (req, res) {
+async function optionsP (req, res) {
   let aula = req.params.idclass
 
-  console.log(req.body)
-
   if (req.body.activador) {
-    Org.findOneAndUpdate({ login: aula }, { isActive: true }, (err) => {
-      if (err) console.log(err)
-    })
+    await Org.findOneAndUpdate({ login: aula }, { isActive: true })
   } else {
-    Org.findOneAndUpdate({ login: aula }, { isActive: false }, (err) => {
-      if (err) console.log(err)
-    })
+    await Org.findOneAndUpdate({ login: aula }, { isActive: false })
   }
   res.redirect('/classroom/' + aula)
 }
@@ -182,7 +157,7 @@ function optionsP (req, res) {
 function file (req, res) {
   let aula = req.params.idclass
 
-  upload(req, res, err => {
+  upload(async (req, res, err) => {
     if (err) return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sólo se pueden ficheros con formato csv' })
 
     console.log(path.extname(req.file.filename))
@@ -200,11 +175,10 @@ function file (req, res) {
       }
 
       file.shift()
-      Student.collection.insertMany(file, (err, result) => {
-        if (err) console.log(err)
 
-        res.redirect('/classroom/' + aula)
-      })
+      await Student.collection.insertMany(file)
+
+      res.redirect('/classroom/' + aula)
     } else {
       const options = {
         delimiter: /[,|;]+/,
@@ -214,11 +188,9 @@ function file (req, res) {
       let file = csvjson.toObject(csv, options)
 
       file.shift()
-      Student.collection.insertMany(file, (err, result) => {
-        if (err) console.log(err)
 
-        res.redirect('/classroom/' + aula)
-      })
+      await Student.collection.insertMany(file)
+      res.redirect('/classroom/' + aula)
     }
   })
 }
@@ -228,27 +200,14 @@ function load (req, res) {
   res.render('classroom/upload', { titulo: 'Suba el fichero', usuario: req.user, classroom: aula })
 }
 
-function students (req, res) {
+async function students (req, res) {
   let aula = req.params.idclass
 
-  Student.find({ 'orgName': aula }, (err, alumnos) => {
-    if (err) console.log(err)
-
-    res.render('classroom/students', { titulo: 'Alumnos', usuario: req.user, classroom: aula, students: alumnos })
-  })
+  let alumnos = await Student.find({ 'orgName': aula })
+  res.render('classroom/students', { titulo: 'Alumnos', usuario: req.user, classroom: aula, students: alumnos })
 }
 
-function ghedsh (req, res) {
-  let aula = req.params.idclass
-
-  Student.find({ 'orgName': aula }, (err, alumnos) => {
-    if (err) console.log(err)
-
-    res.json(alumnos)
-  })
-}
-
-module.exports = {
+export {
   classrooms,
   classroom,
   orgs,
@@ -259,6 +218,5 @@ module.exports = {
   optionsP,
   file,
   load,
-  students,
-  ghedsh
+  students
 }

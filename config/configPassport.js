@@ -1,20 +1,19 @@
-module.exports = (passport, Strategy) => {
-  const User = require('../app/models/user')
-  require('dotenv').config()
+import dotenv from 'dotenv'
+import User from '../app/models/user'
+
+export default function (passport, Strategy) {
+  dotenv.config()
 
   passport.use(new Strategy({
     clientID: process.env.CLIENTID,
     clientSecret: process.env.CLIENTSECRET,
     callbackURL: process.env.CALLBACKURL,
     scope: ['read:user', 'repo', 'admin:org', 'admin:org_hook', 'delete_repo']
-  }, (accessToken, refreshToken, profile, cb) => {
-    User.findOne({ 'login': profile.username }, (err, user) => {
-      if (err) console.log(err)
-
+  }, async (accessToken, refreshToken, profile, cb) => {
+    try {
+      let user = await User.findOne({ 'login': profile.username })
       if (user) {
-        User.findOneAndUpdate({ login: profile.username }, { token: accessToken, lastLogin: Date.now() }, (err) => {
-          if (err) console.log(err)
-        })
+        await User.findOneAndUpdate({ login: profile.username }, { token: accessToken, lastLogin: Date.now() })
       } else {
         let newUser = new User({
           login: profile.username,
@@ -22,14 +21,13 @@ module.exports = (passport, Strategy) => {
           token: accessToken,
           lastLogin: Date.now()
         })
-
-        newUser.save((err) => {
-          if (err) console.log(err)
-        })
+        await newUser.save()
       }
-    })
 
-    return cb(null, profile)
+      return cb(null, profile)
+    } catch (error) {
+      console.log(error)
+    }
   }))
 
   passport.serializeUser((user, cb) => {

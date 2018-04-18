@@ -22,7 +22,6 @@
 
 #pspace {
   padding-top: 25%;
-
 }
 
 #aspace {
@@ -77,6 +76,7 @@ a:link {
   font-size: 15px;
   font-family: 'Dosis', sans-serif;
 }
+
 .aicons {
   font-size: 18px;
   margin-left: 5%;
@@ -140,7 +140,7 @@ a:link {
   padding-top: 0.1%;
 }
 
-.lisep{
+.lisep {
   margin-top: 2%;
 }
 
@@ -149,20 +149,26 @@ a:link {
 }
 
 /* label focus color */
-.input-field input:focus + label {
+
+.input-field input:focus+label {
   color: #01579b !important;
 }
+
 /* label underline focus color */
+
 .row .input-field input:focus {
   border-bottom: 1px solid #01579b !important;
   box-shadow: 0 1px 0 0 #01579b !important
 }
 
 /* label focus color */
-.input-field input:checked + label {
+
+.input-field input:checked+label {
   color: #01579b !important;
 }
+
 /* label underline focus color */
+
 .row .input-field input:focus {
   border-bottom: 1px solid #01579b !important;
   box-shadow: 0 1px 0 0 #01579b !important
@@ -171,17 +177,34 @@ a:link {
 .switch label input[type=checkbox]:checked+.lever:after {
   background-color: #000 !important;
 }
+
 .switch label input[type=checkbox]:checked+.lever {
   background-color: #01579b !important;
 }
 
-.dropdown-content li > a, .dropdown-content li > span {
+.dropdown-content li>a,
+.dropdown-content li>span {
   color: #01579b !important;
 }
 
-.titulo-aula-tarea{
+.titulo-aula-tarea {
   text-align: center;
   font-family: 'Dosis', sans-serif;
   padding: 2%;
   margin-bottom: -8%;
+}
+
+.titulo-aula-tarea2 {
+  text-align: center;
+  font-family: 'Dosis', sans-serif;
+  padding: 2%;
+}
+
+nav ul li:hover {
+  background-color: #90caf9;
+}
+
+.imgProfile {
+  width: 15px;
+  height: 15px;
 }

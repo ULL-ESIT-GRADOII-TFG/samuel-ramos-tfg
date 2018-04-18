@@ -1,32 +1,36 @@
 'use strict'
 
-const express = require('express')
+import express from 'express'
+import passport from 'passport'
+import Strategy from 'passport-github'
+import morgan from 'morgan'
+import cookie from 'cookie-parser'
+import session from 'express-session'
+import { join } from 'path'
+import { urlencoded, json } from 'body-parser'
+
+import api from './config/routes'
+import configPassport from './config/configPassport'
+
 const app = express()
-const passport = require('passport')
-const strategy = require('passport-github').Strategy
-const morgan = require('morgan')
-const cookie = require('cookie-parser')
-const body = require('body-parser')
-const session = require('express-session')
-const path = require('path')
 
-require('./config/configPassport')(passport, strategy)
+configPassport(passport, Strategy)
 
-const api = require('./config/routes')
-
-app.set('views', path.join(__dirname, '/app/views/'))
+app.set('views', join(__dirname, '/app/views/'))
 app.set('view engine', 'pug')
 
-app.use(express.static(path.join(__dirname, '/public')))
-app.use(express.static(path.join(__dirname, '/bower_components')))
+app.use(express.static(join(__dirname, '/public')))
+app.use(express.static(join(__dirname, '/bower_components')))
 
 app.use(morgan('combined'))
 app.use(cookie())
 app.use(session({ secret: 'tfg1718', resave: true, saveUninitialized: true }))
-app.use(body.urlencoded({extended: true}))
-app.use(body.json())
+app.use(urlencoded({extended: true}))
+app.use(json())
 app.use(passport.initialize())
 app.use(passport.session())
 app.use('/', api)
-
-module.exports = app
+app.use((req, res) => {
+  res.render('static_pages/error', { titulo: 'Error: Página no encontrada', msg: 'Página no encontrada', usuario: req.user })
+})
+export default app
