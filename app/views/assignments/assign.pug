@@ -60,6 +60,12 @@ html
                         div(class="col s3" align="center") 
                           a(href="https://travis-ci.org/"+ i.orgLogin + "/" + i.name) Travis CI
                         div(class="col s3" align="center") #{j.email}
+                    else 
+                        div(class="col s3" align="center") #{i.StudentLogin}
+                        div(class="col s3" align="center") -
+                        div(class="col s3" align="center") 
+                          a(href="https://travis-ci.org/"+ i.orgLogin + "/" + i.name) Travis CI
+                        div(class="col s3" align="center") -
               else
                 div(align="center" class="col s12")
                   p(class="noclass") No tiene repositorios activos.      

@@ -6,8 +6,9 @@ import Group from '../models/group'
 import Team from '../models/team'
 import Student from '../models/student'
 
-const Github = require('../helpers/githubHelper').Gh
-const Eval = require('../helpers/evaluationHelper')
+import Github from '../helpers/githubHelper'
+
+import * as Eval from '../helpers/evaluationHelper'
 
 const nameFormat = new RegExp('[^a-zA-Z0-9_.-]+', 'g')
 
@@ -118,12 +119,14 @@ async function assignInviP (req, res) {
       await newRepo.save()
 
       const ghUser = new Github(user.token)
+
       await ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
       await ghUser.addCollaborator(aula, repo, estudiante, permisos)
 
       res.redirect('https://github.com/' + aula + '/' + repo)
     }
   } catch (error) {
+    console.log(error)
     res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Error al aceptar la tarea' })
   }
 }

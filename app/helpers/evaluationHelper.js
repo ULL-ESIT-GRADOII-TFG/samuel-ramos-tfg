@@ -1,7 +1,7 @@
-const Github = require('../helpers/githubHelper').Gh
-const User = require('../models/user')
-const base64 = require('base-64')
-const utf8 = require('utf8')
+import Github from '../helpers/githubHelper'
+import User from '../models/user'
+import base64 from 'base-64'
+import utf8 from 'utf8'
 
 async function createSubmodule (org, assign, user) {
   try {
