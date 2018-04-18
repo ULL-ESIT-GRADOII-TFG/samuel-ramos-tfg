@@ -1,9 +1,10 @@
-const xlsx = require('node-xlsx')
-const path = require('path')
-const rows = []
+import xlsx from 'node-xlsx'
+import { join } from 'path'
 
 function convert (file) {
-  const obj = xlsx.parse(path.join(__dirname, file))
+  const rows = []
+  const obj = xlsx.parse(join(__dirname, file))
+
   let str = ''
 
   for (let i = 0; i < obj.length; i++) {
@@ -12,10 +13,11 @@ function convert (file) {
       rows.push(sheet['data'][j])
     }
   }
+
   for (let i = 0; i < rows.length; i++) {
     str += rows[i].join(',') + '\n'
   }
   return str
 }
 
-module.exports = convert
+export default convert
