@@ -1,4 +1,2 @@
-module.exports = {
-  port: process.env.PORT || 8081,
-  db: process.env.MONGODB || 'mongodb://localhost/codelab'
-}
+export const port = process.env.PORT || 8081
+export const db = process.env.MONGODB || 'mongodb://localhost/codelab'

@@ -30,5 +30,7 @@ app.use(json())
 app.use(passport.initialize())
 app.use(passport.session())
 app.use('/', api)
-
+app.use((req, res) => {
+  res.render('static_pages/error', { titulo: 'Error: Página no encontrada', msg: 'Página no encontrada', usuario: req.user })
+})
 export default app
