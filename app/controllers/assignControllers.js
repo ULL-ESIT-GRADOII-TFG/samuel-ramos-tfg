@@ -202,101 +202,81 @@ function team (req, res) {
 }
 
 // Controller for create a new team and an new group assign
-function teamP (req, res) {
+async function teamP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
   let teamFormated = req.body.team.replace(nameFormat, '-')
   let repo = tarea + '-' + teamFormated
   let idTeam
-
-  Assign.findOne({ 'orgLogin': aula }, (err, assign) => {
-    if (err) console.log(err)
+  try {
+    let assign = await Assign.findOne({ 'orgLogin': aula })
+    let user = await User.findOne({ 'login': assign.ownerLogin })
 
     if (!assign.isActive) {
-      return res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
+      res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
     } else {
-      User.findOne({ 'login': assign.ownerLogin }, (err, user) => {
-        if (err) console.log(err)
+      const ghUser = new Github(user.token)
 
-        const ghUser = new Github(user.token)
-        ghUser.createTeam(aula, teamFormated, [req.user.username])
-        .then(result => {
-          let newTeam = new Team({
-            name: teamFormated,
-            id: result.data.id,
-            members: [req.user.username],
-            org: aula
-          })
+      let result = await ghUser.createTeam(aula, teamFormated, [req.user.username])
 
-          newTeam.save((err) => {
-            if (err) console.log(err)
-          })
-
-          idTeam = result.data.id
-          let newGroup = new Group({
-            name: repo,
-            assignName: tarea,
-            team: teamFormated,
-            idTeam: idTeam,
-            ownerLogin: user.login,
-            orgLogin: aula
-          })
-
-          newGroup.save((err) => {
-            if (err) console.log(err)
-          })
-
-          ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.assignType)
-          .then(result => {
-            ghUser.addTeam(idTeam, aula, repo)
-            .then(result => {
-              res.redirect('https://github.com/' + aula + '/' + repo)
-            })
-          })
-        })
-        .catch(error => {
-          console.log(error)
-          res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El equipo ya existe' })
-        })
+      let newTeam = new Team({
+        name: teamFormated,
+        id: result.data.id,
+        members: [req.user.username],
+        org: aula
       })
+
+      await newTeam.save()
+
+      idTeam = result.data.id
+      let newGroup = new Group({
+        name: repo,
+        assignName: tarea,
+        team: teamFormated,
+        idTeam: idTeam,
+        ownerLogin: user.login,
+        orgLogin: aula
+      })
+
+      await newGroup.save()
+
+      await ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.assignType)
+      await ghUser.addTeam(idTeam, aula, repo)
+      res.redirect('https://github.com/' + aula + '/' + repo)
     }
-  })
+  } catch (error) {
+    res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'El equipo ya existe' })
+  }
 }
 
 // Controller for get the assign options
-function optionsG (req, res) {
+async function optionsG (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
 
-  Org.findOne({ 'login': aula }, (err, org) => {
-    if (err) console.log(err)
+  try {
+    let org = await Org.findOne({ 'login': aula })
+    let assign = await Assign.findOne({ 'orgLogin': aula, 'title': tarea })
 
-    console.log(org)
     if (org.ownerLogin === req.user.username) {
-      Assign.findOne({ 'orgLogin': aula, 'title': tarea }, (err, assign) => {
-        if (err) console.log(err)
-
-        res.render('assignments/options', { titulo: 'Opciones', usuario: req.user, classroom: aula, assign: tarea, activado: assign.isActive })
-      })
+      res.render('assignments/options', { titulo: 'Opciones', usuario: req.user, classroom: aula, assign: tarea, activado: assign.isActive })
     } else {
       res.redirect('/classrooms')
     }
-  })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // Controller for save the options page
-function optionsP (req, res) {
+async function optionsP (req, res) {
   let aula = req.params.idclass
   let tarea = req.params.idassign
 
   if (req.body.activador) {
-    Assign.findOneAndUpdate({ titulo: tarea }, { isActive: true }, (err) => {
-      if (err) console.log(err)
-    })
+    await Assign.findOneAndUpdate({ titulo: tarea }, { isActive: true })
   } else {
-    Assign.findOneAndUpdate({ titulo: tarea }, { isActive: false }, (err) => {
-      if (err) console.log(err)
-    })
+    await Assign.findOneAndUpdate({ titulo: tarea }, { isActive: false })
   }
   res.redirect('/assign/' + aula + '/' + tarea)
 }
@@ -309,16 +289,16 @@ async function evalRepo (req, res) {
 
   try {
     let result = await Eval.createSubmodule(aula, tarea, req.user.username)
-    let usr = User.findOne({ 'login': req.user.username })
+    let usr = await User.findOne({ 'login': req.user.username })
 
-    Eval.createEvalRepo(aula, evalRepo, usr, result, readme, res)
+    await Eval.createEvalRepo(aula, evalRepo, usr, result, readme, res)
     res.redirect('/assign/' + tarea + '/' + tarea)
   } catch (error) {
     console.log(error)
   }
 }
 
-export default {
+export {
   newAssign,
   newAssignP,
   assign,

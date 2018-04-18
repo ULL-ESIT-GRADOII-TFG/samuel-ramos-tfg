@@ -207,7 +207,7 @@ async function students (req, res) {
   res.render('classroom/students', { titulo: 'Alumnos', usuario: req.user, classroom: aula, students: alumnos })
 }
 
-export default {
+export {
   classrooms,
   classroom,
   orgs,

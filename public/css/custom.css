@@ -185,3 +185,6 @@ a:link {
   padding: 2%;
   margin-bottom: -8%;
 }
+nav ul li:hover {
+  background-color: white;
+}

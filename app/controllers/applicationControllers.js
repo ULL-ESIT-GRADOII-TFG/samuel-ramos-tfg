@@ -37,7 +37,7 @@ function help (req, res) {
   res.render('static_pages/help', { titulo: 'Ayuda', usuario: req.user })
 }
 
-module.exports = {
+export {
   home,
   logout,
   redirectHome,
