@@ -33,16 +33,23 @@ async function newAssign (req, res) {
 async function newAssignP (req, res) {
   let orgLogin = req.params.idclass
   let titleFormated = req.body.titulo.replace(nameFormat, '-')
+  let repoType
 
   try {
     let org = await Org.findOne({ 'login': orgLogin })
+
+    if (req.body.repo === 'true') {
+      repoType = true
+    } else {
+      repoType = false
+    }
 
     if (org.ownerLogin === req.user.username) {
       let newAssign = new Assign({
         title: titleFormated,
         ownerLogin: req.user.username,
         assignType: req.body.type,
-        repoType: req.body.repo,
+        repoType: repoType,
         orgLogin: orgLogin,
         isActive: true
       })

@@ -29,11 +29,12 @@ export default class Github {
 
   async createRepo (org, name, desc, repoType) {
     try {
-      let result = await rest.repos.createForOrg({ org: org, name: name, description: desc, private: false, has_issues: true, has_projects: true })
+      let result = await rest.repos.createForOrg({ org: org, name: name, description: desc, private: repoType, has_issues: true, has_projects: true })
 
       return result
     } catch (error) {
-      console.log(error)
+      let result = await rest.repos.createForOrg({ org: org, name: name, description: desc, private: false, has_issues: true, has_projects: true })
+      return result
     }
   }
 

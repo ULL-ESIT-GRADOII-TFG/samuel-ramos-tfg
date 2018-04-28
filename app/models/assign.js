@@ -5,7 +5,7 @@ const assignSchema = new Schema({
   title: { type: String, unique: true, lowecase: true },
   ownerLogin: String,
   assignType: String,
-  repoType: String,
+  repoType: Boolean,
   orgLogin: String,
   isActive: Boolean,
   createDate: { type: Date, default: Date.now() }
