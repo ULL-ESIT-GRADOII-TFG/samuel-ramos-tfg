@@ -44,4 +44,4 @@ api.post('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assig
 api.post('/new/:idclass', loggedIn.ensureLoggedIn(), assignControllers.newAssignP)
 api.post('/evalrepo/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.evalRepo)
 
-export default api
+module.exports = api

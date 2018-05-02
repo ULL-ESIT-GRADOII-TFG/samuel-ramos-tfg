@@ -9,8 +9,10 @@ import session from 'express-session'
 import { join } from 'path'
 import { urlencoded, json } from 'body-parser'
 
-import api from './config/routes'
+// import api from './config/routes'
 import configPassport from './config/configPassport'
+
+const api = require('./config/routes')
 
 const app = express()
 

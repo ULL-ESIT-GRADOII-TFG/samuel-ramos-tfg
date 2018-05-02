@@ -144,7 +144,7 @@ async function groupInvi (req, res) {
   let aula = req.params.idclass
   let titulo = 'Tarea ' + req.params.idassign
   try {
-    let teams = Team.find({ org: aula })
+    let teams = await Team.find({ org: aula })
     res.render('assignments/groupInvi', { titulo: titulo, usuario: req.user, assign: tarea, classroom: aula, equipos: teams })
   } catch (error) {
     console.log(error)

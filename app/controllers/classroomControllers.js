@@ -9,8 +9,7 @@ import path from 'path'
 import fs from 'fs'
 
 import Github from '../helpers/githubHelper'
-
-const xlsx = require('../helpers/xlsxConvert')
+import xlsx from '../helpers/xlsxConvert'
 
 // Multer config
 const storage = multer.diskStorage({
@@ -157,7 +156,7 @@ async function optionsP (req, res) {
 function file (req, res) {
   let aula = req.params.idclass
 
-  upload(async (req, res, err) => {
+  upload(req, res, err => {
     if (err) return res.render('static_pages/error2', { titulo: 'Error', usuario: req.user, msg: 'Sólo se pueden ficheros con formato csv' })
 
     console.log(path.extname(req.file.filename))
@@ -176,7 +175,7 @@ function file (req, res) {
 
       file.shift()
 
-      await Student.collection.insertMany(file)
+      Student.collection.insertMany(file)
 
       res.redirect('/classroom/' + aula)
     } else {
@@ -189,7 +188,7 @@ function file (req, res) {
 
       file.shift()
 
-      await Student.collection.insertMany(file)
+      Student.collection.insertMany(file)
       res.redirect('/classroom/' + aula)
     }
   })
