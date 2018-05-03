@@ -11,7 +11,7 @@ async function team (userTeams, user) {
     userGroups.push(teams[i].name)
   }
 
-  return (groups)
+  return groups
 }
 
 export default team
