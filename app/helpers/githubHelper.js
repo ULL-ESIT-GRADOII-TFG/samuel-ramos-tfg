@@ -40,7 +40,7 @@ export default class Github {
 
   async addCollaborator (ownerLogin, nameRepo, user, permisos) {
     try {
-      let result = await rest.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: 'admin' })
+      let result = await rest.repos.addCollaborator({ owner: ownerLogin, repo: nameRepo, username: user, permission: permisos })
 
       return result
     } catch (error) {

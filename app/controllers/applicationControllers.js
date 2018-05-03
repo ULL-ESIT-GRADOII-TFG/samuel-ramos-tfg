@@ -3,7 +3,7 @@ import Group from '../models/group'
 
 // Controller for get home page.
 function home (req, res) {
-  res.render('static_pages/home', { titulo: 'Home', usuario: req.user })
+  res.render('static_pages/home', { titulo: 'CodeLab', usuario: req.user })
 }
 
 // Controller for logout.
@@ -22,7 +22,7 @@ async function profiles (req, res) {
   try {
     let repos = await Repo.find({ 'StudentLogin': req.user.username })
     let groups = await Group.find({ })
-    res.render('static_pages/profile', { titulo: 'Profile', usuario: req.user, tareas: repos, tareasGrupales: groups })
+    res.render('static_pages/profile', { titulo: 'Perfil', usuario: req.user, tareas: repos, tareasGrupales: groups })
   } catch (error) {
     console.log(error)
   }

@@ -34,9 +34,17 @@ async function newAssignP (req, res) {
   let orgLogin = req.params.idclass
   let titleFormated = req.body.titulo.replace(nameFormat, '-')
   let repoType
+  let permisos
+  console.log(req.body.admin)
 
   try {
     let org = await Org.findOne({ 'login': orgLogin })
+
+    if (req.body.admin === 'true') {
+      permisos = 'admin'
+    } else {
+      permisos = 'push'
+    }
 
     if (req.body.repo === 'true') {
       repoType = true
@@ -49,6 +57,7 @@ async function newAssignP (req, res) {
         title: titleFormated,
         ownerLogin: req.user.username,
         assignType: req.body.type,
+        userAdmin: permisos,
         repoType: repoType,
         orgLogin: orgLogin,
         isActive: true
@@ -61,6 +70,7 @@ async function newAssignP (req, res) {
       res.redirect('/classrooms')
     }
   } catch (error) {
+    console.log(error)
     res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'La tarea ya existe' })
   }
 }
@@ -105,13 +115,10 @@ async function assignInviP (req, res) {
   let aula = req.params.idclass
   let repo = tarea + '-' + req.user.username
   let estudiante = req.user.username
-  let permisos
 
   try {
     let assign = await Assign.findOne({ 'orgLogin': aula })
     let user = await User.findOne({ 'login': assign.ownerLogin })
-
-    if (assign.userAdmin) { permisos = 'admin' } else { permisos = 'push' }
 
     if (!assign.isActive) {
       res.render('static_pages/error', { titulo: 'Error', usuario: req.user, msg: 'Ya no puedes aceptar esta tarea, está deshabilitado.' })
@@ -127,8 +134,9 @@ async function assignInviP (req, res) {
 
       const ghUser = new Github(user.token)
 
+      console.log(assign.userAdmin)
       await ghUser.createRepo(aula, repo, 'Repo created by CodeLab', assign.repoType)
-      await ghUser.addCollaborator(aula, repo, estudiante, permisos)
+      await ghUser.addCollaborator(aula, repo, estudiante, assign.userAdmin)
 
       res.redirect('https://github.com/' + aula + '/' + repo)
     }

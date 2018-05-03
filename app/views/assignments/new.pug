@@ -31,7 +31,12 @@ html
                 select(name="type")
                   option(value="individual") Individual
                   option(value="grupal") Grupal
-                label Tipo de asignación
+                label Tipo de asignación              
+              div(class="input-field col s12")
+                select(name="admin")
+                  option(value="true") Admin
+                  option(value="false") Push
+                label Permisos del alumno
               div(class="col s12" id="fspace")
                 div(align="center" class="col s3")
                   button(class="btn-large waves-effect waves-light white-text light-blue darken-4" type="submit") Enviar
