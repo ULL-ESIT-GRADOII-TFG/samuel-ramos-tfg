@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
+// Se define el modelo
 const StudentSchema = new Schema({
   name: String,
   surname: String,
@@ -11,6 +12,7 @@ const StudentSchema = new Schema({
 })
 StudentSchema.index({ 'email': 1, 'orgNAme': 1 }, { 'unique': true })
 
+// Se crea el modelo
 let studentModel = mongoose.model('Student', StudentSchema)
 
 export default studentModel

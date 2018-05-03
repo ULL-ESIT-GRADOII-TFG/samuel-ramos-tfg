@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
+// Se define el modelo
 const OrgSchema = new Schema({
   login: { type: String, unique: true, lowecase: true },
   id: String,
@@ -11,6 +12,7 @@ const OrgSchema = new Schema({
   createDate: { type: Date, default: Date.now() }
 })
 
+// Se crea el modelo
 let orgModel = mongoose.model('Org', OrgSchema)
 
 export default orgModel
