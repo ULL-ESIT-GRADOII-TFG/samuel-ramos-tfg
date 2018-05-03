@@ -10,6 +10,7 @@ import * as assignControllers from '../app/controllers/assignControllers.js'
 
 const api = express.Router()
 
+// Rutas get
 api.get('/', appControllers.home)
 api.get('/login', appControllers.redirectHome)
 api.get('/help', appControllers.help)
@@ -33,6 +34,7 @@ api.get('/groupinvitation/:idclass/:idassign', loggedIn.ensureLoggedIn(), assign
 api.get('/newteam/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.team)
 api.get('/options/:idclass/:idassign', loggedIn.ensureLoggedIn(), assignControllers.optionsG)
 
+// Rutas post
 api.post('/file/:idclass', loggedIn.ensureLoggedIn(), classControllers.file)
 api.post('/invitation/:idclass', loggedIn.ensureLoggedIn(), classControllers.inviP)
 api.post('/orgs', loggedIn.ensureLoggedIn(), classControllers.orgsP)
